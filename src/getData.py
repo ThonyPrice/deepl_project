@@ -1,15 +1,3 @@
-import os
-import matplotlib
-import numpy as np
-import pandas as pd
-from scipy import ndimage
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import tensorflow as tf
-import zipfile
-import requests, io
-from sklearn import preprocessing
-
 '''
 Code inspired from:
 * Title: Tiny Imagenet Visual Recognition Challenge
@@ -19,7 +7,20 @@ Code inspired from:
 * Availability: https://github.com/seshuad/IMagenet/blob/master/TinyImagenet.ipynb
 '''
 
-# Set global parameters
+import os
+import matplotlib
+import numpy as np
+import pandas as pd
+from scipy import ndimage
+from scipy.misc import toimage
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import tensorflow as tf
+import zipfile
+import requests, io
+from sklearn import preprocessing
+
+# --- Set global parameters ---
 BATCH_SIZE = 20
 NUM_CLASSES = 200
 NUM_IMAGES_PER_CLASS = 500
@@ -141,7 +142,7 @@ def plot_objects(instances, images_per_row=10, **options):
         rimages = images[row * images_per_row : (row + 1) * images_per_row]
         row_images.append(np.concatenate(rimages, axis=1))
     image = np.concatenate(row_images, axis=0)
-    plt.imshow(image, **options)
+    plt.imshow(toimage(image), **options)
     plt.axis("off")
     plt.show()
 
@@ -175,6 +176,18 @@ def main():
     training_le = le.fit(training_labels)
     training_labels_encoded = training_le.transform(training_labels)
 
-    print ("First 30 Training Labels", training_labels_encoded[0:30])
-    plot_objects(training_images[0:30])
-    return
+    # print ("First 30 Training Labels", training_labels_encoded[0:30])
+    # plot_objects(training_images[0:30])
+
+    val_data = pd.read_csv(VAL_IMAGES_DIR + 'val_annotations.txt', sep='\t', header=None, names=['File', 'Class', 'X', 'Y', 'H', 'W'])
+    val_images, val_labels, val_files = load_validation_images(VAL_IMAGES_DIR, val_data, batch_size=BATCH_SIZE)
+    val_labels_encoded = training_le.transform(val_labels)
+    # plot_objects(val_images[0:30])
+    # print (val_labels_encoded[0:30])
+    return (
+        training_images, training_labels_encoded,
+        val_images, val_labels_encoded
+    )
+
+if __name__ == '__main__':
+    main()

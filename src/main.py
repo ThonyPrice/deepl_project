@@ -14,7 +14,9 @@ from os import listdir
 from keras import callbacks, backend
 from pandas import read_csv
 import os
+import sys
 import matplotlib.pyplot as pyplot
+import getData
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
@@ -24,22 +26,26 @@ from sklearn.model_selection import StratifiedKFold
 
 #Plots the loss function
 def plotLoss(trainedModel):
-  pyplot.plot(trainedModel.history['loss'])
-  pyplot.plot(trainedModel.history['val_loss'])
+    pyplot.plot(trainedModel.history['loss'])
+    pyplot.plot(trainedModel.history['val_loss'])
 
-  pyplot.title('model loss')
-  pyplot.xlabel('epoch')
-  pyplot.ylabel('loss')
+    pyplot.title('model loss')
+    pyplot.xlabel('epoch')
+    pyplot.ylabel('loss')
 
-  pyplot.legend(['train', 'validation'], loc='uptrainLengthper left')
-  pyplot.legend(['train loss'], loc='upper left')
+    pyplot.legend(['train', 'validation'], loc='uptrainLengthper left')
+    pyplot.legend(['train loss'], loc='upper left')
 
-  pyplot.show()
+    pyplot.show()
 
 
 #Fetches the dataset
 def generateData(n_pictures):
     #TODO Get picture data
+    training_images, training_labels_encoded, \
+        val_images, val_labels_encoded = getData.main()
+    print(training_images)
+    sys.exit(0)
 
 
 #The network model to be used
@@ -75,7 +81,7 @@ def trainModel(n_pictures, epochs=30, batchsize=100):
 
     #Generates class predictions and checks accuracy
     scores = network.evaluate(X_test, Y_test, verbose=0)
-	print("%s: %.2f%%" % (network.metrics_names[1], network[1]*100))
+    print("%s: %.2f%%" % (network.metrics_names[1], network[1]*100))
 
 
 
@@ -92,4 +98,4 @@ def main():
 
 
 if __name__ == "__main__":
-  main()
+    main()
