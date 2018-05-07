@@ -10,6 +10,15 @@ import zipfile
 import requests, io
 from sklearn import preprocessing
 
+'''
+Code inspired from:
+* Title: Tiny Imagenet Visual Recognition Challenge
+* Author: seshuad
+* Date: 2017-08-25
+* Code version: 0.1
+* Availability: https://github.com/seshuad/IMagenet/blob/master/TinyImagenet.ipynb
+'''
+
 # Set global parameters
 BATCH_SIZE = 20
 NUM_CLASSES = 200
@@ -152,19 +161,20 @@ def reset_graph(seed=42):
     tf.set_random_seed(seed)
     np.random.seed(seed)
 
+def main():
+    download_images(IMAGES_URL)
+    training_images, training_labels, training_files = \
+    load_training_images(TRAINING_IMAGES_DIR, batch_size=BATCH_SIZE)
 
-download_images(IMAGES_URL)
-training_images, training_labels, training_files = \
-load_training_images(TRAINING_IMAGES_DIR, batch_size=BATCH_SIZE)
+    shuffle_index = np.random.permutation(len(training_labels))
+    training_images = training_images[shuffle_index]
+    training_labels = training_labels[shuffle_index]
+    training_files  = training_files[shuffle_index]
 
-shuffle_index = np.random.permutation(len(training_labels))
-training_images = training_images[shuffle_index]
-training_labels = training_labels[shuffle_index]
-training_files  = training_files[shuffle_index]
+    le = preprocessing.LabelEncoder()
+    training_le = le.fit(training_labels)
+    training_labels_encoded = training_le.transform(training_labels)
 
-le = preprocessing.LabelEncoder()
-training_le = le.fit(training_labels)
-training_labels_encoded = training_le.transform(training_labels)
-
-print ("First 30 Training Labels", training_labels_encoded[0:30])
-plot_objects(training_images[0:30])
+    print ("First 30 Training Labels", training_labels_encoded[0:30])
+    plot_objects(training_images[0:30])
+    return
