@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Ignore too large files
+tiny-imagenet-200
+
+# Mac files
+.DS_Store
+
 # C extensions
 *.so
 
