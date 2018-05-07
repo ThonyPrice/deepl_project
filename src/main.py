@@ -5,9 +5,10 @@
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation
 from sklearn.preprocessing import StandardScaler
+import keras
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import MinMaxScaler
-import numpy
+import numpy as np
 from math import sqrt
 import statistics
 from os import listdir
@@ -44,33 +45,50 @@ def generateData(n_pictures):
     #TODO Get picture data
     training_images, training_labels_encoded, \
         val_images, val_labels_encoded = getData.main()
-    print(training_images)
-    sys.exit(0)
+
+
+    return training_images, training_labels_encoded, val_images, val_labels_encoded
+    #print(training_images)
+    #sys.exit(0)
 
 
 #The network model to be used
 def network_model(dim):
     model = Sequential()
     model.add(Dense(40, input_dim=dim, kernel_initializer='normal', activation='relu'))
-    model.add(Dense(10, kernel_initializer='normal'), activation='softmax')
+    model.add(Dense(200, kernel_initializer='normal', activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
 
 #Trains the specified model
-def trainModel(n_pictures, epochs=30, batchsize=100):
+def trainModel(n_pictures, epochs_n=30, batchsize=100):
 
     #X pictures, Y classes.
-    X_train, Y_train, X_test, Y_test, X_val, Y_val = generateData(n_pictures)
+    X_train, Y_train, X_val, Y_val = generateData(n_pictures)
+
+    Y_train = keras.utils.to_categorical(Y_train, 200)
+    Y_val = keras.utils.to_categorical(Y_val, 200)
+    print(Y_train)
+
+    #print(X_train.shape)
+    #print(Y_train.shape)
+
+    #X_val = X_val.T
+    #X_train = X_train.T
+
 
     #TODO Scale the dataset. Some scaling options: See imports from sklearn.preprocessing
     #TODO Might need to reshape the data
 
-    earlyStop = callbacks.EarlyStopping(monitor='accuracy', min_delta=0.00005, patience=200, verbose=0, mode='max')
+    earlyStop = callbacks.EarlyStopping(monitor='accuracy', min_delta=0.00005, patience=2000, verbose=0, mode='max')
 
-    network = network_model(X_train[:,0])
+    #print(X_train[:,0].shape)
+    network = network_model(X_train[0,:].shape[0])
+    X_train = np.divide(X_train, 255)
+    X_val = np.divide(X_val, 255)
 
-    networkHistory = network.fit(X_train, Y_train, verbose=0, epochs=epochs_n, batch_size=batchsize, callbacks=[earlyStop], validation_data=[X_val, Y_val], shuffle=True)
+    networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=[earlyStop], validation_data=[X_val, Y_val], shuffle=True)
 
     #Plots the loss function of test and validation
     #plotLoss(networkHistory)
@@ -80,8 +98,8 @@ def trainModel(n_pictures, epochs=30, batchsize=100):
 
 
     #Generates class predictions and checks accuracy
-    scores = network.evaluate(X_test, Y_test, verbose=0)
-    print("%s: %.2f%%" % (network.metrics_names[1], network[1]*100))
+    scores = network.evaluate(X_val, Y_val, verbose=1)
+    #print("%s: %.2f%%" % (network.metrics_names[1], network[1]*100))
 
 
 
@@ -89,7 +107,7 @@ def trainModel(n_pictures, epochs=30, batchsize=100):
 def main():
 
     n_pictures = 500
-    epochs = 30
+    epochs = 200
     batchsize = 100
     trainModel(n_pictures, epochs, batchsize)
 
