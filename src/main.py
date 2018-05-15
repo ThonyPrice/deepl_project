@@ -3,7 +3,9 @@
 #Date last modified
 
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation
+from keras.layers import Dense, Dropout, Activation,  Conv2D, MaxPooling2D, Flatten
+from keras.preprocessing import image as image_utils
+
 from sklearn.preprocessing import StandardScaler
 import keras
 from sklearn.preprocessing import RobustScaler
@@ -23,6 +25,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import StratifiedKFold
+
+
+from matplotlib import pyplot as plt
 
 
 #Plots the loss function
@@ -61,34 +66,102 @@ def network_model(dim):
     return model
 
 
+def big_cnn_model(dim):
+    model = Sequential()
+
+    model.add(Conv2D(64, (3, 3), padding="same", input_shape=dim, activation='relu'))
+    model.add(Conv2D(64, (3, 3), padding="same",activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+
+    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
+    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    model.add(Conv2D(256, (3, 3), padding="same",activation='relu'))
+    model.add(Conv2D(256, (3, 3), padding="same",activation='relu'))
+    model.add(Conv2D(256, (3, 3), padding="same",activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
+    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
+    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
+    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
+    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096 , activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096 , activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(200, activation='softmax'))
+
+    model.compile(loss='categorical_crossentropy', optimizer='RMSprop', metrics=['accuracy'])
+
+    return model
+
+
+def cnn_model(dim):
+    model = Sequential()
+
+    model.add(Conv2D(64, (3, 3), padding="same", input_shape=dim, activation='relu'))
+    model.add(Conv2D(64, (3, 3), padding="same",activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+
+    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
+    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    model.add(Flatten())
+    model.add(Dense(1000 , activation='relu'))
+    model.add(Dropout(0.25))
+    model.add(Dense(1000 , activation='relu'))
+    model.add(Dropout(0.25))
+    model.add(Dense(200, activation='softmax'))
+
+    model.compile(loss='categorical_crossentropy', optimizer='RMSprop', metrics=['accuracy'])
+
+    return model
+
+def new_mode(dim):
+    return model
+
+
 #Trains the specified model
-def trainModel(n_pictures, epochs_n=30, batchsize=100):
+def trainModel(n_pictures, epochs_n=30, batchsize=256):
 
     #X pictures, Y classes.
     X_train, Y_train, X_val, Y_val = generateData(n_pictures)
 
+
+    X_train=X_train.reshape(4000, 64,64,3)
+    X_val=X_val.reshape(20, 64,64,3)
+
+    #plt.imshow(X_train[0])
+    #plt.show()
+
     Y_train = keras.utils.to_categorical(Y_train, 200)
     Y_val = keras.utils.to_categorical(Y_val, 200)
-    print(Y_train)
-
-    #print(X_train.shape)
-    #print(Y_train.shape)
 
     #X_val = X_val.T
     #X_train = X_train.T
 
+    earlyStop = callbacks.EarlyStopping(monitor='acc', min_delta=0.000005, patience=2000, verbose=0, mode='max')
 
-    #TODO Scale the dataset. Some scaling options: See imports from sklearn.preprocessing
-    #TODO Might need to reshape the data
-
-    earlyStop = callbacks.EarlyStopping(monitor='accuracy', min_delta=0.00005, patience=2000, verbose=0, mode='max')
-
-    #print(X_train[:,0].shape)
-    network = network_model(X_train[0,:].shape[0])
     X_train = np.divide(X_train, 255)
     X_val = np.divide(X_val, 255)
+    print(X_train.shape)
 
-    networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=[earlyStop], validation_data=[X_val, Y_val], shuffle=True)
+
+    network = cnn_model(( 64, 64, 3))
+
+
+    #networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
     #Plots the loss function of test and validation
     #plotLoss(networkHistory)
@@ -107,7 +180,7 @@ def trainModel(n_pictures, epochs_n=30, batchsize=100):
 def main():
 
     n_pictures = 500
-    epochs = 200
+    epochs = 30
     batchsize = 100
     trainModel(n_pictures, epochs, batchsize)
 
