@@ -1,5 +1,6 @@
 \documentclass{kthreport}
 
+\usepackage{hhline}
 \usepackage[parfill]{parskip}
 \usepackage{subcaption}
 
@@ -22,15 +23,18 @@ To thoroughly investigate the topic a CNN will be constructed in the most vanill
 
 \subsection{Evaluation architectures}
 
-The basis of the CNN architecture is inspired by \cite{NIPS2012_4824}, it is summarized in figure \ref{fig:architecture}. However, it was implemented on the full dataset which features images of resolution $224\times224\times3$ while our images are $64\times64\times3$. Inspired by \textbf{insert 3 reports here} we decided to test three configurations, summarized in \ref{table:configurations}.
+The basis of the CNN architecture is inspired by \cite{NIPS2012_4824}, it is summarized in figure \ref{fig:architecture}. However, it was implemented on the full dataset which features images of resolution $224\times224\times3$ while our images are $64\times64\times3$. Inspired by \textbf{insert 3 reports here} we decided to test three configurations, summarized in \ref{table:3_configurations}.
 
 \input{snippets/fig_architecture}
 
-Tests was run with \textbf{insert how tests were run, how data was split, validation size, etc.} The results of each architecture is preented in
+\input{snippets/3_configurations}
+
+
+Tests was run with \textbf{insert how tests were run, how data was split, validation size, etc.} The results of each architecture is presented in...
 
 \subsection{Initialization matters}
 
-Moving on with current architecture of the network we 
+Moving on with current architecture of the network we
 
 \subsection{Implementation specifics}
 
