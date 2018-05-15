@@ -159,9 +159,7 @@ def trainModel(n_pictures, epochs_n=30, batchsize=256):
 
 
     network = cnn_model(( 64, 64, 3))
-
-
-    #networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
+    networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
     #Plots the loss function of test and validation
     #plotLoss(networkHistory)
