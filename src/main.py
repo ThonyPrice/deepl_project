@@ -2,8 +2,8 @@
 #Names
 #Date last modified
 
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation,  Conv2D, MaxPooling2D, Flatten, BatchNormalization, AveragePooling2D
+from keras.models import Sequential, Model
+from keras.layers import Dense, Dropout, Activation,  Conv2D, MaxPooling2D, Flatten, BatchNormalization, AveragePooling2D, ZeroPadding2D, GlobalAveragePooling2D, GlobalMaxPooling2D
 from keras.preprocessing import image as image_utils
 
 from sklearn.preprocessing import StandardScaler
@@ -47,7 +47,6 @@ def plotLoss(trainedModel):
 
 #Fetches the dataset
 def generateData(n_pictures):
-    #TODO Get picture data
     training_images, training_labels_encoded, \
         val_images, val_labels_encoded = getData.main()
 
@@ -55,6 +54,9 @@ def generateData(n_pictures):
     return training_images, training_labels_encoded, val_images, val_labels_encoded
     #print(training_images)
     #sys.exit(0)
+
+
+
 
 
 #The network model to be used
@@ -128,57 +130,76 @@ def cnn_model(dim):
 
     return model
 
-def cnn_medium(dim):
+def vgg_net(dim):
     model = Sequential()
 
-    model.add(Conv2D(64, (7,7), padding="same", input_shape=dim))
+    #Conv layers, round 1
+    model.add(Conv2D(32, (2,2), padding="same", input_shape=dim))
     model.add(BatchNormalization())
-    model.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
     model.add(Activation('relu'))
 
-    model.add(Conv2D(64, (1, 1), padding="same",activation='relu'))
-    model.add(Conv2D(64, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(256, (1, 1), padding="same",activation='relu'))
+    model.add(Conv2D(32, (2,1), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+
+    model.add(Conv2D(32, (1,2), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+
+
+
 
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-    model.add(Conv2D(128, (1, 1), padding="same",activation='relu'))
-    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(512, (1, 1), padding="same",activation='relu'))
+
+
+    #Conv layers, round 2
+    model.add(Conv2D(48, (2,2), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+
+    model.add(Conv2D(48, (2,2), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+
+    model.add(Conv2D(48, (2,2), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+
+
+
+
 
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-    model.add(Conv2D(256, (1, 1), padding="same",activation='relu'))
-    model.add(Conv2D(256, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(1024, (1, 1), padding="same",activation='relu'))
 
-    model.add(AveragePooling2D(2,2))
+
+
+    #Conv layers, round 3
+    model.add(Conv2D(80, (2,2), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+
+    model.add(Conv2D(80, (2,2), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+
+    model.add(Conv2D(80, (2,2), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+
+
+
+
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Flatten())
-    model.add(Dense(1000))
-    model.add(Dropout(0.25))
     model.add(Dense(200, activation='softmax'))
 
-    model.compile(loss='categorical_crossentropy', optimizer='RMSprop', metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
 
-
-
-
-
-def resNet18(dim):
-    '''
-    Conv2D
-    batch_norm
-    relu
-    Conv2D
-    BN
-    relu
-
-
-
-    '''
 
 def new_mode(dim):
     return model
@@ -211,7 +232,7 @@ def trainModel(n_pictures, epochs_n=30, batchsize=256):
     print(X_val.shape)
 
 
-    network = cnn_medium((64, 64, 3))
+    network = vgg_net((64, 64, 3))
     networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
     #Plots the loss function of test and validation
@@ -223,8 +244,6 @@ def trainModel(n_pictures, epochs_n=30, batchsize=256):
 
     #Generates class predictions and checks accuracy
     scores = network.evaluate(X_val, Y_val, verbose=1)
-    #print("%s: %.2f%%" % (network.metrics_names[1], network[1]*100))
-
 
 
 
@@ -241,3 +260,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+'''
+
+from keras.layers import Conv2D, Input
+
+# input tensor for a 3-channel 64x64 image
+x = Input(shape=(64, 64, 3))
+# 3x3 conv with 3 output channels (same as input channels)
+y = Conv2D(3, (3, 3), padding='same')(x)
+# this returns x + y.
+z = keras.layers.add([x, y])
+
+
+'''
