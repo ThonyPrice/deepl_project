@@ -10,15 +10,29 @@
   A & B & C
   \\\hline
 
-  X weight layers & Y weight layers & Z weight layers
+  15 weight layers & Y weight layers & Z weight layers
   \\\hhline{|=|=|=|}
 
   \multicolumn{3}{|c|}{input ($64\times64\;RGB\;image$)}
   \\\hline
 
-  conv3-64 & conv3-64 & conv3-64
+  conv2D-32, 2x2, BN, ReLu & conv3-64 & conv3-64 \\
+  conv2D-32, 2x1, BN, ReLu \\
+  conv2D-32, 1x2, BN, ReLu  \\ \hline
+  MaxPooling, 2x2
   \\\hline
-
+  conv2D-48, 2x2, BN, ReLu \\
+  conv2D-48, 2x2, BN, ReLu \\
+  conv2D-48, 2x2, BN, ReLu\\ \hline
+  MaxPooling, 2x2
+  \\\hline
+  conv2D-80, 2x2, BN, ReLu \\
+  conv2D-80, 2x2, BN, ReLu \\
+  conv2D-80, 2x2, BN, ReLu\\ \hline
+  MaxPooling, 2x2
+  \\\hline
+  FC-200, SoftMax \\
+  \hline
   \end{tabular}
 \caption[]
 {\small
