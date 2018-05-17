@@ -12,7 +12,7 @@ import matplotlib
 import numpy as np
 import pandas as pd
 from scipy import ndimage
-from scipy.misc import toimage
+# from scipy.misc import toimage
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import tensorflow as tf
@@ -142,7 +142,7 @@ def plot_objects(instances, images_per_row=10, **options):
         rimages = images[row * images_per_row : (row + 1) * images_per_row]
         row_images.append(np.concatenate(rimages, axis=1))
     image = np.concatenate(row_images, axis=0)
-    plt.imshow(toimage(image), **options)
+    plt.imshow(image, **options)
     plt.axis("off")
     plt.show()
 
