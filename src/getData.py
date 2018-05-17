@@ -7,6 +7,8 @@ Code inspired from:
 * Availability: https://github.com/seshuad/IMagenet/blob/master/TinyImagenet.ipynb
 '''
 
+# TODO: Make train size dependend on n_pictures
+
 import os
 import matplotlib
 import numpy as np
