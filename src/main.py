@@ -199,6 +199,45 @@ def vgg_net(dim):
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
+def vgg_net16b(dim):
+    model = Sequential()
+
+    #Conv layers, round 1
+    model.add(Conv2D(64, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(Conv2D(64, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(128, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(Conv2D(128, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(256, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(Conv2D(256, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(Conv2D(256, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(Dropout(0.75))
+
+    model.add(Dense(4096))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(Dropout(0.75))
+
+    model.add(Dense(200, activation='softmax'))
+
+    model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
+    return model
+
 
 
 def new_mode(dim):
@@ -206,7 +245,7 @@ def new_mode(dim):
 
 
 #Trains the specified model
-def trainModel(n_pictures, epochs_n=30, batchsize=256):
+def trainModel(n_pictures, epochs_n, batchsize):
 
     #X pictures, Y classes.
     X_train, Y_train, X_val, Y_val = generateData(n_pictures)
@@ -232,7 +271,7 @@ def trainModel(n_pictures, epochs_n=30, batchsize=256):
     print(X_val.shape)
 
 
-    network = vgg_net((64, 64, 3))
+    network = vgg_net16((64, 64, 3))
     networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
     #Plots the loss function of test and validation
@@ -249,7 +288,7 @@ def trainModel(n_pictures, epochs_n=30, batchsize=256):
 
 def main():
 
-    n_pictures = 500
+    n_pictures = 10
     epochs = 10
     batchsize = 100
     trainModel(n_pictures, epochs, batchsize)
