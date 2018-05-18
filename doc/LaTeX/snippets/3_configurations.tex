@@ -1,37 +1,44 @@
 \medskip
 \begin{table}[htbp]
 \begin{center}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
 
   \hline
-  \multicolumn{3}{|c|}{ConvNet Configuration} \\
+  \multicolumn{4}{|c|}{ConvNet Configuration} \\
   \hline
 
-  A & B & C
+  A & B & C & D
   \\\hline
 
-  15 weight layers & Y weight layers & Z weight layers
-  \\\hhline{|=|=|=|}
+  SGD/adam, RUI & adam, BN, RUI &  adam, Dropout, RUI & adam, Dropout, RUI, BN
+  \\\hhline{|=|=|=|=|}
 
-  \multicolumn{3}{|c|}{input ($64\times64\times3\;RGB\;image$)}
+  \multicolumn{4}{|c|}{input ($64\times64\times3\;RGB\;image$)}
   \\\hline
 
-  conv2D-32, 2x2, BN, ReLu & conv3-64 & conv3-64 \\
-  conv2D-32, 2x1, BN, ReLu \\
-  conv2D-32, 1x2, BN, ReLu  \\ \hline
-  MaxPooling, 2x2
+  conv-32, 2x2, ReLu & conv-32, 2x2, ReLu, BN & conv-32, 2x2, ReLu & conv-32, 2x2, ReLu, BN \\
+  conv-32, 2x1, ReLu & conv-32, 2x1, ReLu, BN & conv-32, 2x1, ReLu & conv-32, 2x1, ReLu, BN \\
+  conv-32, 1x2, ReLu & conv-32, 1x2, ReLu, BN & conv-32, 1x2, ReLu & conv-32, 1x2, ReLu, BN \\
+  \hline
+  MaxPooling, 2x2    & MaxPooling, 2x2    & MaxPooling, 2x2    & MaxPooling, 2x2 \\
+  \hline
+  conv-48, 2x2, ReLu & conv-48, 2x2, ReLu, BN & conv-48, 2x2, ReLu & conv-48, 2x2, ReLu, BN \\
+  conv-48, 2x2, ReLu & conv-48, 2x2, ReLu, BN & conv-48, 2x2, ReLu & conv-48, 2x2, ReLu, BN \\
+  conv-48, 2x2, ReLu & conv-48, 2x2, ReLu, BN & conv-48, 2x2, ReLu & conv-48, 2x2, ReLu, BN \\
+  \hline
+  MaxPooling, 2x2    & MaxPooling, 2x2    & MaxPooling, 2x2    & MaxPooling, 2x2 \\
+  \hline
+  conv-80, 2x2, ReLu & conv-80, 2x2, ReLu, BN & conv-80, 2x2, ReLu & conv-80, 2x2, ReLu, BN \\
+  conv-80, 2x2, ReLu & conv-80, 2x2, ReLu, BN & conv-80, 2x2, ReLu & conv-80, 2x2, ReLu, BN \\
+  conv-80, 2x2, ReLu & conv-80, 2x2, ReLu, BN & conv-80, 2x2, ReLu & conv-80, 2x2, ReLu, BN \\
+  \hline
+  MaxPooling, 2x2    & MaxPooling, 2x2        & MaxPooling, 2x2    & MaxPooling, 2x2 \\
+  \hline
+  FC-2048, ReLu      & FC-2048, ReLu, BN      & FC-2048, ReLu      & FC-2048, ReLu, BN
   \\\hline
-  conv2D-48, 2x2, BN, ReLu \\
-  conv2D-48, 2x2, BN, ReLu \\
-  conv2D-48, 2x2, BN, ReLu\\ \hline
-  MaxPooling, 2x2
-  \\\hline
-  conv2D-80, 2x2, BN, ReLu \\
-  conv2D-80, 2x2, BN, ReLu \\
-  conv2D-80, 2x2, BN, ReLu\\ \hline
-  MaxPooling, 2x2
-  \\\hline
-  FC-200, SoftMax \\
+  FC-200, SoftMax    & FC-200, SoftMax        & Dropout 0.3        & Dropout 0.3   \\
+  \hline
+                    &                         & FC-200, SoftMax    & FC-200, SoftMax \\
   \hline
   \end{tabular}
 \caption[]

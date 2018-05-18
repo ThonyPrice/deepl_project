@@ -114,16 +114,21 @@ def trainModel(n_train, n_val, epochs_n, batchsize, model_list):
 def main():
 
     '''n_train is the number of images per class. Max 500. Total training samples = n_train * 200.'''
-    n_train = 3
+    n_train = 500
 
     '''n_val is the total number of validation images. Max 10000.'''
-    n_val = 10
+    n_val = 10000
 
     epochs = 2
-    batchsize = 100
+    batchsize = 10
     model_list = [
-        ("sgd", ["vgg_z", (64, 64, 3), "sgd", 0.3]),
-        ("adam", ["vgg_z", (64, 64, 3), "adam", 0])
+        # Name,             ["architect", (res),   "solver", BN?, dropout, init
+        ("sgd",             ["vgg_z", (64, 64, 3), "sgd",  False,   0, 'random_uniform']),
+        ("adam",            ["vgg_z", (64, 64, 3), "adam", False,   0, 'random_uniform']),
+        ("adam_bn",         ["vgg_z", (64, 64, 3), "adam", True,    0, 'random_uniform']),
+        ("adam_drop",       ["vgg_z", (64, 64, 3), "adam", False, 0.3, 'random_uniform']),
+        ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "adam", True,  0.3, 'random_uniform']),
+        ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "adam", True,  0.3, 'he_normal'])
     ]
     trainModel(n_train, n_val, epochs, batchsize, model_list)
 
