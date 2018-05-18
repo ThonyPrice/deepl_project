@@ -172,49 +172,27 @@ def reset_graph(seed=42):
     tf.set_random_seed(seed)
     np.random.seed(seed)
 
-def main(n_train, n_val):
+def get_val_data():
+    return val_images, val_labels_encoded
 
-    download_images(IMAGES_URL)
+download_images(IMAGES_URL)
+training_images, training_labels, training_files = load_training_images(TRAINING_IMAGES_DIR, batch_size=BATCH_SIZE)
 
-    training_images, training_labels, training_files = \
-    load_training_images(TRAINING_IMAGES_DIR, batch_size=n_train)
+shuffle_index = np.random.permutation(len(training_labels))
+training_images = training_images[shuffle_index]
+training_labels = training_labels[shuffle_index]
+training_files  = training_files[shuffle_index]
 
-    print("images loaded")
+le = preprocessing.LabelEncoder()
+training_le = le.fit(training_labels)
+training_labels_encoded = training_le.transform(training_labels)
 
-    shuffle_index = np.random.permutation(len(training_labels))
-    training_images = training_images[shuffle_index]
-    training_labels = training_labels[shuffle_index]
-    training_files  = training_files[shuffle_index]
+# print ("First 30 Training Labels", training_labels_encoded[0:30])
+# plot_objects(training_images[0:30])
 
-    print("images shuffled")
+val_data = pd.read_csv(VAL_IMAGES_DIR + 'val_annotations.txt', sep='\t', header=None, names=['File', 'Class', 'X', 'Y', 'H', 'W'])
+val_images, val_labels, val_files = load_validation_images(VAL_IMAGES_DIR, val_data, batch_size=BATCH_SIZE)
+val_labels_encoded = training_le.transform(val_labels)
 
-    le = preprocessing.LabelEncoder()
-    training_le = le.fit(training_labels)
-    training_labels_encoded = training_le.transform(training_labels)
-
-    print("lable encoder done")
-
-
-    # print ("First 30 Training Labels", training_labels_encoded[0:30])
-    #plot_objects(training_images[0:30])
-
-
-    val_data = pd.read_csv(VAL_IMAGES_DIR + 'val_annotations.txt', sep='\t', header=None, names=['File', 'Class', 'X', 'Y', 'H', 'W'])
-    print("read val images")
-    val_images, val_labels, val_files = load_validation_images(VAL_IMAGES_DIR, val_data, batch_size=n_val)
-    print("loaded val img")
-    val_labels_encoded = training_le.transform(val_labels)
-
-
-    print("val transformed")
-
-    # plot_objects(val_images[0:30])
-    # print (val_labels_encoded[0:30])
-
-    return (
-        training_images[:n_train*200], training_labels_encoded[:n_train*200],
-        val_images[:n_val], val_labels_encoded[:n_val]
-    )
-
-if __name__ == '__main__':
-    main()
+# plot_objects(val_images[0:30])
+# print (val_labels_encoded[0:30])
