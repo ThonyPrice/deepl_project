@@ -60,7 +60,7 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
     print(X_val.shape)
     print(Y_val.shape)
 
-    X_train=X_train.reshape(n_train, 64,64,3)
+    X_train=X_train.reshape(n_train*200, 64,64,3)
     X_val=X_val.reshape(n_val, 64,64,3)
 
 
@@ -94,26 +94,16 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
 
 
 
-    with open('/trainHistoryDict', 'wb') as file_pi:
+    with open('trainHistoryDict/data_pickle.pickle', 'wb') as file_pi:
         pickle.dump(networkHistory.history, file_pi)
 
-    #n_train is the number of images per class. Max 500. Total training samples = n_train * 200.
-    n_train = 200
-
-    #n_val is the total number of validation images. Max 10000.
-    n_val = 100
 
     '''Plots the loss function of test and validation'''
     #plotLoss(networkHistory)
 
-    epochs = 5
-    batchsize = 100
-    trainModel(n_train, n_val, epochs, batchsize)
-
 
     '''Generates class predictions(if doing things manually, etc for ensemble)'''
     #predictions = network.predict(X_test, batch_size=100, verbose=0)
-
 
 
     '''Generates class predictions and checks accuracy'''
@@ -123,12 +113,12 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
 def main():
 
     '''n_train is the number of images per class. Max 500. Total training samples = n_train * 200.'''
-    n_train = 20
+    n_train = 3
 
     '''n_val is the total number of validation images. Max 10000.'''
     n_val = 10
 
-    epochs = 10
+    epochs = 2
     batchsize = 100
     trainModel(n_train, n_val, epochs, batchsize)
 
