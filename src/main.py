@@ -52,7 +52,7 @@ def generateData(n_train, n_val):
 
 
 '''Trains the specified model'''
-def trainModel(n_train, n_val, epochs_n, batchsize):
+def trainModel(n_train, n_val, epochs_n, batchsize, model_list):
     #X pictures, Y classes.
     X_train, Y_train, X_val, Y_val = generateData(n_train, n_val)
     print(X_train.shape)
@@ -60,7 +60,7 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
     print(X_val.shape)
     print(Y_val.shape)
 
-    X_train=X_train.reshape(n_train, 64,64,3)
+    X_train=X_train.reshape(n_train*200, 64,64,3)
     X_val=X_val.reshape(n_val, 64,64,3)
 
 
@@ -77,54 +77,55 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
 
 
 
+
     '''Data generator for data agumentation'''
     #dataGenerator = image.ImageDataGenerator()
     #dataGenerator.fit(X_train)
 
+    for m_name, params in model_list:
 
-    network = getModel("vgg_z", (64, 64, 3))
-
-
-    '''Use when using default mean of training'''
-    networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
+        network = getModel(*params)
 
 
+        '''Use when using default mean of training'''
+        networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
-    '''Use when using data augmentation'''
-    #networkHistory = network.fit_generator(dataGenerator.flow(X_train, Y_train, batch_size=batchsize), steps_per_epoch=n_train/batchsize, epochs=epochs_n)
-
-
-
-    with open('trainHistoryDict/', 'wb') as file_pi:
-        pickle.dump(networkHistory.history, file_pi)
+        '''Use when using data augmentation'''
+        #networkHistory = network.fit_generator(dataGenerator.flow(X_train, Y_train, batch_size=batchsize), steps_per_epoch=n_train/batchsize, epochs=epochs_n)
 
 
 
-    '''Plots the loss function of test and validation'''
-    #plotLoss(networkHistory)
+        with open('trainHistoryDict/' + m_name + '.pickle', 'wb') as file_pi:
+            pickle.dump(networkHistory.history, file_pi)
 
 
-
-    '''Generates class predictions(if doing things manually, etc for ensemble)'''
-    #predictions = network.predict(X_test, batch_size=100, verbose=0)
-
+        '''Plots the loss function of test and validation'''
+        #plotLoss(networkHistory)
 
 
-    '''Generates class predictions and checks accuracy'''
-    scores = network.evaluate(X_val, Y_val, verbose=1)
+        '''Generates class predictions(if doing things manually, etc for ensemble)'''
+        #predictions = network.predict(X_test, batch_size=100, verbose=0)
+
+
+        '''Generates class predictions and checks accuracy'''
+        scores = network.evaluate(X_val, Y_val, verbose=1)
 
 
 def main():
 
     '''n_train is the number of images per class. Max 500. Total training samples = n_train * 200.'''
-    n_train = 20
+    n_train = 3
 
     '''n_val is the total number of validation images. Max 10000.'''
     n_val = 10
 
-    epochs = 10
+    epochs = 2
     batchsize = 100
-    trainModel(n_train, n_val, epochs, batchsize)
+    model_list = [
+        ("sgd", ["vgg_z", (64, 64, 3), "sgd", 0.3]),
+        ("adam", ["vgg_z", (64, 64, 3), "adam", 0])
+    ]
+    trainModel(n_train, n_val, epochs, batchsize, model_list)
 
 
 if __name__ == "__main__":
