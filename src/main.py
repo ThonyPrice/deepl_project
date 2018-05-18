@@ -90,7 +90,7 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
     print(X_val.shape)
 
 
-    network = getModel("vgg_z", (64, 64, 3))
+    network = getModel("vgg_z", (64, 64, 3), opt = "sgd", dropout = 0.3)
 
     networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
@@ -109,13 +109,13 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
 def main():
 
     #n_train is the number of images per class. Max 500. Total training samples = n_train * 200.
-    n_train = 500
+    n_train = 200
 
     #n_val is the total number of validation images. Max 10000.
-    n_val = 10000
+    n_val = 100
 
 
-    epochs = 10
+    epochs = 5
     batchsize = 100
     trainModel(n_train, n_val, epochs, batchsize)
 
