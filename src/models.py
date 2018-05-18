@@ -2,18 +2,18 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Activation,  Conv2D, MaxPooling2D, Flatten, BatchNormalization, AveragePooling2D, ZeroPadding2D, GlobalAveragePooling2D, GlobalMaxPooling2D
 from keras.preprocessing import image as image_utils
 
-def getModel(modelString, dim):
+def getModel(modelString, dim, opt = "adam", dropout = 0):
     allModels = ['vgg_z']
 
     if (modelString == "vgg_z"):
-        return vgg_z(dim)
+        return vgg_z(dim, opt = "adam", dropout = 0)
 
     elif (modelString == "big_cnn_model"):
         return big_cnn_model(dim)
 
 
 
-def vgg_z(dim):
+def vgg_z(dim, opt = "adam", dropout = 0):
     model = Sequential()
 
     #Conv layers, round 1
@@ -60,10 +60,20 @@ def vgg_z(dim):
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Flatten())
+    model.add(Dense(2048))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(Dropout(dropout))
+
     model.add(Dense(200, activation='softmax'))
 
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
     return model
+
+
+
+
 
 
 
