@@ -201,8 +201,6 @@ def vgg_net(dim):
 
 
 
-def new_mode(dim):
-    return model
 
 
 #Trains the specified model
