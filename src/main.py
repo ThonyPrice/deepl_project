@@ -47,21 +47,14 @@ def generateData(n_pictures):
     return training_images, training_labels_encoded, val_images, val_labels_encoded
 
 
-
-
-
-
-
-#Trains the specified model
+# Trains the specified model
 def trainModel(n_train, n_val, epochs_n, batchsize):
-
     #X pictures, Y classes.
     X_train, Y_train, X_val, Y_val = generateData(n_train, n_val)
     print(X_train.shape)
     print(Y_train.shape)
     print(X_val.shape)
     print(Y_val.shape)
-
 
     X_train=X_train.reshape(n_train, 64,64,3)
     X_val=X_val.reshape(n_val, 64,64,3)
@@ -82,9 +75,7 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
     print(X_train.shape)
     print(X_val.shape)
 
-
     network = getModel("vgg_z", (64, 64, 3))
-
     networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
     with open('/trainHistoryDict', 'wb') as file_pi:
@@ -96,32 +87,23 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
     #Generates class predictions
     #predictions = network.predict(X_test, batch_size=100, verbose=0)
 
-
     #Generates class predictions and checks accuracy
     scores = network.evaluate(X_val, Y_val, verbose=1)
 
 
-
 def main():
-
     #n_train is the number of images per class. Max 500. Total training samples = n_train * 200.
     n_train = 500
-
     #n_val is the total number of validation images. Max 10000.
     n_val = 10000
-
 
     epochs = 10
     batchsize = 100
     trainModel(n_train, n_val, epochs, batchsize)
 
 
-
-
-
 if __name__ == "__main__":
     main()
-
 
 
 '''
