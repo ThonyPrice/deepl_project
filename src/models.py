@@ -67,15 +67,6 @@ def vgg_z(dim):
 
 
 
-#The network model to be used
-def network_model(dim):
-    model = Sequential()
-    model.add(Dense(40, input_dim=dim, kernel_initializer='normal', activation='relu'))
-    model.add(Dense(200, kernel_initializer='normal', activation='softmax'))
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    return model
-
-
 def big_cnn_model(dim):
     model = Sequential()
 
@@ -138,60 +129,6 @@ def cnn_model(dim):
 
     return model
 
-def vgg_net(dim):
-    model = Sequential()
-
-    #Conv layers, round 1
-    model.add(Conv2D(32, (2,2), padding="same", input_shape=dim))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(32, (2,1), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(32, (1,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    #Conv layers, round 2
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    #Conv layers, round 3
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Flatten())
-    model.add(Dense(200, activation='softmax'))
-
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    return model
 
 def vgg_net16b(dim):
     model = Sequential()
