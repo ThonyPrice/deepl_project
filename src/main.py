@@ -1,44 +1,49 @@
-#Deep learning project DD2424
-#Names
+# Deep learning project DD2424
+# W. Skagerstrom, N. Lindqvist, T. Price
 #Date last modified
 
+<<<<<<< HEAD
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Activation,  Conv2D, MaxPooling2D, Flatten, BatchNormalization, AveragePooling2D, ZeroPadding2D, GlobalAveragePooling2D, GlobalMaxPooling2D
 from keras.preprocessing import image
 from sklearn.preprocessing import StandardScaler
-import keras
-from sklearn.preprocessing import RobustScaler
-from sklearn.preprocessing import MinMaxScaler
-import numpy as np
-from math import sqrt
-import statistics
-from os import listdir
-from keras import callbacks, backend
-from pandas import read_csv
-import os
-import sys
-import matplotlib.pyplot as pyplot
+=======
 import getData
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import RobustScaler
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import StratifiedKFold
+>>>>>>> a0675f450fd186467db8d1ec0dc85e08f57d7d86
+import keras
+import os
+import numpy as np
+import matplotlib.pyplot as pyplot
+import pickle
+import statistics
+import sys
+
+from math import sqrt
 from matplotlib import pyplot as plt
-from models import *
+from os import listdir
+from pandas import read_csv
+from keras import callbacks, backend
+
+from keras.models import Sequential, Model
+from keras.layers import (
+    Dense, Dropout, Activation, Conv2D, MaxPooling2D, Flatten,
+    BatchNormalization, AveragePooling2D, ZeroPadding2D,
+    GlobalAveragePooling2D, GlobalMaxPooling2D
+)
+from keras.preprocessing import image as image_utils
+from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
+from sklearn.model_selection import StratifiedKFold
 
 
 '''Plots the loss function'''
 def plotLoss(trainedModel):
     pyplot.plot(trainedModel.history['loss'])
     pyplot.plot(trainedModel.history['val_loss'])
-
     pyplot.title('model loss')
     pyplot.xlabel('epoch')
     pyplot.ylabel('loss')
-
     pyplot.legend(['train', 'validation'], loc='uptrainLengthper left')
     pyplot.legend(['train loss'], loc='upper left')
-
     pyplot.show()
 
 
@@ -53,14 +58,12 @@ def generateData(n_train, n_val):
 
 '''Trains the specified model'''
 def trainModel(n_train, n_val, epochs_n, batchsize):
-
     #X pictures, Y classes.
     X_train, Y_train, X_val, Y_val = generateData(n_train, n_val)
     print(X_train.shape)
     print(Y_train.shape)
     print(X_val.shape)
     print(Y_val.shape)
-
 
     X_train=X_train.reshape(n_train, 64,64,3)
     X_val=X_val.reshape(n_val, 64,64,3)
@@ -78,11 +81,10 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
     print(X_val.shape)
 
 
+
     '''Data generator for data agumentation'''
     #dataGenerator = image.ImageDataGenerator()
     #dataGenerator.fit(X_train)
-
-
 
 
     network = getModel("vgg_z", (64, 64, 3))
@@ -98,19 +100,24 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
 
 
 
+
+    with open('/trainHistoryDict', 'wb') as file_pi:
+        pickle.dump(networkHistory.history, file_pi)
+
+
+
     '''Plots the loss function of test and validation'''
     #plotLoss(networkHistory)
 
 
 
-    '''Generates class predictions'''
+    '''Generates class predictions(if doing things manually, etc for ensemble)'''
     #predictions = network.predict(X_test, batch_size=100, verbose=0)
 
 
 
     '''Generates class predictions and checks accuracy'''
     scores = network.evaluate(X_val, Y_val, verbose=1)
-
 
 
 def main():
@@ -121,13 +128,9 @@ def main():
     '''n_val is the total number of validation images. Max 10000.'''
     n_val = 10000
 
-
     epochs = 10
     batchsize = 100
     trainModel(n_train, n_val, epochs, batchsize)
-
-
-
 
 
 if __name__ == "__main__":
