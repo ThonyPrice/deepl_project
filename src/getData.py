@@ -56,6 +56,9 @@ def load_training_images(image_dir, batch_size=500):
     names = []
     labels = []
 
+    print("in load traning image")
+
+
     # Loop through all the types directories
     for type in os.listdir(image_dir):
         if os.path.isdir(image_dir + type + '/images/'):
@@ -83,11 +86,11 @@ def load_training_images(image_dir, batch_size=500):
     return (images, np.asarray(labels), np.asarray(names))
 
 def get_label_from_name(data, name):
-    for idx, row in data.iterrows():
-        if (row['File'] == name):
-            return row['Class']
+    x = int(name.replace("val_", "").replace(".JPEG",""))
+    row = data.iloc[x]
 
-    return None
+    return row['Class']
+
 
 
 def load_validation_images(testdir, validation_data, batch_size=NUM_VAL_IMAGES):
@@ -101,8 +104,12 @@ def load_validation_images(testdir, validation_data, batch_size=NUM_VAL_IMAGES):
     # Loop through all the images of a val directory
     batch_index = 0;
 
+    print("entering for-loop")
 
+    i = 1
     for image in val_images:
+        print(i)
+        i += 1
         image_file = os.path.join(testdir, 'images/', image)
         #print (testdir, image_file)
 
@@ -117,6 +124,7 @@ def load_validation_images(testdir, validation_data, batch_size=NUM_VAL_IMAGES):
 
         if (batch_index >= batch_size):
             break;
+
 
     print ("Loaded Validation images ", image_index)
     return (images, np.asarray(labels), np.asarray(names))
@@ -167,17 +175,24 @@ def reset_graph(seed=42):
 def main(n_train, n_val):
 
     download_images(IMAGES_URL)
+
     training_images, training_labels, training_files = \
     load_training_images(TRAINING_IMAGES_DIR, batch_size=n_train)
+
+    print("images loaded")
 
     shuffle_index = np.random.permutation(len(training_labels))
     training_images = training_images[shuffle_index]
     training_labels = training_labels[shuffle_index]
     training_files  = training_files[shuffle_index]
 
+    print("images shuffled")
+
     le = preprocessing.LabelEncoder()
     training_le = le.fit(training_labels)
     training_labels_encoded = training_le.transform(training_labels)
+
+    print("lable encoder done")
 
 
     # print ("First 30 Training Labels", training_labels_encoded[0:30])
@@ -185,8 +200,14 @@ def main(n_train, n_val):
 
 
     val_data = pd.read_csv(VAL_IMAGES_DIR + 'val_annotations.txt', sep='\t', header=None, names=['File', 'Class', 'X', 'Y', 'H', 'W'])
+    print("read val images")
     val_images, val_labels, val_files = load_validation_images(VAL_IMAGES_DIR, val_data, batch_size=n_val)
+    print("loaded val img")
     val_labels_encoded = training_le.transform(val_labels)
+
+
+    print("val transformed")
+
     # plot_objects(val_images[0:30])
     # print (val_labels_encoded[0:30])
 
