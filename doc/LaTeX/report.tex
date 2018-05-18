@@ -16,7 +16,7 @@
 
 This report is our final piece of work in the course DD2424, Deep Learning in Data Science. The overarching purpose is investigating convolutional neural networks (CNN's) while applying knowledge and techniques which we've acquired in during the course.
 
-To thoroughly investigate the topic a CNN will be constructed in the most vanilla way possible. Different architectures is compared to another before moving on with one which performs better in terms of accuracy. In turns the network will be optimized by more sophisticated initialization, changing activation functions and dropout layers. Each modification and effect will be analyzed. Lastly, the results is discussed on their own and in context of other imageNet classifiers.
+To thoroughly investigate the topic a CNN will be constructed in the most vanilla way possible. Different architectures is compared to another before moving on with one which performs better in terms of accuracy. In turns the network will be optimized by more sophisticated initialization, changing activation functions and additional additional optimization and regularization such as dropout and batch normalization. The effect of each modification will be documented and analyzed. Lastly, the results is discussed on their own and in context of other imageNet classifiers.
 
 
 \section{Implementing a CNN}
@@ -38,7 +38,13 @@ Moving on with current architecture of the network we
 
 \subsection{Implementation specifics}
 
-The stack for implementation consisted of Python, Keras, etc. The test was run on \textbf{[insert hardware]}.
+The network was written and implemented in Python 3.5, using the Keras Framework which runs on top of Tensorflow. Numpy was used for data management and Matplotlib to create the graphs. To assist in training and evaluating the networks, we used Google Cloud services for computation power. The specifications of the hardware used was:
+\begin{itemize}
+\item GPU
+\item CPU
+\item RAM
+\item Disk space
+\end{itemize}
 
 
 \subsection{First important subtopic}

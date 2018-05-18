@@ -2,66 +2,79 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Activation,  Conv2D, MaxPooling2D, Flatten, BatchNormalization, AveragePooling2D, ZeroPadding2D, GlobalAveragePooling2D, GlobalMaxPooling2D
 from keras.preprocessing import image as image_utils
 
-def getModel(modelString, dim, opt = "adam", dropout = 0):
+def getModel(modelString, dim, opt = "adam", BN = False, dropout = 0, initializer = 'random_uniform'):
     allModels = ['vgg_z']
 
     if (modelString == "vgg_z"):
-        return vgg_z(dim, opt = "adam", dropout = 0)
+        return vgg_z(dim, opt, BN, dropout, initializer)
 
     elif (modelString == "big_cnn_model"):
         return big_cnn_model(dim)
 
 
 
-def vgg_z(dim, opt = "adam", dropout = 0):
+def vgg_z(dim, opt, BN, dropout, initializer):
     model = Sequential()
+
+    if BN:
+        do_BN = lambda : model.add(BatchNormalization())
+    else:
+        do_BN = lambda : None
 
     #Conv layers, round 1
     model.add(Conv2D(32, (2,2), padding="same", input_shape=dim))
-    model.add(BatchNormalization())
+    do_BN()
     model.add(Activation('relu'))
     model.add(Conv2D(32, (2,1), padding="same"))
-    model.add(BatchNormalization())
+    do_BN()
     model.add(Activation('relu'))
     model.add(Conv2D(32, (1,2), padding="same"))
-    model.add(BatchNormalization())
+    do_BN()
     model.add(Activation('relu'))
 
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     #Conv layers, round 2
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
+    model.add(Conv2D(48, (2,2), padding="same",
+                kernel_initializer = initializer))
+    do_BN()
     model.add(Activation('relu'))
 
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
+    model.add(Conv2D(48, (2,2), padding="same",
+                kernel_initializer = initializer))
+    do_BN()
     model.add(Activation('relu'))
 
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
+    model.add(Conv2D(48, (2,2), padding="same",
+                kernel_initializer = initializer))
+    do_BN()
     model.add(Activation('relu'))
 
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     #Conv layers, round 3
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
+    model.add(Conv2D(80, (2,2), padding="same",
+                kernel_initializer = initializer))
+    do_BN()
     model.add(Activation('relu'))
 
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
+    model.add(Conv2D(80, (2,2), padding="same",
+                kernel_initializer = initializer))
+    do_BN()
     model.add(Activation('relu'))
 
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
+    model.add(Conv2D(80, (2,2), padding="same",
+                kernel_initializer = initializer))
+    do_BN()
     model.add(Activation('relu'))
 
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Flatten())
-    model.add(Dense(2048))
-    model.add(BatchNormalization())
+    model.add(Dense(2048,
+                kernel_initializer=initializer))
+
+    do_BN()
     model.add(Activation('relu'))
     model.add(Dropout(dropout))
 
