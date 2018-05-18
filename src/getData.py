@@ -164,10 +164,11 @@ def reset_graph(seed=42):
     tf.set_random_seed(seed)
     np.random.seed(seed)
 
-def main():
+def main(n_train, n_val):
+
     download_images(IMAGES_URL)
     training_images, training_labels, training_files = \
-    load_training_images(TRAINING_IMAGES_DIR, batch_size=BATCH_SIZE)
+    load_training_images(TRAINING_IMAGES_DIR, batch_size=n_train)
 
     shuffle_index = np.random.permutation(len(training_labels))
     training_images = training_images[shuffle_index]
@@ -184,13 +185,14 @@ def main():
 
 
     val_data = pd.read_csv(VAL_IMAGES_DIR + 'val_annotations.txt', sep='\t', header=None, names=['File', 'Class', 'X', 'Y', 'H', 'W'])
-    val_images, val_labels, val_files = load_validation_images(VAL_IMAGES_DIR, val_data, batch_size=BATCH_SIZE)
+    val_images, val_labels, val_files = load_validation_images(VAL_IMAGES_DIR, val_data, batch_size=n_val)
     val_labels_encoded = training_le.transform(val_labels)
     # plot_objects(val_images[0:30])
     # print (val_labels_encoded[0:30])
+
     return (
-        training_images, training_labels_encoded,
-        val_images, val_labels_encoded
+        training_images[:n_train], training_labels_encoded[:n_train],
+        val_images[:n_val], val_labels_encoded[:n_val]
     )
 
 if __name__ == '__main__':
