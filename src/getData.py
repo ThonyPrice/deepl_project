@@ -191,7 +191,7 @@ def main(n_train, n_val):
     # print (val_labels_encoded[0:30])
 
     return (
-        training_images[:n_train], training_labels_encoded[:n_train],
+        training_images[:n_train*200], training_labels_encoded[:n_train*200],
         val_images[:n_val], val_labels_encoded[:n_val]
     )
 

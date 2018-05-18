@@ -27,6 +27,8 @@ from keras.preprocessing import image as image_utils
 from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
 from sklearn.model_selection import StratifiedKFold
 
+from models import *
+
 
 '''Plots the loss function'''
 def plotLoss(trainedModel):
@@ -87,9 +89,8 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
 
 
 
-    '''Use when using data augmentation''''
+    '''Use when using data augmentation'''
     #networkHistory = network.fit_generator(dataGenerator.flow(X_train, Y_train, batch_size=batchsize), steps_per_epoch=n_train/batchsize, epochs=epochs_n)
-
 
 
 
@@ -122,10 +123,10 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
 def main():
 
     '''n_train is the number of images per class. Max 500. Total training samples = n_train * 200.'''
-    n_train = 500
+    n_train = 20
 
     '''n_val is the total number of validation images. Max 10000.'''
-    n_val = 10000
+    n_val = 10
 
     epochs = 10
     batchsize = 100
