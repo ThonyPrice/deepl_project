@@ -49,44 +49,39 @@ def generateData(n_train, n_val):
 
     return training_images, training_labels_encoded, val_images, val_labels_encoded
 
-
-
-'''Trains the specified model'''
-def trainModel(n_train, n_val, epochs_n, batchsize, model_list):
-    #X pictures, Y classes.
-    X_train, Y_train, X_val, Y_val = generateData(n_train, n_val)
-    print(X_train.shape)
-    print(Y_train.shape)
-    print(X_val.shape)
-    print(Y_val.shape)
-
-    X_train=X_train.reshape(n_train*200, 64,64,3)
-    X_val=X_val.reshape(n_val, 64,64,3)
-
-
-    Y_train = keras.utils.to_categorical(Y_train, 200)
-    Y_val = keras.utils.to_categorical(Y_val, 200)
-
-
-
-
-    X_train = np.divide(X_train, 255)
-    X_val = np.divide(X_val, 255)
-    print(X_train.shape)
-    print(X_val.shape)
-
-
-
-
-    '''Data generator for data agumentation'''
-    #dataGenerator = image.ImageDataGenerator()
-    #dataGenerator.fit(X_train)
+def trainModel(epochs_n, model_list):
+    # #X pictures, Y classes.
+    # X_train, Y_train, X_val, Y_val = generateData(n_train, n_val)
+    # print(X_train.shape)
+    # print(Y_train.shape)
+    # print(X_val.shape)
+    # print(Y_val.shape)
+    # X_train=X_train.reshape(n_train*200, 64,64,3)
+    # X_val=X_val.reshape(n_val, 64,64,3)
+    # Y_train = keras.utils.to_categorical(Y_train, 200)
+    # Y_val = keras.utils.to_categorical(Y_val, 200)
+    # X_train = np.divide(X_train, 255)
+    # X_val = np.divide(X_val, 255)
+    # print(X_train.shape)
+    # print(X_val.shape)
 
     for m_name, params in model_list:
-
-        network = getModel(*params)
-
-
+        model = getModel(*params)
+        # Get and reshape validation data
+        X_val, y_val = getData.get_val_data()
+        X_val = X_val.reshape(getData.BATCH_SIZE, 64,64,3)
+        y_val = keras.utils.to_categorical(y_val, 200)
+        # Train iteratively
+        for epoch in range(epochs_n):
+            print("[PARENT EPOCH] epoch {}...".format(epoch + 1))
+            for batch in getData.get_next_batch():
+                X_batch, y_batch = batch[0], batch[1]
+                print(np.shape(X_batch))
+                X_batch = X_batch.reshape(np.shape(X_batch)[0], 64,64,3)
+                y_batch = keras.utils.to_categorical(y_batch, 200)
+                model.train_on_batch(X_batch, y_batch)
+                model.test_on_batch(X_val, y_val)
+        
         '''Use when using default mean of training'''
         networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
@@ -112,15 +107,8 @@ def trainModel(n_train, n_val, epochs_n, batchsize, model_list):
 
 
 def main():
-
-    '''n_train is the number of images per class. Max 500. Total training samples = n_train * 200.'''
-    n_train = 500
-
-    '''n_val is the total number of validation images. Max 10000.'''
-    n_val = 10000
-
+    getData # Prepare data
     epochs = 2
-    batchsize = 10
     model_list = [
         # Name,             ["architect", (res),   "solver", BN?, dropout, init
         ("sgd",             ["vgg_z", (64, 64, 3), "sgd",  False,   0, 'random_uniform']),
@@ -130,7 +118,7 @@ def main():
         ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "adam", True,  0.3, 'random_uniform']),
         ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "adam", True,  0.3, 'he_normal'])
     ]
-    trainModel(n_train, n_val, epochs, batchsize, model_list)
+    trainModel(epochs, model_list)
 
 
 if __name__ == "__main__":
