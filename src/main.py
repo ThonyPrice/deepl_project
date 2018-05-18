@@ -47,184 +47,24 @@ def generateData(n_pictures):
     return training_images, training_labels_encoded, val_images, val_labels_encoded
 
 
-# The network model to be used
-def network_model(dim):
-    model = Sequential()
-    model.add(Dense(40, input_dim=dim, kernel_initializer='normal', activation='relu'))
-    model.add(Dense(200, kernel_initializer='normal', activation='softmax'))
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    return model
 
 
-def big_cnn_model(dim):
-    model = Sequential()
-
-    model.add(Conv2D(64, (3, 3), padding="same", input_shape=dim, activation='relu'))
-    model.add(Conv2D(64, (3, 3), padding="same",activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Conv2D(256, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(256, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(256, (3, 3), padding="same",activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(512, (3, 3), padding="same",activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Flatten())
-    model.add(Dense(4096 , activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(4096 , activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(200, activation='softmax'))
-
-    model.compile(loss='categorical_crossentropy', optimizer='RMSprop', metrics=['accuracy'])
-
-    return model
 
 
-def cnn_model(dim):
-    model = Sequential()
 
-    model.add(Conv2D(64, (3, 3), padding="same", input_shape=dim, activation='relu'))
-    model.add(Conv2D(64, (3, 3), padding="same",activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-
-    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
-    model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Flatten())
-    model.add(Dense(1000 , activation='relu'))
-    model.add(Dropout(0.25))
-    model.add(Dense(1000 , activation='relu'))
-    model.add(Dropout(0.25))
-    model.add(Dense(200, activation='softmax'))
-
-    model.compile(loss='categorical_crossentropy', optimizer='RMSprop', metrics=['accuracy'])
-
-    return model
-
-
-def vgg_net(dim):
-    model = Sequential()
-
-    #Conv layers, round 1
-    model.add(Conv2D(32, (2,2), padding="same", input_shape=dim))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(32, (2,1), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(32, (1,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    #Conv layers, round 2
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(48, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    #Conv layers, round 3
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Conv2D(80, (2,2), padding="same"))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Flatten())
-    model.add(Dense(200, activation='softmax'))
-
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    return model
-
-def vgg_net16(dim):
-    model = Sequential()
-
-    #Conv layers, round 1
-    model.add(Conv2D(64, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(Conv2D(64, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-    model.add(Conv2D(128, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(Conv2D(128, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-    model.add(Conv2D(256, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(Conv2D(256, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(Conv2D(256, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(Conv2D(512, (3,3), padding="same", input_shape=dim, activation = "relu"))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Flatten())
-    model.add(Dense(4096))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-    model.add(Dropout(0.75))
-
-    model.add(Dense(4096))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-    model.add(Dropout(0.75))
-
-    model.add(Dense(200, activation='softmax'))
-
-    model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
-    return model
-
-
-def new_mode(dim):
-    return model
-
-
-# Trains the specified model
-def trainModel(n_pictures, epochs_n, batchsize):
+#Trains the specified model
+def trainModel(n_train, n_val, epochs_n, batchsize):
 
     #X pictures, Y classes.
-    X_train, Y_train, X_val, Y_val = generateData(n_pictures)
+    X_train, Y_train, X_val, Y_val = generateData(n_train, n_val)
+    print(X_train.shape)
+    print(Y_train.shape)
+    print(X_val.shape)
+    print(Y_val.shape)
 
 
-    X_train=X_train.reshape(4000, 64,64,3)
-    X_val=X_val.reshape(20, 64,64,3)
+    X_train=X_train.reshape(n_train, 64,64,3)
+    X_val=X_val.reshape(n_val, 64,64,3)
 
     #plt.imshow(X_train[0])
     #plt.show()
@@ -243,7 +83,8 @@ def trainModel(n_pictures, epochs_n, batchsize):
     print(X_val.shape)
 
 
-    network = vgg_net16((64, 64, 3))
+    network = getModel("vgg_z", (64, 64, 3))
+
     networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
     with open('/trainHistoryDict', 'wb') as file_pi:
@@ -263,10 +104,16 @@ def trainModel(n_pictures, epochs_n, batchsize):
 
 def main():
 
-    n_pictures = 10
-    epochs = 1
-    batchsize = 5
-    trainModel(n_pictures, epochs, batchsize)
+    #n_train is the number of images per class. Max 500. Total training samples = n_train * 200.
+    n_train = 500
+
+    #n_val is the total number of validation images. Max 10000.
+    n_val = 10000
+
+
+    epochs = 10
+    batchsize = 100
+    trainModel(n_train, n_val, epochs, batchsize)
 
 
 
