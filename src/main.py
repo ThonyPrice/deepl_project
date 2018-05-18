@@ -95,7 +95,7 @@ def trainModel(n_train, n_val, epochs_n, batchsize):
 
 
 
-    with open('/trainHistoryDict', 'wb') as file_pi:
+    with open('trainHistoryDict/', 'wb') as file_pi:
         pickle.dump(networkHistory.history, file_pi)
 
 
