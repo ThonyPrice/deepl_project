@@ -246,7 +246,7 @@ def trainModel(n_pictures, epochs_n, batchsize):
     networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
     with open('/trainHistoryDict', 'wb') as file_pi:
-        pickle.dump(history.history, file_pi)
+        pickle.dump(networkHistory.history, file_pi)
 
     #Plots the loss function of test and validation
     #plotLoss(networkHistory)
