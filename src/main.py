@@ -1,65 +1,52 @@
-#Deep learning project DD2424
-#Names
+# Deep learning project DD2424
+# W. Skagerstrom, N. Lindqvist, T. Price
 #Date last modified
 
-from keras.models import Sequential, Model
-from keras.layers import Dense, Dropout, Activation,  Conv2D, MaxPooling2D, Flatten, BatchNormalization, AveragePooling2D, ZeroPadding2D, GlobalAveragePooling2D, GlobalMaxPooling2D
-from keras.preprocessing import image as image_utils
-
-from sklearn.preprocessing import StandardScaler
-import keras
-from sklearn.preprocessing import RobustScaler
-from sklearn.preprocessing import MinMaxScaler
-import numpy as np
-from math import sqrt
-import statistics
-from os import listdir
-from keras import callbacks, backend
-from pandas import read_csv
-import os
-import sys
-import matplotlib.pyplot as pyplot
 import getData
+import keras
+import os
+import numpy as np
+import matplotlib.pyplot as pyplot
+import statistics
+import sys
 
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import RobustScaler
-from sklearn.preprocessing import MinMaxScaler
+from math import sqrt
+from matplotlib import pyplot as plt
+from os import listdir
+from pandas import read_csv
+from keras import callbacks, backend
+
+from keras.models import Sequential, Model
+from keras.layers import (
+    Dense, Dropout, Activation, Conv2D, MaxPooling2D, Flatten,
+    BatchNormalization, AveragePooling2D, ZeroPadding2D,
+    GlobalAveragePooling2D, GlobalMaxPooling2D
+)
+from keras.preprocessing import image as image_utils
+from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
 from sklearn.model_selection import StratifiedKFold
 
 
-from matplotlib import pyplot as plt
-
-
-#Plots the loss function
+# Plots the loss function
 def plotLoss(trainedModel):
     pyplot.plot(trainedModel.history['loss'])
     pyplot.plot(trainedModel.history['val_loss'])
-
     pyplot.title('model loss')
     pyplot.xlabel('epoch')
     pyplot.ylabel('loss')
-
     pyplot.legend(['train', 'validation'], loc='uptrainLengthper left')
     pyplot.legend(['train loss'], loc='upper left')
-
     pyplot.show()
 
 
-#Fetches the dataset
+# Fetches the dataset
 def generateData(n_pictures):
     training_images, training_labels_encoded, \
         val_images, val_labels_encoded = getData.main()
-
-
     return training_images, training_labels_encoded, val_images, val_labels_encoded
-    #print(training_images)
-    #sys.exit(0)
 
 
-
-
-
-#The network model to be used
+# The network model to be used
 def network_model(dim):
     model = Sequential()
     model.add(Dense(40, input_dim=dim, kernel_initializer='normal', activation='relu'))
@@ -74,7 +61,6 @@ def big_cnn_model(dim):
     model.add(Conv2D(64, (3, 3), padding="same", input_shape=dim, activation='relu'))
     model.add(Conv2D(64, (3, 3), padding="same",activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
 
     model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
     model.add(Conv2D(128, (3, 3), padding="same",activation='relu'))
@@ -130,6 +116,7 @@ def cnn_model(dim):
 
     return model
 
+
 def vgg_net(dim):
     model = Sequential()
 
@@ -146,12 +133,7 @@ def vgg_net(dim):
     model.add(BatchNormalization())
     model.add(Activation('relu'))
 
-
-
-
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-
 
     #Conv layers, round 2
     model.add(Conv2D(48, (2,2), padding="same"))
@@ -166,14 +148,7 @@ def vgg_net(dim):
     model.add(BatchNormalization())
     model.add(Activation('relu'))
 
-
-
-
-
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-
-
 
     #Conv layers, round 3
     model.add(Conv2D(80, (2,2), padding="same"))
@@ -188,9 +163,6 @@ def vgg_net(dim):
     model.add(BatchNormalization())
     model.add(Activation('relu'))
 
-
-
-
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Flatten())
@@ -199,7 +171,7 @@ def vgg_net(dim):
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
-def vgg_net16b(dim):
+def vgg_net16(dim):
     model = Sequential()
 
     #Conv layers, round 1
@@ -239,12 +211,11 @@ def vgg_net16b(dim):
     return model
 
 
-
 def new_mode(dim):
     return model
 
 
-#Trains the specified model
+# Trains the specified model
 def trainModel(n_pictures, epochs_n, batchsize):
 
     #X pictures, Y classes.
@@ -274,6 +245,9 @@ def trainModel(n_pictures, epochs_n, batchsize):
     network = vgg_net16((64, 64, 3))
     networkHistory = network.fit(X_train, Y_train, verbose=1, epochs=epochs_n, batch_size=batchsize, callbacks=None, validation_data=[X_val, Y_val], shuffle=True)
 
+    with open('/trainHistoryDict', 'wb') as file_pi:
+        pickle.dump(history.history, file_pi)
+
     #Plots the loss function of test and validation
     #plotLoss(networkHistory)
 
@@ -289,8 +263,8 @@ def trainModel(n_pictures, epochs_n, batchsize):
 def main():
 
     n_pictures = 10
-    epochs = 10
-    batchsize = 100
+    epochs = 1
+    batchsize = 5
     trainModel(n_pictures, epochs, batchsize)
 
 
