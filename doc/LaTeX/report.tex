@@ -57,11 +57,12 @@ VGGNet was introduced in 2014 and one of its most common characteristics is the 
 
 \subsection{Dataset}
 The data used was the ImageNet Tiny dataset, which is a reduced variant of the ImageNet set. The Tiny variation consists of 200 different classes. The resolution of the images has been reduced to $64\times64\times3$ (from  $224\times224\times3$). The dataset consists of 100 000 training samples, 10000 validation samples, and 10000 test samples.
-\\\\
-Below is a small sample of pictures included in the dataset:
+
+In figure \ref{fig:30_samples} is a small sample of pictures included in the dataset.
+
 \input{snippets/samples}
 \FloatBarrier
-Normalization of the input data occurs as two different methods: At first, some models are trained with data where the color channeles are divided by the maximum output of the RBG color palettes (255), resulting in the the colors being represented as numbers in ${\rm I\!R} \in [0,1]$.
+Normalization of the input data occurs as two different methods: At first, some models are trained with data where the color channels are divided by the maximum output of the RBG color palettes (255), resulting in the the colors being represented as numbers in ${\rm I\!R} \in [0,1]$.
 This was later changed to using Batch Normalization instead for the later training iterations.
 
 \subsection{Data Augmentation}
