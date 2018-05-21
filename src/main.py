@@ -92,8 +92,8 @@ def main():
         ("sgd_mom",         ["vgg_z", (64, 64, 3), "sgd_mom", False,   0, 'random_uniform']),
         ("adam_bn",         ["vgg_z", (64, 64, 3), "Adam",    True,    0, 'random_uniform']),
         # ("adam_drop",     ["vgg_z", (64, 64, 3), "Adam",    False, 0.3, 'random_uniform']),
-        ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "Adam",    True,  0.3, 'random_uniform']),
-        ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "Adam",    True,  0.3, 'he_normal'])
+        ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "Adam",    True,  0.5, 'random_uniform']),
+        ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "Adam",    True,  0.5, 'he_normal'])
     ]
     trainModel(model_list)
 
