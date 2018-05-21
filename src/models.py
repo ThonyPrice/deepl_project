@@ -30,21 +30,15 @@ def vgg_z(dim, opt, BN, dropout, initializer):
 
     #Conv layers, round 1
     model.add(Conv2D(32, (2,2), padding="same", input_shape=dim,
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)
-        ))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
     model.add(Conv2D(32, (2,1), padding="same",
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)
-        ))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
     model.add(Conv2D(32, (1,2), padding="same",
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)
-        ))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
 
@@ -52,20 +46,17 @@ def vgg_z(dim, opt, BN, dropout, initializer):
 
     #Conv layers, round 2
     model.add(Conv2D(48, (2,2), padding="same",
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
 
     model.add(Conv2D(48, (2,2), padding="same",
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
 
     model.add(Conv2D(48, (2,2), padding="same",
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
 
@@ -73,20 +64,17 @@ def vgg_z(dim, opt, BN, dropout, initializer):
 
     #Conv layers, round 3
     model.add(Conv2D(80, (2,2), padding="same",
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
 
     model.add(Conv2D(80, (2,2), padding="same",
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
 
     model.add(Conv2D(80, (2,2), padding="same",
-        kernel_initializer = initializer,
-        kernel_regularizer=regularizers.l2(l2_rate)))
+        kernel_initializer = initializer))
     do_BN()
     model.add(Activation('relu'))
 
