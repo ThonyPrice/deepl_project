@@ -49,10 +49,11 @@ AlexNet is the network architecture that renewed the industry interest in Convol
 \subsection{GoogleNet}
 GoogleNet uses what is called a inception module, which works by calculating several different convolutions of different dimension within the same module combining them before propagating them to the next layer of the network\cite{szegedy2016rethinking}. This causes GoogleNet to be much more space efficient due to the less numerous amount of parameters, which is only further amplified by the usage of average pooling instead of fully connected layers, which further reduces the dimensionality of the total number of network parameters.
 \subsection{ResNet}
-ResNet was added to the different architectures of networks for image classification in 2015 and won the 1st place on the ILSVRC 2015 classification task. As deeper networks are more difficult to train a residual learning framework eases the training for deep networks by adding a shortcut between layers. The shortcut decreases the complexity of the networks and witch allows more layers. 
+ResNet was added to the different architectures of networks for image classification in 2015 and won the 1st place on the ILSVRC 2015 classification task. As deeper networks are more difficult to train a residual learning framework eases the training for deep networks by adding a shortcut between layers. The shortcut decreases the complexity of the networks and witch allows more layers.
 
 ref:
 https://arxiv.org/pdf/1512.03385.pdf
+
 
 \subsection{VGGNet}
 VGGNet was introduced in 2014 and one of its most common characteristics is the simplicity of the network, while still achieving good performance on complicated classification tasks such as the ImageNet challenge\cite{simonyan2014very}. While being simple in its design, the network is computationally demanding to train due to the heavy number of parameters.
@@ -73,10 +74,10 @@ Below is a small sample of pictures included in the dataset:
 \subsection{Data Augmentation}
 An additional feature that was later added in order to improve the accuracy of the network was data augmentation. The methods of augmentation are the following:\\
 \begin{itemize}
-\item Shifting.
-\item Whitening.
-\item Rotation.
-\item etc,etc.
+\item \textbf{Featurewise center:} Set mean of all inputs to 0.
+\item \textbf{Whitening (ZCA):} Applying whitening, may strengthen structure of objects in image.
+\item \textbf{Horizontal flip:} New perspective on images naturally expands the training data. Vertical flip is available too but in many of the classes an upside-down representation has low resemblance to the image class.
+\item \textbf{Shift:} Shifting images horizontally and vertically allows images to appear in different regions of input space which allows for better generalization.
 \end{itemize}
 Data augmentation was applied batch by batch for each batch used in the training process.
 
