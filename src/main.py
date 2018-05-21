@@ -27,17 +27,12 @@ from sklearn.model_selection import StratifiedKFold
 from models import *
 
 # Global parameters
+EPOCHS = 2
 BATCH_SIZE = 50
 NUM_CLASSES = 200
-NUM_IMAGES_PER_CLASS = 500
-NUM_IMAGES = NUM_CLASSES * NUM_IMAGES_PER_CLASS
-NUM_VAL_IMAGES = 10000
-
 IMAGE_SIZE = 64
 NUM_CHANNELS = 3
 IMAGE_ARR_SIZE = IMAGE_SIZE * IMAGE_SIZE * NUM_CHANNELS
-
-EPOCHS = 2
 
 def plotLoss(trainedModel, model_name):
     ''' Plots the loss function '''
