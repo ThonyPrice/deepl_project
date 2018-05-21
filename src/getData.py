@@ -9,6 +9,7 @@ Code inspired from:
 
 # TODO: Make train size dependend on n_pictures
 
+
 import os
 import matplotlib
 import numpy as np
@@ -30,7 +31,7 @@ NUM_IMAGES = NUM_CLASSES * NUM_IMAGES_PER_CLASS
 TRAINING_IMAGES_DIR = './tiny-imagenet-200/train/'
 TRAIN_SIZE = NUM_IMAGES
 
-NUM_VAL_IMAGES = 10000
+NUM_VAL_IMAGES = 10  #9832
 VAL_IMAGES_DIR = './tiny-imagenet-200/val/'
 
 IMAGE_SIZE = 64
@@ -89,7 +90,10 @@ def get_label_from_name(data, name):
     x = int(name.replace("val_", "").replace(".JPEG",""))
     row = data.iloc[x]
 
-    return row['Class']
+    if (row['File'] == name):
+        return row['Class']
+
+    return None
 
 
 
@@ -97,7 +101,7 @@ def load_validation_images(testdir, validation_data, batch_size=NUM_VAL_IMAGES):
     labels = []
     names = []
     image_index = 0
-
+    print(batch_size)
     images = np.ndarray(shape=(batch_size, IMAGE_ARR_SIZE))
     val_images = os.listdir(testdir + '/images/')
 
@@ -106,15 +110,16 @@ def load_validation_images(testdir, validation_data, batch_size=NUM_VAL_IMAGES):
 
     print("entering for-loop")
 
-    i = 1
+    #i = 1
     for image in val_images:
-        print(i)
-        i += 1
+        #print(i)
+        #i += 1
         image_file = os.path.join(testdir, 'images/', image)
         #print (testdir, image_file)
 
         # reading the images as they are; no normalization, no color editing
         image_data = mpimg.imread(image_file)
+        #print(image_data.shape)
         if (image_data.shape == (IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS)):
             images[image_index, :] = image_data.flatten()
             image_index += 1
@@ -175,6 +180,10 @@ def reset_graph(seed=42):
 def get_val_data():
     return val_images, val_labels_encoded
 
+def get_train_data():
+    return training_images, training_labels_encoded
+
+
 download_images(IMAGES_URL)
 training_images, training_labels, training_files = load_training_images(TRAINING_IMAGES_DIR, batch_size=BATCH_SIZE)
 
@@ -191,7 +200,7 @@ training_labels_encoded = training_le.transform(training_labels)
 # plot_objects(training_images[0:30])
 
 val_data = pd.read_csv(VAL_IMAGES_DIR + 'val_annotations.txt', sep='\t', header=None, names=['File', 'Class', 'X', 'Y', 'H', 'W'])
-val_images, val_labels, val_files = load_validation_images(VAL_IMAGES_DIR, val_data, batch_size=BATCH_SIZE)
+val_images, val_labels, val_files = load_validation_images(VAL_IMAGES_DIR, val_data, batch_size=NUM_VAL_IMAGES)
 val_labels_encoded = training_le.transform(val_labels)
 
 # plot_objects(val_images[0:30])
