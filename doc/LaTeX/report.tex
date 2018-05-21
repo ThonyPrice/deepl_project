@@ -69,12 +69,13 @@ Normalization of the input data occurs as two different methods: At first, some 
 This was later changed to using Batch Normalization instead for the later training iterations.
 
 \subsection{Data Augmentation}
-An additional feature that was later added in order to improve the accuracy of the network was data augmentation. The methods of augmentation are the following:\\
+An additional feature that was later added in order to improve the accuracy of the network was data augmentation. The methods of augmentation are the following:
+
 \begin{itemize}
-\item Shifting.
-\item Whitening.
-\item Rotation.
-\item etc,etc.
+  \item \textbf{Featurewise center:} Set mean of all inputs to 0.
+  \item \textbf{Whitening (ZCA):} Applying whitening, may strengthen structure of objects in image.
+  \item \textbf{Horizontal flip:} New perspective on images naturally expands the training data. Vertical flip is available too but in many of the classes an upside-down representation has low resemblance to the image class.
+  \item \textbf{Shift:} Shifting images horizontally and vertically allows images to appear in different regions of input space which allows for better generalization.
 \end{itemize}
 Data augmentation was applied batch by batch for each batch used in the training process.
 
