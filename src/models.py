@@ -27,19 +27,22 @@ def vgg_z(dim, opt, BN, dropout, initializer):
         do_BN = lambda : None
 
     #Conv layers, round 1
-    model.add(Conv2D(32, (2,2), padding="same", input_shape=dim),
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+    model.add(Conv2D(32, (2,2), padding="same", input_shape=dim,
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)
+        ))
     do_BN()
     model.add(Activation('relu'))
-    model.add(Conv2D(32, (2,1), padding="same"),
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+    model.add(Conv2D(32, (2,1), padding="same",
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)
+        ))
     do_BN()
     model.add(Activation('relu'))
-    model.add(Conv2D(32, (1,2), padding="same"),
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+    model.add(Conv2D(32, (1,2), padding="same",
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)
+        ))
     do_BN()
     model.add(Activation('relu'))
 
@@ -47,20 +50,20 @@ def vgg_z(dim, opt, BN, dropout, initializer):
 
     #Conv layers, round 2
     model.add(Conv2D(48, (2,2), padding="same",
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)))
     do_BN()
     model.add(Activation('relu'))
 
     model.add(Conv2D(48, (2,2), padding="same",
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)))
     do_BN()
     model.add(Activation('relu'))
 
     model.add(Conv2D(48, (2,2), padding="same",
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)))
     do_BN()
     model.add(Activation('relu'))
 
@@ -68,20 +71,20 @@ def vgg_z(dim, opt, BN, dropout, initializer):
 
     #Conv layers, round 3
     model.add(Conv2D(80, (2,2), padding="same",
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)))
     do_BN()
     model.add(Activation('relu'))
 
     model.add(Conv2D(80, (2,2), padding="same",
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)))
     do_BN()
     model.add(Activation('relu'))
 
     model.add(Conv2D(80, (2,2), padding="same",
-            kernel_initializer = initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+        kernel_initializer = initializer,
+        kernel_regularizer=regularizers.l2(0.01)))
     do_BN()
     model.add(Activation('relu'))
 
@@ -89,8 +92,8 @@ def vgg_z(dim, opt, BN, dropout, initializer):
 
     model.add(Flatten())
     model.add(Dense(2048,
-            kernel_initializer=initializer),
-            kernel_regularizer=regularizers.l2(0.01))
+        kernel_initializer=initializer,
+        kernel_regularizer=regularizers.l2(0.01)))
 
     do_BN()
     model.add(Activation('relu'))
@@ -98,9 +101,8 @@ def vgg_z(dim, opt, BN, dropout, initializer):
 
     model.add(Dense(200, activation='softmax'))
 
-
     model.compile(loss='categorical_crossentropy', optimizer=opt,
-            metrics=['accuracy', metrics.top_k_categorical_accuracy])
+        metrics=['accuracy', metrics.top_k_categorical_accuracy])
     return model
 
 
