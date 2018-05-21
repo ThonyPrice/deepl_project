@@ -48,7 +48,6 @@ def plotLoss(trainedModel, model_name):
     pyplot.ylabel('loss')
     pyplot.legend(['train', 'validation'], loc='best')
     pyplot.legend(['train loss'], loc='upper left')
-    pyplot.show()
     pyplot.savefig('loss_plots/' + model_name)
     pyplot.close()
 
@@ -78,8 +77,6 @@ def trainModel(model_list):
             steps_per_epoch=len(X_tr) / BATCH_SIZE, epochs=EPOCHS,
             verbose=1, callbacks=None, validation_data=(X_val, y_val),
             use_multiprocessing=False, shuffle=False)
-        print(networkHistory)
-        print(networkHistory.history)
         plotLoss(networkHistory, m_name)
         scores = model.evaluate(X_val, y_val, verbose=1)
         print('Scores:')
