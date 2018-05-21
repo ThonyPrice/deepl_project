@@ -88,7 +88,7 @@ def main():
     getData # Prepare data
     model_list = [
         # Name,             ["architect", (res),   "solver",  BN?, dropout, init
-        # ("sgd",           ["vgg_z", (64, 64, 3), "sgd",     False,   0, 'random_uniform']),
+        ("sgd",             ["vgg_z", (64, 64, 3), "sgd",     False,   0, 'random_uniform']),
         ("sgd_mom",         ["vgg_z", (64, 64, 3), "sgd_mom", False,   0, 'random_uniform']),
         ("adam_bn",         ["vgg_z", (64, 64, 3), "Adam",    True,    0, 'random_uniform']),
         # ("adam_drop",     ["vgg_z", (64, 64, 3), "Adam",    False, 0.3, 'random_uniform']),
