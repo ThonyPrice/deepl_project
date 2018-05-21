@@ -31,7 +31,6 @@ BATCH_SIZE = 50
 NUM_CLASSES = 200
 NUM_IMAGES_PER_CLASS = 500
 NUM_IMAGES = NUM_CLASSES * NUM_IMAGES_PER_CLASS
-
 NUM_VAL_IMAGES = 10000
 
 IMAGE_SIZE = 64
@@ -47,9 +46,10 @@ def plotLoss(trainedModel, model_name):
     pyplot.title('model loss')
     pyplot.xlabel('epoch')
     pyplot.ylabel('loss')
-    pyplot.legend(['train', 'validation'], loc='uptrainLengthper left')
+    pyplot.legend(['train', 'validation'], loc='best')
     pyplot.legend(['train loss'], loc='upper left')
-    pyplot.savefig('loss_plots/' + model_name + 'png')
+    pyplot.show()
+    pyplot.savefig('loss_plots/' + model_name)
     pyplot.close()
 
 
@@ -71,16 +71,23 @@ def trainModel(model_list):
     datagen = image_utils.ImageDataGenerator()
     datagen.fit(X_tr)
     for m_name, params in model_list:
+        print('Evaluating model: ' + m_name)
         model = getModel(*params)
-        network = model.fit_generator(
+        networkHistory = model.fit_generator(
             datagen.flow(X_tr, y_tr, batch_size=BATCH_SIZE),
             steps_per_epoch=len(X_tr) / BATCH_SIZE, epochs=EPOCHS,
             verbose=1, callbacks=None, validation_data=(X_val, y_val),
             use_multiprocessing=False, shuffle=False)
+        print(networkHistory)
+        print(networkHistory.history)
+        plotLoss(networkHistory, m_name)
+        scores = model.evaluate(X_val, y_val, verbose=1)
+        print('Scores:')
+        print(scores)
         with open('trainHistoryDict/' + m_name + '.pickle', 'wb') as file_pi:
-            pickle.dump(network.history, file_pi)
-        plotLoss(network)
-        scores = network.evaluate(X_val, Y_val, verbose=1)
+            pickle.dump(networkHistory.history, file_pi)
+        with open('scores/' + m_name + '.pickle', 'wb') as file_pi:
+            pickle.dump(scores, file_pi)
 
 
 def main():
