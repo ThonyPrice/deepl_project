@@ -125,9 +125,13 @@ Graphs/Tables of trainloss, valloss, accuracies etc.
 \subsection{Evaluation of method}
 Thoughts about the method.
 
+Ignoring all gray-scale images in training could have an slight impact on our test accuracy. If we were to recreate the method we would try to figure out an optimal way of handling both grayscale images and RGB images in the same method. One approach would be to reduce all images with 3 channels to grayscale images and create a model optimal for only 1 channel images. Another approach would be to use a assemble methodology with one network adapted for grayscale images and one for RGB images.
+
 \subsection{Evaluation of results}
 
 Thoughts about the result.
+
+As mentioned in the previous section the test accuracy would perhaps have been slightly higher if we would have regarded the fact that some images are in gray-scale. Around 2\% of the test images and validation images are gray-scale and we assume that the percentage of gray-scale images is the same in the test data. This implies an guaranteed 2\% decrease in accuracy on the test data. 
 
 \subsection{ImageNet state of the art}
 
