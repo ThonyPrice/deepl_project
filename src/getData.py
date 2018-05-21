@@ -24,14 +24,14 @@ import requests, io
 from sklearn import preprocessing
 
 # --- Set global parameters ---
-BATCH_SIZE = 20
+BATCH_SIZE = 500
 NUM_CLASSES = 200
 NUM_IMAGES_PER_CLASS = 500
 NUM_IMAGES = NUM_CLASSES * NUM_IMAGES_PER_CLASS
 TRAINING_IMAGES_DIR = './tiny-imagenet-200/train/'
 TRAIN_SIZE = NUM_IMAGES
 
-NUM_VAL_IMAGES = 10  #9832
+NUM_VAL_IMAGES = 9832  #9832
 VAL_IMAGES_DIR = './tiny-imagenet-200/val/'
 
 IMAGE_SIZE = 64
