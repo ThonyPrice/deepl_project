@@ -32,33 +32,29 @@ To thoroughly investigate the topic a CNN will be constructed in the most vanill
 \newpage
 
 \section{Introduction}
-Image classification is one of the main branches within Computer Vision. The task can be summarized as extracting features from a picture, which takes the shape of a pixel matrix containing either 1 or 3 channels (for gray-scale or red, green, and blue, respectively). Back in 2012, Convolutional Neural Networks (CNN's) began replacing the previously manually written algorithms for feature detection, and continue to hold the title as a state of the art method for image classification. The reason for the resurgence of CNN's was partly due to the winning entry of the AlexNet in the 2012 ImageNet competition \cite{krizhevsky2012imagenet}. Convolutional Neural Networks have existed for almost 20 years, but was previously limited by the availability of data and computer hardware. However, due to the great advancement of modern computers has enabled the ability to train increasingly deep and complex types of neural networks. In 2014, another progressive leap in the development of image classification occured with the itroduction of VGGNet and GoogleNet \cite{simonyan2014very}, \cite{szegedy2016rethinking}.  Due to the possibility of creating CNN's of varying architecture and size, a modern industry standard for evaluating the performance of a network is by benchmarking it through the ImageNet dataset \cite{russakovsky2015imagenet}.
+Image classification is one of the main branches within Computer Vision. The task can be summarized as extracting features from a picture, which takes the shape of a pixel matrix containing either 1 or 3 channels (for gray-scale or red, green, and blue, respectively). Back in 2012, Convolutional Neural Networks (CNN's) began replacing the previously manually written algorithms for feature detection, and continue to hold the title as a state of the art method for image classification. The reason for the resurgence of CNN's was partly due to the winning entry of the AlexNet in the 2012 ImageNet competition \cite{krizhevsky2012imagenet}. Convolutional Neural Networks have existed for almost 20 years, but was previously limited by the availability of data and computer hardware. However, due to the great advancement of modern computers has enabled the ability to train increasingly deep and complex types of neural networks. In 2014, another progressive leap in the development of image classification occurred with the introduction of VGGNet and GoogleNet \cite{simonyan2014very}, \cite{szegedy2016rethinking}.  Due to the possibility of creating CNN's of varying architecture and size, a modern industry standard for evaluating the performance of a network is by benchmarking it through the ImageNet dataset \cite{russakovsky2015imagenet}.
 
 
 \section{Previous work}
 Among the many entries to the ImageNet classification challenge, deep convolution network architectures such AlexNet, VGGNet and GoogleNet have proven themselves to be highly effective and has created a renewed interesting in the development and optimization of such architectures. However, these different types of network comes with some individual strengths and weaknesses.
 
-Text about previous work, references etc.
 
-Useful citations:
-
-AlexNet: \cite{krizhevsky2012imagenet}
-
-VGGNet: \cite{simonyan2014very}
-
-GoogleNet:\cite{szegedy2016rethinking}
 
 \subsection{AlexNet}
 AlexNet is the network architecture that renewed the industry interest in Convolutional Neural networks. AlexNet consists of a total of 8 layers, which are 5 convolutional layers which are stacked on eachother, followed by three fully connected layers. The network features two sets of of batch normalization, which are applied following each of the first two convolution layers, and a dropout occurs after each of the last two fully connected layers.
 \subsection{GoogleNet}
+GoogleNet uses what is called a inception module, which works by calculating several different convolutions of different dimension within the same module combining them before propagating them to the next layer of the network\cite{szegedy2016rethinking}. This causes GoogleNet to be much more space efficient due to the less numerous amount of parameters, which is only further amplified by the usage of average pooling instead of fully connected layers, which further reduces the dimensionality of the total number of network parameters.
+\subsection{ResNet}
+ResNet is a recent addition to the different architectures of networks for image classification. \textbf{More on ResNets}.
+
 
 \subsection{VGGNet}
-\subsection{ResNet}
-\subsection{SqueezeNet}
+VGGNet was introduced in 2014 and one of its most common characteristics is the simplicity of the network, while still achieving good performance on complicated classification tasks such as the ImageNet challenge\cite{simonyan2014very}. While being simple in its design, the network is computationally demanding to train due to the heavy number of parameters.
 
 
 
 \section{Method}
+
 \subsection{Dataset}
 The data used was the ImageNet Tiny dataset, which is a reduced variant of the ImageNet set. The Tiny variation consists of 200 different classes. The resolution of the images has been reduced to $64\times64\times3$ (from  $224\times224\times3$). The dataset consists of 100 000 training samples, 10000 validation samples, and 10000 test samples.
 \\\\
@@ -80,6 +76,8 @@ An additional feature that was later added in order to improve the accuracy of t
 Data augmentation was applied batch by batch for each batch used in the training process.
 
 \subsection{Implementing a CNN}
+
+We chose to experiment with different variations of the VGGNet architecture due to its simple implementation and the availability of good hardware due to the availability of the Google Cloud Computing services obtained by KTH for the DD2424 course.
 
 \subsubsection{Implementation specifics}
 

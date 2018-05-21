@@ -22,6 +22,7 @@ from keras.layers import (
     GlobalAveragePooling2D, GlobalMaxPooling2D
 )
 from keras.preprocessing import image as image_utils
+from keras.optimizers import Adam
 from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
 from sklearn.model_selection import StratifiedKFold
 from models import *
@@ -36,6 +37,7 @@ IMAGE_ARR_SIZE = IMAGE_SIZE * IMAGE_SIZE * NUM_CHANNELS
 
 def plotLoss(trainedModel, model_name):
     ''' Plots the loss function '''
+    pyplot.switch_backend('agg')
     pyplot.plot(trainedModel.history['loss'])
     pyplot.plot(trainedModel.history['val_loss'])
     pyplot.title('model loss')
@@ -80,18 +82,18 @@ def trainModel(model_list):
             pickle.dump(networkHistory.history, file_pi)
         with open('scores/' + m_name + '.pickle', 'wb') as file_pi:
             pickle.dump(scores, file_pi)
-
+        backend.clear_session()
 
 def main():
     getData # Prepare data
     model_list = [
-        # Name,             ["architect", (res),   "solver", BN?, dropout, init
-        ("sgd",             ["vgg_z", (64, 64, 3), "sgd",  False,   0, 'random_uniform']),
-        ("adam",            ["vgg_z", (64, 64, 3), "adam", False,   0, 'random_uniform']),
-        ("adam_bn",         ["vgg_z", (64, 64, 3), "adam", True,    0, 'random_uniform']),
-        ("adam_drop",       ["vgg_z", (64, 64, 3), "adam", False, 0.3, 'random_uniform']),
-        ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "adam", True,  0.3, 'random_uniform']),
-        ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "adam", True,  0.3, 'he_normal'])
+        # Name,             ["architect", (res),   "solver",  BN?, dropout, init
+        # ("sgd",           ["vgg_z", (64, 64, 3), "sgd",     False,   0, 'random_uniform']),
+        ("sgd_mom",         ["vgg_z", (64, 64, 3), "sgd_mom", False,   0, 'random_uniform']),
+        ("adam_bn",         ["vgg_z", (64, 64, 3), "Adam",    True,    0, 'random_uniform']),
+        # ("adam_drop",     ["vgg_z", (64, 64, 3), "Adam",    False, 0.3, 'random_uniform']),
+        ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "Adam",    True,  0.3, 'random_uniform']),
+        ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "Adam",    True,  0.3, 'he_normal'])
     ]
     trainModel(model_list)
 

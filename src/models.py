@@ -1,6 +1,7 @@
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Activation,  Conv2D, MaxPooling2D, Flatten, BatchNormalization, AveragePooling2D, ZeroPadding2D, GlobalAveragePooling2D, GlobalMaxPooling2D
 from keras.preprocessing import image as image_utils
+from keras.optimizers import Adam, SGD
 
 def getModel(modelString, dim, opt = "adam", BN = False, dropout = 0, initializer = 'random_uniform'):
     allModels = ['vgg_z']
@@ -15,7 +16,10 @@ def getModel(modelString, dim, opt = "adam", BN = False, dropout = 0, initialize
 
 def vgg_z(dim, opt, BN, dropout, initializer):
     model = Sequential()
-
+    if opt == 'Adam':
+        opt = Adam(lr=0.001)
+    if opt == 'sgd_mom':
+        opt = SGD(momentum=0.9)
     if BN:
         do_BN = lambda : model.add(BatchNormalization())
     else:
