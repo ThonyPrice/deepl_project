@@ -27,7 +27,7 @@ from sklearn.model_selection import StratifiedKFold
 from models import *
 
 # Global parameters
-EPOCHS = 2
+EPOCHS = 20
 BATCH_SIZE = 50
 NUM_CLASSES = 200
 IMAGE_SIZE = 64
