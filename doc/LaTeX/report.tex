@@ -130,7 +130,7 @@ To combat the overfitting we begun tinkering with what regularization and and op
 \end{itemize}
 
 %------------------------------------------
-\begin{wrapfigure}{r}{0.5\linewidth}
+\begin{wrapfigure}{r}{0.4\linewidth}
   \includegraphics[width=\linewidth]{../images/improved_loss_1.png}
   \caption[]
   {\small Slightly improved results of loss functions while tinkering with regularization. Learning appears inconsistent but overfitting is not as present as previously.}
@@ -139,23 +139,23 @@ To combat the overfitting we begun tinkering with what regularization and and op
 %------------------------------------------
 Manually tuning these parameters we found some improvements, such as those in figure \ref{fig:loss_improved_1}. Continuing in the same manner gave the loss plot of figure REF. The network applied had 30\% dropout and L2 regularization in the fully connected layer and in other aspects constrained to the architecture (C) in table \ref{table:3_configurations}.
 
-The slightly improved convergence of the validation loss inspired hope of a successful network but a longer run (no plot available) showed that overfitting begun to occur after ~20 epochs. We went back to tinkering with the models and tried tuning different parameters to accomplish a steady learning rate.
+The slightly improved convergence of the validation loss inspired hope of a successful network but a longer run (no plot available) showed that overfitting begun to occur after ~20 epochs. We went back to tinkering with the models and tried tuning different parameters to accomplish a steady learning rate. \\
+
 
 % Don't use this - apply wrapper figure instead
 % \input{snippets/loss_improved_1}
 
 \subsection{Final results}
 %------------------------------------------
-\begin{wraptable}{r}{0.5\linewidth}
+\begin{wraptable}{l}{0.4\linewidth}
   \input{snippets/final_config.tex}
 \end{wraptable}
 %------------------------------------------
-
 The final results found was achieved with a model that has the structure presented in TABLE. We found additional connected layers in the end combined with L2 regularization helped prevent overfitting. During our testing it proved a steady learning rate of the 20 first epochs, so we ran it for 60 in total to see if learning was continued and what final results we could achieve.
 
 The top-1 accuracy was \textbf{X}\ and top-5 accuracy \textbf{Y}, both on validation data. Plot A represents training and validation loss, even though there are fluctuations the validation loss follows the training loss nicely, the expanding gap in the higher epochs may be countered by increasing regularization. Plot B illustrates the evolution of accuracy which, in conjunction with the loss, converges towards the maximal accuracy found.
 
-The results of the all different models can be found in table \ref{table:accuracy}. 
+The results of the all different models can be found in table \ref{table:accuracy}.
 
 
 \input{snippets/accuracy_table}
