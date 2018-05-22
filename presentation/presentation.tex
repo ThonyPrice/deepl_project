@@ -24,19 +24,51 @@
     \item Implementation
     \item Results
   \end{itemize}
-
 \end{frame}
 
 \section{Proposal and intention}
 \begin{frame}
   \frametitle{Project proposal}
-
   \begin{itemize}
 	  \item Implement a CNN
+    \item Achieve acceptable results in terms of accuracy (on ImageNet)
     \item Apply techniques from course to optimize performance of network
-\end{itemize}
-
+  \end{itemize}
 \end{frame}
+
+\section{Implementation}
+\begin{frame}
+  \frametitle{Research of the field}
+  We began looking at state of the art
+  \begin{itemize}
+    \item GoogLeNet
+    \item RezNet
+    \item VGGNet
+  \end{itemize}
+
+  Then to more achievable en par with our scope. Here Stanford's course \textbf{CS231} proved a valuable source. There was many reports on classification of ImageNet by CNNs.
+\end{frame}
+
+\begin{frame}
+  Considering this we wen't for an VGGNet inspired architecture of the network. The leftmost represents the most vanilla. Each step to the right a optimization technique is added.
+  \textbf{Insert table of architecture here}
+\end{frame}
+
+\begin{frame}
+  We initialized a run on Google Cloud and the result was... OVERFITTING
+  \textbf{Insert plots here}
+\end{frame}
+
+\begin{frame}
+  To battle this we applied
+  \begin{itemize}
+    \item Batch normalization (All layers)
+    \item Dropout (Dense layers)
+    \item L2 regularization (X layers)
+  \end{itemize}
+  Tinkering with these variables resulted in improved performance \textbf{insert plot here/next slide}
+\end{frame}
+
 
 
 \end{document}
