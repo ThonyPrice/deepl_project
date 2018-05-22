@@ -74,10 +74,10 @@ Figure \ref{fig:30_samples} visualizes a small sample of pictures included in th
 An additional feature that was later added in order to improve the accuracy of the network was data augmentation. Data augmentation was applied batch by batch for each batch used in the training process. The methods of augmentation were the following:
 
 \begin{itemize}
-  \item \textbf{Featurewise center:} Set mean of all inputs to 0.
   \item \textbf{Whitening (ZCA):} Applying whitening, may strengthen structure of objects in image by removing redundant information.
   \item \textbf{Horizontal flip:} New perspective on images naturally expands the training data. Vertical flip is available too but in many of the classes an upside-down representation has low resemblance to the image class.
   \item \textbf{Shift:} Shifting images horizontally and vertically allows images to appear in different regions of input space which allows for better generalization.
+  \item \textbf{Rotation:} Rotating the images by up to 60 degrees.
 \end{itemize}
 
 \subsection{CNN implementation}
@@ -120,7 +120,7 @@ Running over all 4 models presented in table \ref{table:3_configurations} the tr
 \input{snippets/4_losses}
 \FloatBarrier
 
-To combat the overfitting we begun tinkering with what regularization we had in our toolbox by testing different combinations of:
+To combat the overfitting we begun tinkering with the different methods we had in our toolbox by testing different combinations of:
 
 \begin{itemize}
 
@@ -148,7 +148,7 @@ We also added some additional preprocessing to the dataset by subtracting the me
 Manually tuning these parameters we found some minor improvements, which is displayed in figure \ref{fig:loss_improved_1}. In this version, we took model D from \ref{table:3_configurations} and added an $L_{2}$ regularization term of $1E-3$ after each convolutional and fully connected layer, and also increased the number of fully connected layers to 3, where we increased the dropout to 70\%.
 
 
-The new model showed a slight improved convergence of the validation loss, but showed an atrocious learning capability due to the high loss values, and thus we found that adding batch normalization, dropout in addition to $L_{2}$ regularization caused the network to shift over to the other side of the spectrum, where instead of overfitting, it had problems learning things. We decided to remove dropout that occurs after the fully connected layers, and instead rely on the L2 regularization and add a decay to the learning rate of the network, that decays the learning rate by $1e-6$ after each gradient update. The Adam algorithm was initialized with a learning rate of $1e-2$, and we now let it train for longer, 60 epochs in total.
+The new model showed a slight improved convergence of the validation loss, but showed an atrocious learning capability due to the high loss values, and thus we found that adding batch normalization, dropout in addition to $L_{2}$ regularization caused the network to shift over to the other side of the spectrum, where instead of overfitting, it had problems learning things. We decided to remove dropout that occurs after the fully connected layers, and instead rely on the $L_{2}$ regularization and add a decay to the learning rate of the network, that decays the learning rate by $1e-6$ after each gradient update. The Adam algorithm was initialized with a learning rate of $1e-2$, and we now let it train for longer, 60 epochs in total.
 
 \subsection{Final results}
 

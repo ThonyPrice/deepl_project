@@ -65,7 +65,13 @@ def trainModel(model_list):
     X_tr, y_tr, X_val, y_val = getPreparedData()
     # Prepare data generator object
     datagen = image_utils.ImageDataGenerator(
-        featurewise_center=True
+        featurewise_center=True,
+        rotation_range=60,
+        zca_whitening=True,
+        zoom_range=0.2,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        horizontal_flip=True
     )
     datagen.fit(X_tr)
     for m_name, params in model_list:
