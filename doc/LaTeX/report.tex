@@ -100,12 +100,11 @@ This was later changed to using Batch Normalization instead for the later traini
 
 \subsubsection{Evaluating architectures}
 
-The basis of the CNN architecture is inspired by \cite{NIPS2012_4824}, it is summarized in figure \ref{fig:architecture}. However, it was implemented on the full ImageNet dataset. Inspired by architectures mentioned in Previous work \ref{sec:PreviousWork}, we decided to test three configurations, summarized in \ref{table:3_configurations}.
+The basis of the CNN architecture is inspired by \cite{NIPS2012_4824}, it is summarized in figure \ref{fig:architecture}. However, it was implemented on the full ImageNet dataset. Inspired by architectures mentioned in Previous work \ref{sec:PreviousWork}, we decided to test four configurations, summarized in \ref{table:3_configurations}.
 
+\input{snippets/fig_architecture}
+\FloatBarrier
 \input{snippets/3_configurations}
-
-% We should not use this anymore(?)
-% \input{snippets/fig_architecture}
 
 Tests was run with \textbf{insert how tests were run} iterations. Training was done on the entire Tiny Imagenet dataset, containing 100 000 images and their respective labels. The composition of the dataset is 200 classes with 500 images each. The training data is shuffled before the training process begins. For evaluation, the entire validation dataset was used, containing 10000 images. The results of each architecture is presented in section...
 
