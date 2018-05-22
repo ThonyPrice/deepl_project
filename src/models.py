@@ -4,7 +4,7 @@ from keras.preprocessing import image as image_utils
 from keras.optimizers import Adam, SGD
 from keras import metrics, regularizers
 
-l2_rate = 0.00005
+l2_rate = 0.0001
 
 def getModel(modelString, dim, opt = "adam", BN = False, dropout = 0, initializer = 'random_uniform'):
     allModels = ['vgg_z']
@@ -20,9 +20,9 @@ def getModel(modelString, dim, opt = "adam", BN = False, dropout = 0, initialize
 def vgg_z(dim, opt, BN, dropout, initializer):
     model = Sequential()
     if opt == 'Adam':
-        opt = Adam(lr=0.01, decay=0.99)
+        opt = Adam(lr=0.001, decay=1e-3)
     if opt == 'sgd_mom':
-        opt = SGD(lr=0.1, momentum=0.9, decay=0.9, nesterov=True)
+        opt = SGD(lr=0.01, momentum=0.9, decay=1e-3, nesterov=True)
     if BN:
         do_BN = lambda : model.add(BatchNormalization())
     else:
