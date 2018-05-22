@@ -9,7 +9,7 @@ import matplotlib.ticker
 
 def plotLoss(history, model_name, fontsize=12, titlefontsize = 14, xaxis=None):
     ''' Plots the loss function '''
-
+    x_len = len(history['top_k_categorical_accuracy'])
     pyplot.switch_backend('agg')
     xaxis = [i for i in range(1,len(history['loss']))] + [len(history['loss'])]
     pyplot.plot(xaxis,history['loss'])
@@ -23,14 +23,15 @@ def plotLoss(history, model_name, fontsize=12, titlefontsize = 14, xaxis=None):
     pyplot.gca().xaxis.set_major_locator(locator)
     formatter = matplotlib.ticker.StrMethodFormatter("{x:.0f}")
     pyplot.gca().xaxis.set_major_formatter(formatter)
-    pyplot.xlim(0, 21)
+    pyplot.xlim(0, x_len+1)
+    pyplot.xticks(numpy.arange(0, x_len+1, 5.0))
 
     pyplot.savefig('testPlots/lossPlots/' + model_name+"_loss")
     pyplot.close()
 
 def plotTop1Acc(history, model_name,fontsize=12,titlefontsize = 14, xaxis=None):
     ''' Plots the acc function '''
-
+    x_len = len(history['top_k_categorical_accuracy'])
     pyplot.switch_backend('agg')
     xaxis = [i for i in range(1,len(history['acc']))] + [len(history['loss'])]
     pyplot.plot(xaxis,history['acc'])
@@ -44,7 +45,8 @@ def plotTop1Acc(history, model_name,fontsize=12,titlefontsize = 14, xaxis=None):
     pyplot.gca().xaxis.set_major_locator(locator)
     formatter = matplotlib.ticker.StrMethodFormatter("{x:.0f}")
     pyplot.gca().xaxis.set_major_formatter(formatter)
-    pyplot.xlim(0, 21)
+    pyplot.xlim(0, x_len+1)
+    pyplot.xticks(numpy.arange(0, x_len+1, 5.0))
 
 
     pyplot.savefig('testPlots/accPlots/' + model_name+"_top1")
@@ -52,7 +54,7 @@ def plotTop1Acc(history, model_name,fontsize=12,titlefontsize = 14, xaxis=None):
 
 def plotTop5Acc(history, model_name,fontsize=12,titlefontsize = 14, xaxis=None):
     ''' Plots the acc function '''
-
+    x_len = len(history['top_k_categorical_accuracy'])
     pyplot.switch_backend('agg')
     xaxis = [i for i in range(1,len(history['top_k_categorical_accuracy']))] + [len(history['top_k_categorical_accuracy'])]
     pyplot.plot(xaxis,history['top_k_categorical_accuracy'])
@@ -66,7 +68,8 @@ def plotTop5Acc(history, model_name,fontsize=12,titlefontsize = 14, xaxis=None):
     pyplot.gca().xaxis.set_major_locator(locator)
     formatter = matplotlib.ticker.StrMethodFormatter("{x:.0f}")
     pyplot.gca().xaxis.set_major_formatter(formatter)
-    pyplot.xlim(0, 21)
+    pyplot.xlim(0, x_len+1)
+    pyplot.xticks(numpy.arange(0, x_len+1, 5.0))
 
 
     pyplot.savefig('testPlots/top5accPlots/' + model_name+"_top5")
