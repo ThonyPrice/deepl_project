@@ -2,14 +2,14 @@
 
 \begin{table}[htbp]
 \begin{center}
-\begin{tabular}{|c|l|l|l|}
+\begin{tabular}{|l|l|l|l|}
 \cline{1-4}
-\textbf{Model} & \textbf{Top-5 val} & \textbf{Top-1 val} & \textbf{Test}  \\
+\textbf{Model} & \textbf{Top-1 val} & \textbf{Top-5 val} & \textbf{Test}  \\
 \cline{1-4}
-          CNN1 &   3.759  		&  0 	& 0\\
-          CNN2 &   42.8  		&  0 	& 0\\
-          CNN3 &   3751.879  	&  15\% & 0\\
-          CNN4 &   24785.653  	& 87\% 	&	0\\
+          A: SGD, RUI                &   17\%  		  &  96\%	      & 0\\
+          B: Adam, RUI, BN           &   22\%  		  &  98\%	      & 0\\
+          C: Adam, RUI, Dropout      &   6\%      	&  40\%       & 0\\
+          D: Adam, HEI, Dropout, BN  &   29\%  	    &  92\% 	    &	0\\
 
 \cline{1-4}
 \end{tabular}
