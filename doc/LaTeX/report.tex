@@ -196,12 +196,11 @@ From table \ref{table:accuracy} it is clear that adding regularization and thus 
 
 \subsection{Tiny ImageNet state of the art}
 
-Comparing ours to other state of the art networks.
-
 In Techniques for Image Classification on Tiny-ImageNet by Zach Barnes, Frank Cipollone and Tyler Romero of Stanford University, Stanford, CA they showed that using a ResNet18 with data augmentation, dropout and Snapshot Ensembleling they could receive an accuracy of top-5 validation of 81,4 \%, top-1 validation of 60,2 \% and top-1 test of 53,6 \%.
 
-
 DenResNet: Ensembling Dense Networks and Residual Networks by Victor Cheung of Stanford University Computer Science Department achieve an accuracy of approximately 65 \% top-1 error rate on the validation set and an error on the test set of 25.6 \%. As of June 12th, 2017 their result was first on the leaderboard for TinyImagenet. They used a  ensemble of three models: ResNet101, ResNet152 and DenseNet121. They apply normalization, marginalization and MAP inference in the ensemble architecture.
+
+Our results definitely comes up short comparing against these. The main primarily difference lies in number of epochs, our 60 is much less than number of epochs used by the implementations mentioned above. Another factor are the suboptimal parameters in our network which leads to overfitting.
 
 \section{Conclusion}
 Making neural nets are a form of art. With so many architectures to choose from the real craftsmanship lies in tuning and tweaking the network accordingly to work properly. We're satisfied with the project as we've learned a lot about CNNs, even though we were hoping to achieve somewhat better accuracy.
