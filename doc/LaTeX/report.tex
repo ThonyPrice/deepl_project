@@ -146,7 +146,9 @@ The slightly improved convergence of the validation loss inspired hope of a succ
 
 \subsection{Final results}
 
-The final results found was achieved with a model of with \textbf{SPECS}. Since it proved a steady learning rate of the 20 first epochs we ran it for 60 in total to see if learning was continued. The top-1 accuracy was \textbf{X} and top-5 accuracy \textbf{Y}. This indicates \textbf{Z}. The plot REF presents the evolution of accuracy and loss over the training epochs.
+The final results found was achieved with a model that has the structure presented in TABLE. We found additional connected layers in the end combined with L2 regularization helped prevent overfitting. During our testing it proved a steady learning rate of the 20 first epochs, so we ran it for 60 in total to see if learning was continued and what final results we could achieve.
+
+The top-1 accuracy was \textbf{X}\ and top-5 accuracy \textbf{Y}, both on validation data. Plot A represents training and validation loss, even though there are fluctuations the validation loss follows the training loss nicely, the expanding gap in the higher epochs may be countered by increasing regularization. Plot B illustrates the evolution of accuracy which, in conjunction with the loss, converges towards the maximal accuracy found.
 
 % --- Insert accuracy and loss plots here ---
 
