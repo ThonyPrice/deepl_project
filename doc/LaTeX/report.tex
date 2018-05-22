@@ -127,8 +127,34 @@ Loss function.\\
 The network was trained on the entire Tiny ImageNet dataset, consisting of the 100 000 pictures, for \textbf{NUMBER OF EPOCHS}. Some of the later iterations of training also included data augmentation methods listed in \textbf{WHERE DATA AUGMENTATION SECTION IS}.
 
 \section{Results}
-Graphs/Tables of trainloss, valloss, accuracies etc.
-\input{snippets/modeldummy.tex}
+
+\subsection{Declaring war on overfitting}
+
+Running over all 4 models presented in table \ref{table:3_configurations} the training and validation loss proved immense after around 10 epochs. See figure \ref{fig:4_losses}. We then realized that most of the architectures lacked any form of regularization, rendering our results very much expected.
+
+\input{snippets/4_losses}
+
+To combat the overfitting we begun tinkering with what regularization techniques are known to us, these were:
+
+\begin{itemize}
+  \item Subtracting mean of all images
+  \item L2 regularization
+  \item Dropout in dense layers
+  \item Decay rate
+\end{itemize}
+
+Manually tuning these parameters we found some improvements, such as those in figure \ref{fig:loss_improved_1}. And continuing in the same manner gave the loss plot of figure REF.
+
+\input{snippets/loss_improved_1}
+
+\subsection{Final results}
+
+The final results found was achieved with a model of with \textbf{SPECS}.
+
+The top-1 accuracy was \textbf{X} and top-5 accuracy \textbf{Y}. This indicates \textbf{Z}.
+
+% Graphs/Tables of trainloss, valloss, accuracies etc.
+% \input{snippets/modeldummy.tex}
 
 \section{Discussion}
 
