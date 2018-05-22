@@ -47,6 +47,8 @@ def plotTop1Acc(history, model_name,fontsize=12,titlefontsize = 14, xaxis=None):
     pyplot.xlim(0, 21)
 
 
+
+
     pyplot.savefig('testPlots/accPlots/' + model_name+"_top1")
     pyplot.close()
 
@@ -83,6 +85,10 @@ def main():
             plotLoss(history, name)
             plotTop1Acc(history, name)
             plotTop5Acc(history, name)
+
+            print("model name: " + name)
+            print(name + " top 1 acc: " + str(history['val_acc'][-1]))
+            print(name + " top 5 acc: " + str(history['val_top_k_categorical_accuracy'][-1]))
 
         file.close()
 
