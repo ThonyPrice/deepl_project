@@ -150,7 +150,7 @@ The final results found was achieved with a model that has the structure present
 
 The top-1 accuracy was \textbf{X}\ and top-5 accuracy \textbf{Y}, both on validation data. Plot A represents training and validation loss, even though there are fluctuations the validation loss follows the training loss nicely, the expanding gap in the higher epochs may be countered by increasing regularization. Plot B illustrates the evolution of accuracy which, in conjunction with the loss, converges towards the maximal accuracy found.
 
-The results of the all different models can be found in table \ref{table:accuracy}. 
+The results of the all different models can be found in table \ref{table:accuracy}.
 
 
 \input{snippets/accuracy_table}
@@ -162,9 +162,8 @@ The results of the all different models can be found in table \ref{table:accurac
 \label{sec:Discussion}
 
 \subsection{Evaluation of method}
-Thoughts about the method.
 
-If we where to recreate the experiment we would use a different base architecture for the network.
+There are several flaws in our method and if we where to recreate the experiment we would use a different base architecture for the network.
 As seen in figure \ref{wrap-fig:graph_cnns} it is clear that using an VGG structure is not optimal in regard to accuracy, operations and amount of parameters.
 A residual network structure seems to be the network with the highest potential today with regard to accuracy and operation.
 We would probably start with a basic ResNet structure instead of the VGG-net.
@@ -178,7 +177,7 @@ Thoughts about the result.
 
 As mentioned in the previous section the test accuracy would perhaps have been slightly higher if we would have regarded the fact that some images are in gray-scale. Around 2\% of the test images and validation images are gray-scale and we assume that the percentage of gray-scale images is the same in the test data. This implies an 2\% loss in accuracy on the test data.
 
-\subsection{ImageNet state of the art}
+\subsection{Tiny ImageNet state of the art}
 
 Comparing ours to other state of the art networks.
 
