@@ -70,7 +70,6 @@ Figure \ref{fig:30_samples} visualizes a small sample of pictures included in th
 \input{snippets/samples}
 
 \subsection{Data Augmentation}
-\label{DataAugmentation}
 An additional feature that was later added in order to improve the accuracy of the network was data augmentation. Data augmentation was applied batch by batch for each batch used in the training process. The methods of augmentation were the following:
 
 \begin{itemize}
@@ -101,56 +100,68 @@ This was later changed to using Batch Normalization instead for the later traini
 
 \subsubsection{Evaluating architectures}
 
-The basis of the CNN architecture is inspired by \cite{NIPS2012_4824}, it is summarized in figure \ref{fig:architecture}. However, it was implemented on the full ImageNet dataset. Inspired by architectures mentioned in Previous work \ref{sec:PreviousWork}, we decided to test four configurations, summarized in \ref{table:3_configurations}.
+The basis of the CNN architecture is inspired by \cite{NIPS2012_4824}, it is summarized in figure \ref{fig:architecture}. However, it was implemented on the full ImageNet dataset. Inspired by architectures mentioned in Previous work \ref{sec:PreviousWork}, we decided to test three configurations, summarized in \ref{table:3_configurations}.
 
-\input{snippets/fig_architecture}
-\FloatBarrier
 \input{snippets/3_configurations}
 
-Training was done on the entire Tiny ImageNet dataset, containing 100 000 images and their respective labels. The composition of the dataset is 200 classes with 500 images each. The training data is shuffled before the training process begins. For evaluation, the entire validation dataset was used, containing 10000 images. Some of the later iterations of training also included data augmentation methods listed in section \ref{DataAugmentation}.The results of each architecture is presented in the Results \ref{sec:Results}.
+% We should not use this anymore(?)
+% \input{snippets/fig_architecture}
 
+Tests was run with \textbf{insert how tests were run} iterations. Training was done on the entire Tiny Imagenet dataset, containing 100 000 images and their respective labels. The composition of the dataset is 200 classes with 500 images each. The training data is shuffled before the training process begins. For evaluation, the entire validation dataset was used, containing 10000 images. The results of each architecture is presented in section...
+
+\subsubsection{Initialization matters}
+
+Details about the different parts of the network.\\
+Weight initialization.\\
+Optimizer.\\
+Learning rate.\\
+Loss function.\\
+
+
+
+
+\subsubsection{Training and evaluation}
+The network was trained on the entire Tiny ImageNet dataset, consisting of the 100 000 pictures, for \textbf{NUMBER OF EPOCHS}. Some of the later iterations of training also included data augmentation methods listed in \textbf{WHERE DATA AUGMENTATION SECTION IS}.
 
 \section{Results}
-\label{sec:Results}
 
 \subsection{Declaring war on overfitting}
 
-Running over all 4 models presented in table \ref{table:3_configurations} the training and validation loss proved immense after around 5-10 epochs. See figure \ref{fig:4_losses}. We then realized that most of the architectures lacked any form of regularization, except the ones with dropout. Therefore rendering our results very much expected.
+Running over all 4 models presented in table \ref{table:3_configurations} the training and validation loss proved immense after around 10 epochs. See figure \ref{fig:4_losses}. We then realized that most of the architectures lacked any form of regularization, rendering our results very much expected.
 
 \input{snippets/4_losses}
 
+<<<<<<< HEAD
 To combat the overfitting we begun tinkering with what regularization and and optimization techniques we had in our toolbox, these were primarily:
+=======
+To combat the overfitting we begun tinkering with what regularization techniques are known to us, these were:
+>>>>>>> 1b9ac7ea8327bd4ef8ae80b133e9f60b86ee05ef
 
 \begin{itemize}
   \item Subtracting mean of all images
   \item L2 regularization
+<<<<<<< HEAD
   \item Learning rate
+=======
+  \item Dropout in dense layers
+>>>>>>> 1b9ac7ea8327bd4ef8ae80b133e9f60b86ee05ef
   \item Decay rate
 \end{itemize}
 
-%------------------------------------------
-\begin{wrapfigure}{r}{0.5\linewidth}
-  \includegraphics[width=\linewidth]{../images/improved_loss_1.png}
-  \caption[]
-  {\small Slightly improved results of loss functions while tinkering with regularization. Learning appears inconsistent but overfitting is not as present as previously.}
-  \label{fig:loss_improved_1}
-\end{wrapfigure}
-%------------------------------------------
-Manually tuning these parameters we found some improvements, such as those in figure \ref{fig:loss_improved_1}. Continuing in the same manner gave the loss plot of figure REF. The network applied had 30\% dropout and L2 regularization in the fully connected layer and in other aspects constrained to the architecture (C) in table \ref{table:3_configurations}.
+Manually tuning these parameters we found some improvements, such as those in figure \ref{fig:loss_improved_1}. And continuing in the same manner gave the loss plot of figure REF.
 
-The slightly improved convergence of the validation loss inspired hope of a successful network but a longer run (no plot available) showed that overfitting begun to occur after ~20 epochs. We went back to tinkering with the models and tried tuning different parameters to accomplish a steady learning rate.
-
-% Don't use this - apply wrapper figure instead
-% \input{snippets/loss_improved_1}
+\input{snippets/loss_improved_1}
 
 \subsection{Final results}
 
-The final results found was achieved with a model of with \textbf{SPECS}. Since it proved a steady learning rate of the 20 first epochs we ran it for 60 in total to see if learning was continued. The top-1 accuracy was \textbf{X} and top-5 accuracy \textbf{Y}. This indicates \textbf{Z}. The plot REF presents the evolution of accuracy and loss over the training epochs.
+The final results found was achieved with a model of with \textbf{SPECS}.
 
-% --- Insert accuracy and loss plots here ---
+The top-1 accuracy was \textbf{X} and top-5 accuracy \textbf{Y}. This indicates \textbf{Z}.
+
+% Graphs/Tables of trainloss, valloss, accuracies etc.
+% \input{snippets/modeldummy.tex}
 
 \section{Discussion}
-\label{sec:Discussion}
 
 \subsection{Evaluation of method}
 Thoughts about the method.
