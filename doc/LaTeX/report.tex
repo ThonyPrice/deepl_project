@@ -113,33 +113,43 @@ Training was done on the entire Tiny ImageNet dataset, containing 100 000 images
 \section{Results}
 \label{sec:Results}
 
-\subsection{Declaring war on overfitting}
+\subsection{First training iteration: Declaring war on overfitting}
 
 Running over all 4 models presented in table \ref{table:3_configurations} the training and validation loss proved immense after around 5-10 epochs. See figure \ref{fig:4_losses}. We then realized that most of the architectures lacked any form of regularization, except the ones with dropout. Therefore rendering our results very much expected.
 
 \input{snippets/4_losses}
+\FloatBarrier
 
-To combat the overfitting we begun tinkering with what regularization and and optimization techniques we had in our toolbox, these were primarily:
+To combat the overfitting we begun tinkering with what regularization we had in our toolbox by testing different combinations of:
 
 \begin{itemize}
-  \item Subtracting mean of all images
+ 
   \item L2 regularization
-  \item Learning rate
   \item Decay rate
-  \item Stuff here
+  \item Dropout
+  \item Batch normalization 
+  
 \end{itemize}
 
+
+
 %------------------------------------------
-\begin{wrapfigure}{r}{0.5\linewidth}
+\begin{wrapfigure}{r}{0.5\linewidth}[!h]
   \includegraphics[width=\linewidth]{../images/improved_loss_1.png}
   \caption[]
-  {\small Slightly improved results of loss functions while tinkering with regularization. Learning appears inconsistent but overfitting is not as present as previously.}
+  {\small Slightly improved convergence of loss functions(not overfitting to the training data) while tinkering with regularization, but significantly increased loss value.}
   \label{fig:loss_improved_1}
 \end{wrapfigure}
 %------------------------------------------
-Manually tuning these parameters we found some improvements, such as those in figure \ref{fig:loss_improved_1}. Continuing in the same manner gave the loss plot of figure REF. The network applied had 30\% dropout and L2 regularization in the fully connected layer and in other aspects constrained to the architecture (C) in table \ref{table:3_configurations}.
+\FloatBarrier
 
-The slightly improved convergence of the validation loss inspired hope of a successful network but a longer run (no plot available) showed that overfitting begun to occur after ~20 epochs. We went back to tinkering with the models and tried tuning different parameters to accomplish a steady learning rate.
+We also added some additional preprocessing to the dataset by subtracting the mean value of the dataset, feature-wise.
+
+Manually tuning these parameters we found some minor improvements, which is displayed in figure \ref{fig:loss_improved_1}. In this version, we took model D from \ref{table:3_configurations} and added an $L_{2}$ regularization term of $1E-3$ after each convolutional and fully connected layer, and also increased the number of fully connected layers to 3, where we increased the dropout to 70\%. 
+
+
+The new model showed a slight improved convergence of the validation loss, but showed an atrocious learning capability due to the high loss values, and thus we found that adding batch normalization, dropout in addition to $L_{2}$ regularization caused the network to shift over to the other side of the spectrum, where instead of overfitting, it had problems learning things. We decided to remove dropout that occurs after the fully connected layers, and instead rely on the L2 regularization and add a decay to the learning rate of the network, that decays the learning rate by $1e-6$ after each gradient update. The Adam algorithm was initialized with a learning rate of $1e-2$, and we now let it train for longer, 60 epochs in total. 
+
 
 % Don't use this - apply wrapper figure instead
 % \input{snippets/loss_improved_1}
