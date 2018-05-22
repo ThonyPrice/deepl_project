@@ -134,7 +134,7 @@ To combat the overfitting we begun tinkering with the different methods we had i
 
 
 %------------------------------------------
-\begin{wrapfigure}{r}{0.5\linewidth}
+\begin{wrapfigure}{r}{0.4\linewidth}
   \includegraphics[width=\linewidth]{../images/improved_loss_1.png}
   \caption[]
   {\small Slightly improved convergence of loss functions(not overfitting to the training data) while tinkering with regularization, but significantly increased loss value.}
@@ -154,32 +154,34 @@ The new model showed a slight improved convergence of the validation loss, but s
 % Don't use this - apply wrapper figure instead
 % \input{snippets/loss_improved_1}
 
+\newpage
 \subsection{Final results}
+\FloatBarrier
+
+\input{snippets/final_plots}
+
 %------------------------------------------
-\begin{wraptable}{r}{0.5\linewidth}
+\begin{wraptable}{l}{0.4\linewidth}
   \input{snippets/final_config.tex}
 \end{wraptable}
 %------------------------------------------
-
 The final results found was achieved with a model that has the structure presented in TABLE. We found additional connected layers in the end combined with L2 regularization helped prevent overfitting. During our testing it proved a steady learning rate of the 20 first epochs, so we ran it for 60 in total to see if learning was continued and what final results we could achieve.
 
 The top-1 accuracy was \textbf{X}\ and top-5 accuracy \textbf{Y}, both on validation data. Plot A represents training and validation loss, even though there are fluctuations the validation loss follows the training loss nicely, the expanding gap in the higher epochs may be countered by increasing regularization. Plot B illustrates the evolution of accuracy which, in conjunction with the loss, converges towards the maximal accuracy found.
 
-The results of the all different models can be found in table \ref{table:accuracy}.
-
+Summing up all tested models during the experiments, the results of the these models can be found in table \ref{table:accuracy} presented with top-1 accuracy and top-5 accuracy. \\
 
 \input{snippets/accuracy_table}
 
-
 % --- Insert accuracy and loss plots here ---
 
+\clearpage
 \section{Discussion}
 \label{sec:Discussion}
 
 \subsection{Evaluation of method}
-Thoughts about the method.
 
-If we where to recreate the experiment we would use a different base architecture for the network.
+There are several flaws in our method and if we where to recreate the experiment we would use a different base architecture for the network.
 As seen in figure \ref{wrap-fig:graph_cnns} it is clear that using an VGG structure is not optimal in regard to accuracy, operations and amount of parameters.
 A residual network structure seems to be the network with the highest potential today with regard to accuracy and operation.
 We would probably start with a basic ResNet structure instead of the VGG-net.
@@ -193,7 +195,7 @@ Thoughts about the result.
 
 As mentioned in the previous section the test accuracy would perhaps have been slightly higher if we would have regarded the fact that some images are in gray-scale. Around 2\% of the test images and validation images are gray-scale and we assume that the percentage of gray-scale images is the same in the test data. This implies an 2\% loss in accuracy on the test data.
 
-\subsection{ImageNet state of the art}
+\subsection{Tiny ImageNet state of the art}
 
 Comparing ours to other state of the art networks.
 
