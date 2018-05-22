@@ -20,9 +20,9 @@ def getModel(modelString, dim, opt = "adam", BN = False, dropout = 0, initialize
 def vgg_z(dim, opt, BN, dropout, initializer):
     model = Sequential()
     if opt == 'Adam':
-        opt = Adam(lr=0.01, decay=0.99)
+        opt = Adam(lr=0.01, decay=1e-6)
     if opt == 'sgd_mom':
-        opt = SGD(lr=0.3, momentum=0.9, decay=0.99, nesterov=True)
+        opt = SGD(lr=0.01, momentum=0.9, decay=1e-6, nesterov=True)
     if BN:
         do_BN = lambda : model.add(BatchNormalization())
     else:

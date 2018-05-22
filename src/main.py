@@ -91,8 +91,8 @@ def main():
     model_list = [
         # Name,               ["architect", (res),   "solver",  BN?, dropout, init
         # ("sgd",             ["vgg_z", (64, 64, 3), "sgd",     False,   0, 'random_uniform']),
-        ("sgd_mom",         ["vgg_z", (64, 64, 3), "sgd_mom", True,   0.3, 'he_normal']),
-        # ("adam_bn",         ["vgg_z", (64, 64, 3), "Adam",    True,    0, 'random_uniform']),
+        #("sgd_mom",         ["vgg_z", (64, 64, 3), "sgd_mom", False,   0.5, 'he_normal']),
+         ("adam_bn",         ["vgg_z", (64, 64, 3), "Adam",    True,    0, 'he_uniform']),
         # ("adam_drop",       ["vgg_z", (64, 64, 3), "Adam",    False, 0.3, 'random_uniform']),
         # ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "Adam",    True,  0.7, 'random_uniform']),
         # ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "Adam",    True,  0.5, 'he_normal'])
