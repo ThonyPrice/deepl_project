@@ -64,7 +64,10 @@ def trainModel(model_list):
     ''' Train all models in list and save their progress '''
     X_tr, y_tr, X_val, y_val = getPreparedData()
     # Prepare data generator object
-    datagen = image_utils.ImageDataGenerator()
+    datagen = image_utils.ImageDataGenerator(
+        featurewise_center=True, 
+        samplewise_center=True
+    )
     datagen.fit(X_tr)
     for m_name, params in model_list:
         print('Evaluating model: ' + m_name)
@@ -88,12 +91,12 @@ def main():
     getData # Prepare data
     model_list = [
         # Name,             ["architect", (res),   "solver",  BN?, dropout, init
-        ("sgd",             ["vgg_z", (64, 64, 3), "sgd",     False,   0, 'random_uniform']),
-        ("sgd_mom",         ["vgg_z", (64, 64, 3), "sgd_mom", False,   0, 'random_uniform']),
-        ("adam_bn",         ["vgg_z", (64, 64, 3), "Adam",    True,    0, 'random_uniform']),
+        # ("sgd",             ["vgg_z", (64, 64, 3), "sgd",     False,   0, 'random_uniform']),
+        # ("sgd_mom",         ["vgg_z", (64, 64, 3), "sgd_mom", False,   0, 'random_uniform']),
+        # ("adam_bn",         ["vgg_z", (64, 64, 3), "Adam",    True,    0, 'random_uniform']),
         # ("adam_drop",     ["vgg_z", (64, 64, 3), "Adam",    False, 0.3, 'random_uniform']),
-        ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "Adam",    True,  0.5, 'random_uniform']),
-        ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "Adam",    True,  0.5, 'he_normal'])
+        ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "Adam",    True,  0.7, 'random_uniform']),
+        ("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "Adam",    True,  0.7, 'he_normal'])
     ]
     trainModel(model_list)
 

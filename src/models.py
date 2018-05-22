@@ -4,7 +4,7 @@ from keras.preprocessing import image as image_utils
 from keras.optimizers import Adam, SGD
 from keras import metrics, regularizers
 
-l2_rate = 0.0001
+l2_rate = 0.001
 
 def getModel(modelString, dim, opt = "adam", BN = False, dropout = 0, initializer = 'random_uniform'):
     allModels = ['vgg_z']
@@ -81,7 +81,20 @@ def vgg_z(dim, opt, BN, dropout, initializer):
     model.add(Dense(2048,
         kernel_initializer=initializer,
         kernel_regularizer=regularizers.l2(l2_rate)))
+    do_BN()
+    model.add(Activation('relu'))
+    model.add(Dropout(dropout))
 
+    model.add(Dense(2048,
+        kernel_initializer=initializer,
+        kernel_regularizer=regularizers.l2(l2_rate)))
+    do_BN()
+    model.add(Activation('relu'))
+    model.add(Dropout(dropout))
+
+    model.add(Dense(2048,
+        kernel_initializer=initializer,
+        kernel_regularizer=regularizers.l2(l2_rate)))
     do_BN()
     model.add(Activation('relu'))
     model.add(Dropout(dropout))
