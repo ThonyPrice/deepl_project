@@ -12,7 +12,7 @@
   A & B & C & D
   \\\hline
 
-  SGD/adam, RUI & adam, BN, RUI &  adam, Dropout, RUI & adam, Dropout, RUI, BN
+  SGD, RUI & Adam, RUI, BN &  Adam, RUI, Dropout & Adam, HEI, Dropout, BN
   \\\hhline{|=|=|=|=|}
 
   \multicolumn{4}{|c|}{input ($64\times64\times3\;RGB\;image$)}
@@ -46,7 +46,7 @@
   }
 \caption[]
 {\small
-  Configuration of the four different CNNs tested initially. They differ in terms of solver, usage of batch normalization or not, and dropout.
+  Configuration of the four different CNNs tested initially. They differ in terms of solver (SGD/Adam), batch normalization (BN), Dropout and initializer (Random Unit Initialization/He Initialization).
 }
 \label{table:3_configurations}
 \end{center}
