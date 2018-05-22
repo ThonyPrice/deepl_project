@@ -156,6 +156,12 @@ The final results found was achieved with a model of with \textbf{SPECS}. Since 
 \subsection{Evaluation of method}
 Thoughts about the method.
 
+If we where to recreate the experiment we would use a different base architecture for the network.
+As seen in figure \ref{wrap-fig:graph_cnns} it is clear that using an VGG structure is not optimal in regard to accuracy, operations and amount of parameters.
+A residual network structure seems to be the network with the highest potential today with regard to accuracy and operation.
+We would probably start with a basic ResNet structure instead of the VGG-net.
+The reason for using a VGG- net was foremost its easy interpretation and simple implementation. However, the struggle to get an high accuracy due to slow training rate most likely slowed down the process more then the time required to implement and interpret the ResNet structure.
+
 Ignoring all gray-scale images in training could have an slight impact on our test accuracy. If we were to recreate the method we would try to figure out an optimal way of handling both grayscale images and RGB images in the same method. One approach would be to reduce all images with 3 channels to grayscale images and create a model optimal for only 1 channel images. Another approach would be to use a assemble methodology with one network adapted for grayscale images and one for RGB images.
 
 \subsection{Evaluation of results}
@@ -175,6 +181,8 @@ DenResNet: Ensembling Dense Networks and Residual Networks by Victor Cheung of S
 
 \section{Conclusion}
 Final thoughts, future research, improvements etc.
+
+
 
 \bibliography{references}{}
 \bibliographystyle{plain}
