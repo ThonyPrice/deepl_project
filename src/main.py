@@ -28,7 +28,7 @@ from sklearn.model_selection import StratifiedKFold
 from models import *
 
 # Global parameters
-EPOCHS = 20
+EPOCHS = 60
 BATCH_SIZE = 100
 NUM_CLASSES = 200
 IMAGE_SIZE = 64
@@ -75,7 +75,7 @@ def trainModel(model_list):
             datagen.flow(X_tr, y_tr, batch_size=BATCH_SIZE),
             steps_per_epoch=len(X_tr) / BATCH_SIZE, epochs=EPOCHS,
             verbose=1, callbacks=None, validation_data=(X_val, y_val),
-            use_multiprocessing=False, shuffle=False)
+            use_multiprocessing=False, shuffle=True)
         plotLoss(networkHistory, m_name)
         scores = model.evaluate(X_val, y_val, verbose=1)
         print('Scores:')
