@@ -28,7 +28,7 @@ from sklearn.model_selection import StratifiedKFold
 from models import *
 
 # Global parameters
-EPOCHS = 20
+EPOCHS = 100
 BATCH_SIZE = 100
 NUM_CLASSES = 200
 IMAGE_SIZE = 64
@@ -67,10 +67,10 @@ def trainModel(model_list):
     datagen = image_utils.ImageDataGenerator(
         featurewise_center=True,
         rotation_range=60,
-        zca_whitening=True,
+        zca_whitening=False,
         zoom_range=0.2,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
+        width_shift_range=16,
+        height_shift_range=16,
         horizontal_flip=True
     )
     datagen.fit(X_tr)
@@ -102,7 +102,7 @@ def main():
         # ("adam_drop",       ["vgg_z", (64, 64, 3), "Adam",    False, 0.3, 'random_uniform']),
         # ("adam_bn_drop",    ["vgg_z", (64, 64, 3), "Adam",    True,  0.7, 'random_uniform']),
         #("adam_bn_drop_he", ["vgg_z", (64, 64, 3), "Adam",    True,  0.7, 'he_normal'])
-        ("adam_final", ["vgg_z", (64, 64, 3), "Adam",    True,  0.3, 'he_normal'])
+             ("adam_final_no_fc_100batch", ["vgg_z", (64, 64, 3), "Adam",    True,  0.0, 'he_normal'])
     ]
     trainModel(model_list)
 
