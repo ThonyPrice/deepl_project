@@ -12,18 +12,13 @@ def plotLoss(history, model_name, fontsize=12, titlefontsize = 14, xaxis=None):
 
     pyplot.switch_backend('agg')
     xaxis = [i for i in range(1,len(history['loss']))] + [len(history['loss'])]
-    pyplot.plot(xaxis,history['loss'])
-    pyplot.plot(xaxis,history['val_loss'])
+    pyplot.plot(history['loss'])
+    pyplot.plot(history['val_loss'])
     pyplot.title('Model Loss', fontsize=titlefontsize)
     pyplot.xlabel('epoch',fontsize=fontsize)
     pyplot.ylabel('loss',fontsize=fontsize)
     pyplot.legend(["Train loss", "Validation loss"], loc='best', fontsize=fontsize)
 
-    locator = matplotlib.ticker.MultipleLocator(2)
-    pyplot.gca().xaxis.set_major_locator(locator)
-    formatter = matplotlib.ticker.StrMethodFormatter("{x:.0f}")
-    pyplot.gca().xaxis.set_major_formatter(formatter)
-    pyplot.xlim(0, 21)
 
     pyplot.savefig('testPlots/lossPlots/' + model_name+"_loss")
     pyplot.close()
@@ -33,18 +28,13 @@ def plotTop1Acc(history, model_name,fontsize=12,titlefontsize = 14, xaxis=None):
 
     pyplot.switch_backend('agg')
     xaxis = [i for i in range(1,len(history['acc']))] + [len(history['loss'])]
-    pyplot.plot(xaxis,history['acc'])
-    pyplot.plot(xaxis,history['val_acc'])
+    pyplot.plot(history['acc'])
+    pyplot.plot(history['val_acc'])
     pyplot.title('Top 1 Model Accuracy', fontsize=titlefontsize)
     pyplot.xlabel('Epoch', fontsize=fontsize)
     pyplot.ylabel('Accuracy', fontsize=fontsize)
     pyplot.legend(["Train accuracy", "Validation accuracy"], loc='best', fontsize=fontsize)
 
-    locator = matplotlib.ticker.MultipleLocator(2)
-    pyplot.gca().xaxis.set_major_locator(locator)
-    formatter = matplotlib.ticker.StrMethodFormatter("{x:.0f}")
-    pyplot.gca().xaxis.set_major_formatter(formatter)
-    pyplot.xlim(0, 21)
 
 
 
@@ -57,18 +47,13 @@ def plotTop5Acc(history, model_name,fontsize=12,titlefontsize = 14, xaxis=None):
 
     pyplot.switch_backend('agg')
     xaxis = [i for i in range(1,len(history['top_k_categorical_accuracy']))] + [len(history['top_k_categorical_accuracy'])]
-    pyplot.plot(xaxis,history['top_k_categorical_accuracy'])
-    pyplot.plot(xaxis,history['val_top_k_categorical_accuracy'])
+    pyplot.plot(history['top_k_categorical_accuracy'])
+    pyplot.plot(history['val_top_k_categorical_accuracy'])
     pyplot.title('Top 5 Model Accuracy', fontsize=titlefontsize)
     pyplot.xlabel('Epoch', fontsize=fontsize)
     pyplot.ylabel('Accuracy', fontsize=fontsize)
     pyplot.legend(["Train accuracy", "Validation accuracy"], loc='best', fontsize=fontsize)
 
-    locator = matplotlib.ticker.MultipleLocator(2)
-    pyplot.gca().xaxis.set_major_locator(locator)
-    formatter = matplotlib.ticker.StrMethodFormatter("{x:.0f}")
-    pyplot.gca().xaxis.set_major_formatter(formatter)
-    pyplot.xlim(0, 21)
 
 
     pyplot.savefig('testPlots/top5accPlots/' + model_name+"_top5")

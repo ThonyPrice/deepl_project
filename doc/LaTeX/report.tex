@@ -154,31 +154,28 @@ We also added some additional preprocessing to the dataset by subtracting the me
 Manually tuning these parameters we found some minor improvements, which is displayed in figure \ref{fig:loss_improved_1}. In this version, we took model D from table \ref{table:3_configurations} and added an $L_{2}$ regularization term of $1*10{-3}$ after each convolutional and fully connected layer, and also increased the number of fully connected layers to 3. In these fully connected layers we increased the dropout to 70\%.
 
 
-The new model showed a slight improved convergence of the validation loss, but showed an atrocious learning capability due to the high loss values, and thus we found that adding batch normalization, dropout in addition to $L_{2}$ regularization caused the network to shift over to the other side of the spectrum, where instead of overfitting, it had problems learning things. We decided to remove dropout that occurs after the fully connected layers, and instead rely on the $L_{2}$ regularization and add a decay to the learning rate of the network. The decay rate was set to $1*10{-6}$. The Adam solver was initialized with a learning rate of $1*10{-2}$, and we now let it train for longer, 60 epochs in total.
+The new model showed a slight improved convergence of the validation loss, but showed an atrocious learning capability due to the high loss values, and thus we found that adding batch normalization, dropout in addition to $L_{2}$ regularization caused the network to shift over to the other side of the spectrum, where instead of overfitting, it had problems learning things. We decided to remove dropout that occurs after the fully connected layers, and instead rely on the $L_{2}$ regularization and add a decay to the learning rate of the network. The decay rate was set to $1*10^{-6}$. The Adam solver was initialized with a learning rate of $1*10^{-2}$, and we now let it train for longer, 60 epochs in total.
 
 \subsection{Final results}
 
 
-
-
-
-The final results found was achieved with two different model that has the structure presented in table \ref{table:final2configs}. We tested two different approaches: Model E kept the fully connected layers in the end and combined with L2 regularization to help it prevent overfitting to some extent. During our testing it proved a steady learning the 20 first epochs, then it stagnates and begin to overfit. Ideally if we had more time another run with more stricter regularization hopefully would prove more consistent in learning.
+The final results found was achieved with two different models that has the structure presented in table \ref{table:final2configs}. We tested two different approaches: Model E kept the fully connected layers in the end and combined with L2 regularization to help it prevent overfitting to some extent. During our testing it proved a steady learning the 20 first epochs, then it stagnates and begin to overfit. Ideally if we had more time another run with more stricter regularization hopefully would prove more consistent in learning.
 
 \input{snippets/final2configs}
 
 \input{snippets/final_plots}
 
-The top-1 validation accuracy was 25\% and top-5 validation accuracy 50\% for model E. Plot \ref{fig:final_plots_e} (a) represents training and validation loss, even though there are fluctuations the validation loss initially follows the training loss nicely, the expanding gap in the higher epochs may as mentioned be countered by increasing regularization. Plot \ref{fig:final_plots_e} (b) illustrates the evolution of accuracy which, in conjunction with the loss, converges towards the maximal accuracy found.
+The top-1 validation accuracy was $25\%$ and top-5 validation accuracy $50\%$ for model E. Plot \ref{fig:final_plots_e} (a) represents training and validation loss, even though there are fluctuations the validation loss initially follows the training loss nicely, the expanding gap in the higher epochs may as mentioned be countered by increasing regularization. Plot \ref{fig:final_plots_e} (b) illustrates the evolution of accuracy which, in conjunction with the loss, converges towards the maximal accuracy found.
 
 
-As a final network, model F,  we attempted to add some additional reguralization in an attempt to reduce the degree of overfitting to the training data that occured. The $L_{2}$ regularization term was increased to $5*10^{-3}$, and we opted to remove the fully connected layers between the last max-pooling layer and the output layer, and the initial learning rate of the Adam algorithm was reduced to $1*10{-3}$. We let this network train for even longer, 100 epochs in total.
+As a final network, model F,  we attempted to add some additional reguralization in an attempt to reduce the degree of overfitting to the training data that occured. The $L_{2}$ regularization term was increased to $5*10^{-3}$, and we opted to remove the fully connected layers between the last max-pooling layer and the output layer, and the initial learning rate of the Adam algorithm was reduced to $1*10^{-3}$. We let this network train for even longer, 100 epochs in total.
 
 \input{snippets/final_plots2}
 
-The training of the network shows less signs of overfitting, but the accuracy ended at a top 1 $VAL$ validation accuracy and a top 5 $val5$ accuracy. It is likely that the network can be further optimized to still reguarlize enough to not overfit, but that would require additional experimentation.
+The training of the network shows less signs of overfitting, but the accuracy ended at a top 1 validation accuracy of  $24\%$ and a top 5 vaildation accuracy of  $48\%$. It is likely that the network can be further optimized to still reguarlize enough to not overfit, but that would require additional experimentation.
 
 
-Summing up all tested models during the experiments, the results of the these models can be found in table \ref{table:accuracy} presented with top-1 accuracy and top-5 accuracy. It's noteworthy that our last model performed worse than the earlier in terms of accuracy. However, we reason that the last model (E) manifested a more consistent behavior during many epochs of training. That is, if model (D) had been trained further is would faster overfit to the training data and generate a non generalizable network. Model (E) on the other hand manifests consistent learning for a longer duration implying minor tweaking of learning parameters may produce a more optimal network. \\
+Summing up all tested models during the experiments, the results of the these models can be found in table \ref{table:accuracy} presented with top-1 accuracy and top-5 accuracy. It's noteworthy that our last two model performed worse than the earlier in terms of accuracy. However, we reason that the last models (E) and (F) had a more consistent behavior during many epochs of training. That is, if model (D) had been trained further is would faster overfit to the training data and generate a non generalizable network. Model (E) and (F) on the other hand manifests consistent learning for a longer duration implying minor tweaking of learning parameters may produce a more optimal network. \\
 
 \input{snippets/accuracy_table}
 
@@ -209,10 +206,10 @@ Ignoring all gray-scale images in training could have an slight impact on our te
 
 Looking at our result we can see that overfitting is an major issue for our network.
 All figures in \ref{fig:architecture} show that the validation loss increases in the final epochs of the models which clearly indicates overfitting.
-To combat this issue more regularization was added in the model and the adaption shows results of less overfitting seen in figure \ref{fig:final_plots}.
+To combat this issue more regularization was added in the model and the adaption shows results of less overfitting seen in figure 6 and 7.
 From table \ref{table:accuracy} it is clear that adding regularization and thus increasing the complexity also increased the models validation accuracy.
 
-If we would continue the implementations the next step would be to add dropout to model E and balance these parameters, maybe by broadly searching a parameter space then progressing to more fine coarse searches, to find optimal parameters of this model.
+If we would continue the implementations the next step would be further try to balance the parameters between learning and regularization, allowing to efficiently train over more epochs without overfitting, perhaps by broadly searching a parameter space then progressing to more fine coarse searches, to find optimal parameters of this model.
 
 % As mentioned in the previous section the test accuracy would perhaps have been slightly higher if we would have regarded the fact that some images are in gray-scale.
 % Around 2\% of the test images and validation images are gray-scale and we assume that the percentage of gray-scale images is the same in the test data.
