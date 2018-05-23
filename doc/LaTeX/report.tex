@@ -20,9 +20,12 @@
 \newpage
 \begin{abstract}
 
-\noindent This report is our final piece of work in the course DD2424, Deep Learning in Data Science. The overarching purpose is investigating convolutional neural networks (CNNs) while applying knowledge and techniques which we've acquired in during the course.\\
+\noindent This report is our final piece of work in the course DD2424, Deep Learning in Data Science. The overarching purpose is to investigate convolutional neural networks (CNNs) while applying knowledge and techniques which we've acquired during the course.\\
 
-\noindent To thoroughly investigate the topic a CNN will be constructed in the most vanilla way possible. The architecture will be based on research of state of the art and previous implementation on topic. The network will be optimized iteratively by more sophisticated initialization, changing activation functions and additional additional optimization and regularization such as dropout and batch normalization. The effect of each modification will be documented and analyzed. Lastly, the results is discussed on their own and in context of other ImageNet classifiers.
+\noindent To thoroughly investigate the topic, a CNN will be constructed. The architecture will be based on research of previous state of the art implementations on the topic. The network will be optimized iteratively by more sophisticated initialization, changing activation functions and additional optimization and regularization such as dropout and batch normalization. The effect of each modification will be documented and analyzed. The results are then discussed on their own and in context of other ImageNet classifiers.\\
+
+\noindent We implemented a VGGNet which initially suffered immensely by overfitting. By tinkering with parameters of dropout, L2 regularization and batch normalization we countered the effect to some extent but not fully. We achieved a maximum accuracy of 29\%. All in all we learned a lot and conclude that optimization of CNNs is a difficult craft.
+
 \end{abstract}
 \newpage
 
@@ -30,7 +33,7 @@
 \newpage
 
 \section{Introduction}
-Image classification is one of the main branches within Computer Vision. The task can be summarized as extracting features from a picture, which takes the shape of a pixel matrix containing either 1 or 3 channels (for gray-scale or RGB, respectively). Back in 2012, Convolutional Neural Networks (CNNs) began replacing the previously manually written algorithms for feature detection, and continue to hold the title as a state of the art method for image classification. The reason for the resurgence of CNNs was partly due to the winning entry of the AlexNet in the 2012 ImageNet competition \cite{krizhevsky2012imagenet}. Convolutional Neural Networks have existed for almost 20 years, but was previously limited by the availability of data and computer hardware. However, due to the great advancement of modern computers has enabled the ability to train increasingly deep and complex types of neural networks.
+Image classification is one of the main branches within Computer Vision. The task can be summarized as extracting features from a picture, which takes the shape of a pixel matrix containing either 1 or 3 channels (for gray-scale or RGB, respectively). Back in 2012, Convolutional Neural Networks (CNNs) began replacing the previously manually written algorithms for feature detection, and continue to hold the title as a state of the art method for image classification. The reason for the resurgence of CNNs was partly due to the winning entry of the AlexNet in the 2012 ImageNet competition \cite{krizhevsky2012imagenet}. Convolutional Neural Networks have existed for almost 20 years, but was previously limited by the availability of data and computer hardware. However, due to the great advancement of modern computers the ability to train increasingly deep and complex types of neural networks have been enabled.
 
 In 2014, another progressive leap in the development of image classification occurred with the introduction of VGGNet and GoogleNet \cite{simonyan2014very}, \cite{szegedy2016rethinking}.  Due to the possibility of creating CNNs of varying architecture and size, a modern industry standard for evaluating the performance of a network is by benchmarking it through the ImageNet dataset \cite{russakovsky2015imagenet}.
 
@@ -42,33 +45,35 @@ Among the many entries to the ImageNet classification challenge, deep convolutio
 \subsection{AlexNet}
 AlexNet is the network architecture that renewed the industry interest in Convolutional Neural networks. AlexNet consists of a total of 8 layers, which are 5 convolutional layers which are stacked on each other, followed by three fully connected layers. The network features two sets of of batch normalization, which are applied following each of the first two convolution layers, and a dropout occurs after each of the last two fully connected layers. Compared to the other networks mentioned here, it performs slightly worse in terms of accuracy as seen in figure \ref{wrap-fig:graph_cnns}.
 
-\subsection{GoogleNet}
+\clearpage
+\subsection{GoogLeNet}
 %------------------------------------------
-\begin{wrapfigure}{r}{0.5\linewidth}
+\begin{wrapfigure}{r}{0.6\linewidth}
   \includegraphics[width=\linewidth]{../images/graph_cnns.jpg}
   \caption[]
-  {\small Comparision of performance and amount of parameters between different CNNs.}
+  {\small Comparision of performance, amount of parameters and number of operations between different CNNs.}
   \label{wrap-fig:graph_cnns}
 \end{wrapfigure}
 %------------------------------------------
-GoogleNet uses what is called a inception module, which works by calculating several different convolutions of different dimension within the same module combining them before propagating them to the next layer of the network\cite{szegedy2016rethinking}. This causes GoogleNet to be much more space efficient due to the less numerous amount of parameters, which is only further amplified by the usage of average pooling instead of fully connected layers, which further reduces the dimensionality of the total number of network parameters, see figure \ref{wrap-fig:graph_cnns}.
+GoogLeNet uses what is called a inception module, which works by calculating several different convolutions of different dimension within the same module combining them before propagating them to the next layer of the network\cite{szegedy2016rethinking}. This causes GoogLeNet to be much more space efficient due to the less  amount of parameters. This is only further amplified by the usage of average pooling instead of fully connected layers, which further reduces the dimensionality of the total number of network parameters, see figure \ref{wrap-fig:graph_cnns}. \\
 
 \subsection{ResNet}
 ResNet was added to the different architectures of networks for image classification in 2015 and won the 1st place on the ILSVRC 2015 classification task. As deeper networks are more difficult to train a residual learning framework eases the training for deep networks by adding a shortcut between layers. The shortcut decreases the complexity of the networks and witch allows more layers \cite{HeZRS15}.
 
 \subsection{VGGNet}
-VGGNet was introduced in 2014 and one of its most common characteristics is the simplicity of the network, while still achieving good performance on complicated classification tasks such as the ImageNet challenge \cite{simonyan2014very}. While being simple in its design, the network is computationally demanding to train due to the heavy number of parameters.
+VGGNet was introduced in 2014 and one of its most common characteristics is the simplicity of the network, while still achieving good performance on complicated classification tasks such as the ImageNet challenge \cite{simonyan2014very}. While being simple in its design, the network is computationally demanding to train due to the heavy number of parameters, again visualized in figure \ref{wrap-fig:graph_cnns}.
 
 
 \section{Method}
 This section covers our CNN, the methods used for improving its performance, and the tools utilized for the implementation.
 
 \subsection{Dataset}
-The data used was the ImageNet Tiny dataset, which is a reduced variant of the ImageNet set. The Tiny variation consists of 200 different classes. The resolution of the images has been reduced to $64\times64\times3$ (from  $224\times224\times3$). The dataset consists of 100 000 training samples, 10000 validation samples, and 10000 test samples.
+The data used was the ImageNet Tiny dataset, which is a reduced variant of the ImageNet set. The Tiny variation consists of 200 different classes. The resolution of the images has been reduced to $64\times64\times3$ (from  $224\times224\times3$). The dataset consists of 100 000 training samples, 10000 validation samples, and 10000 test samples. Some images are in grayscale, these are ignored as they only constitutes ~2\% of the dataset.
 Figure \ref{fig:30_samples} visualizes a small sample of pictures included in the dataset.
 
 \input{snippets/samples}
 
+\iffalse
 \subsection{Data Augmentation}
 \label{DataAugmentation}
 An additional feature that was later added in order to improve the accuracy of the network was data augmentation. Data augmentation was applied batch by batch for each batch used in the training process. The methods of augmentation were the following:
@@ -79,6 +84,7 @@ An additional feature that was later added in order to improve the accuracy of t
   \item \textbf{Shift:} Shifting images horizontally and vertically allows images to appear in different regions of input space which allows for better generalization.
   \item \textbf{Rotation:} Rotating the images by up to 60 degrees.
 \end{itemize}
+\fi
 
 \subsection{CNN implementation}
 
@@ -91,36 +97,38 @@ The network was written and implemented in Python 3.5.2, using the Keras Framewo
 \begin{itemize}
   \item 1 x NVIDIA Tesla K80
   \item An unspecified dual core CPU (Unknown CPU Platform on the Google Cloud Platform).
-  \item 16 GB RAM memory
+  \item 32 GB RAM memory
   \item 40 GB Disk space.
 \end{itemize}
 
 \subsection{Normalization}
 Normalization of the input data occurs as two different methods: At first, some models are trained with data where the color channels are divided by the maximum output of the RGB color palettes (255), resulting in the the colors being represented as numbers in ${\rm I\!R} \in [0,1]$.
-This was later changed to using Batch Normalization instead for the later training iterations.
+This was later changed to subtracting the mean from the data set, channel wise, in addition to using Batch Normalization instead for the later training iterations.
 
 \subsection{Evaluating architectures}
 
-The basis of the CNN architecture is inspired by \cite{NIPS2012_4824}, it is summarized in figure \ref{fig:architecture}. However, it was implemented on the full ImageNet dataset. Inspired by architectures mentioned in Previous work \ref{sec:PreviousWork}, we decided to test four configurations, summarized in \ref{table:3_configurations}.
+The basis of the CNN architecture is inspired by \cite{NIPS2012_4824}, it is summarized in figure \ref{fig:architecture}. However, the network by \cite{NIPS2012_4824} was implemented on the full sized ImageNet dataset. Inspired by architectures mentioned in Previous work \ref{sec:PreviousWork}, we decided to test four configurations, summarized in table \ref{table:3_configurations}.
 
 \input{snippets/fig_architecture}
 \FloatBarrier
 \input{snippets/3_configurations}
 
-Training was done on the entire Tiny ImageNet dataset, containing 100 000 images and their respective labels. The composition of the dataset is 200 classes with 500 images each. The training data is shuffled before the training process begins. For evaluation, the entire validation dataset was used, containing 10000 images. Some of the later iterations of training also included data augmentation methods listed in section \ref{DataAugmentation}.The results of each architecture is presented in the Results \ref{sec:Results}.
+Training was done on the entire Tiny ImageNet dataset, containing 100 000 images and their respective labels. The composition of the dataset is 200 classes with 500 images each. The training data is shuffled before the training process begins. For evaluation, the entire validation dataset was used, containing 10000 images.
 
+\iffalse
+Some of the later iterations of training also included data augmentation methods listed in section \ref{DataAugmentation}.The results of each architecture is presented in the Results \ref{sec:Results}.
+\fi
 
 \section{Results}
 \label{sec:Results}
 
 \subsection{First training iteration: Declaring war on overfitting}
 
-Running over all 4 models presented in table \ref{table:3_configurations} the training and validation loss proved immense after around 5-10 epochs. See figure \ref{fig:4_losses}. We then realized that most of the architectures lacked any form of regularization, except the ones with dropout. Therefore rendering our results very much expected.
+Running over all 4 models presented in table \ref{table:3_configurations} the training and validation loss proved immense after around 5-10 epochs. See figure \ref{fig:4_losses}. We then realized that most of the architectures lacked any form of regularization, except the ones with dropout. That is, without regularization these results are to be expected.
 
 \input{snippets/4_losses}
-\FloatBarrier
 
-To combat the overfitting we begun tinkering with the different methods we had in our toolbox by testing different combinations of:
+To combat the overfitting we began tinkering with the different methods we had in our toolbox by testing different combinations of:
 
 \begin{itemize}
 
@@ -130,8 +138,6 @@ To combat the overfitting we begun tinkering with the different methods we had i
   \item Batch normalization
 
 \end{itemize}
-
-
 
 %------------------------------------------
 \begin{wrapfigure}{r}{0.4\linewidth}
@@ -145,27 +151,42 @@ To combat the overfitting we begun tinkering with the different methods we had i
 
 We also added some additional preprocessing to the dataset by subtracting the mean value of the dataset, feature-wise.
 
-Manually tuning these parameters we found some minor improvements, which is displayed in figure \ref{fig:loss_improved_1}. In this version, we took model D from \ref{table:3_configurations} and added an $L_{2}$ regularization term of $1E-3$ after each convolutional and fully connected layer, and also increased the number of fully connected layers to 3, where we increased the dropout to 70\%.
+Manually tuning these parameters we found some minor improvements, which is displayed in figure \ref{fig:loss_improved_1}. In this version, we took model D from table \ref{table:3_configurations} and added an $L_{2}$ regularization term of $1*10{-3}$ after each convolutional and fully connected layer, and also increased the number of fully connected layers to 3. In these fully connected layers we increased the dropout to 70\%.
 
 
-The new model showed a slight improved convergence of the validation loss, but showed an atrocious learning capability due to the high loss values, and thus we found that adding batch normalization, dropout in addition to $L_{2}$ regularization caused the network to shift over to the other side of the spectrum, where instead of overfitting, it had problems learning things. We decided to remove dropout that occurs after the fully connected layers, and instead rely on the $L_{2}$ regularization and add a decay to the learning rate of the network, that decays the learning rate by $1e-6$ after each gradient update. The Adam algorithm was initialized with a learning rate of $1e-2$, and we now let it train for longer, 60 epochs in total.
+The new model showed a slight improved convergence of the validation loss, but showed an atrocious learning capability due to the high loss values, and thus we found that adding batch normalization, dropout in addition to $L_{2}$ regularization caused the network to shift over to the other side of the spectrum, where instead of overfitting, it had problems learning things. We decided to remove dropout that occurs after the fully connected layers, and instead rely on the $L_{2}$ regularization and add a decay to the learning rate of the network. The decay rate was set to $1*10{-6}$. The Adam solver was initialized with a learning rate of $1*10{-2}$, and we now let it train for longer, 60 epochs in total.
 
 \subsection{Final results}
 
+
+
+
+
+The final results found was achieved with two different model that has the structure presented in table \ref{table:final2configs}. We tested two different approaches: Model E kept the fully connected layers in the end and combined with L2 regularization to help it prevent overfitting to some extent. During our testing it proved a steady learning the 20 first epochs, then it stagnates and begin to overfit. Ideally if we had more time another run with more stricter regularization hopefully would prove more consistent in learning.
+
+\input{snippets/final2configs}
+
 \input{snippets/final_plots}
 
-%------------------------------------------
-\begin{wraptable}{l}{0.4\linewidth}
-  \input{snippets/final_config.tex}
-\end{wraptable}
-%------------------------------------------
-The final results found was achieved with a model that has the structure presented in TABLE. We found additional connected layers in the end combined with L2 regularization helped prevent overfitting. During our testing it proved a steady learning rate of the 20 first epochs, so we ran it for 60 in total to see if learning was continued and what final results we could achieve.
+The top-1 validation accuracy was 25\% and top-5 validation accuracy 50\% for model E. Plot \ref{fig:final_plots_e} (a) represents training and validation loss, even though there are fluctuations the validation loss initially follows the training loss nicely, the expanding gap in the higher epochs may as mentioned be countered by increasing regularization. Plot \ref{fig:final_plots_e} (b) illustrates the evolution of accuracy which, in conjunction with the loss, converges towards the maximal accuracy found.
 
-The top-1 accuracy was \textbf{X}\ and top-5 accuracy \textbf{Y}, both on validation data. Plot A represents training and validation loss, even though there are fluctuations the validation loss follows the training loss nicely, the expanding gap in the higher epochs may be countered by increasing regularization. Plot B illustrates the evolution of accuracy which, in conjunction with the loss, converges towards the maximal accuracy found.
 
-Summing up all tested models during the experiments, the results of the these models can be found in table \ref{table:accuracy} presented with top-1 accuracy and top-5 accuracy. \\
+As a final network, model F,  we attempted to add some additional reguralization in an attempt to reduce the degree of overfitting to the training data that occured. The $L_{2}$ regularization term was increased to $5*10^{-3}$, and we opted to remove the fully connected layers between the last max-pooling layer and the output layer, and the initial learning rate of the Adam algorithm was reduced to $1*10{-3}$. We let this network train for even longer, 100 epochs in total.
+
+\input{snippets/final_plots2}
+
+The training of the network shows less signs of overfitting, but the accuracy ended at a top 1 $VAL$ validation accuracy and a top 5 $val5$ accuracy. It is likely that the network can be further optimized to still reguarlize enough to not overfit, but that would require additional experimentation.
+
+
+Summing up all tested models during the experiments, the results of the these models can be found in table \ref{table:accuracy} presented with top-1 accuracy and top-5 accuracy. It's noteworthy that our last model performed worse than the earlier in terms of accuracy. However, we reason that the last model (E) manifested a more consistent behavior during many epochs of training. That is, if model (D) had been trained further is would faster overfit to the training data and generate a non generalizable network. Model (E) on the other hand manifests consistent learning for a longer duration implying minor tweaking of learning parameters may produce a more optimal network. \\
 
 \input{snippets/accuracy_table}
+
+
+
+
+
+
 
 % --- Insert accuracy and loss plots here ---
 
@@ -177,30 +198,36 @@ Summing up all tested models during the experiments, the results of the these mo
 
 There are several flaws in our method and if we where to recreate the experiment we would use a different base architecture for the network.
 As seen in figure \ref{wrap-fig:graph_cnns} it is clear that using an VGG structure is not optimal in regard to accuracy, operations and amount of parameters.
-A residual network structure seems to be the network with the highest potential today with regard to accuracy and operation.
-We would probably start with a basic ResNet structure instead of the VGG-net.
-The reason for using a VGG- net was foremost its easy interpretation and simple implementation. However, the struggle to get an high accuracy due to slow training rate most likely slowed down the process more then the time required to implement and interpret the ResNet structure.
+A residual network structure seems have the highest potential today with regard to accuracy and operation.
+We would probably start with a basic ResNet structure instead of the VGG-net if we were to redo the experiments.
+The reason for using a VGG- net was foremost it's easy interpretation and simple implementation. However, the struggle to get an high accuracy due to slow training rate most likely slowed down the process more then the time required to implement and interpret the ResNet structure.
+With ResNet in place fewer computations would mean more time on our hands to search for optimal parameters.
 
-Ignoring all gray-scale images in training could have an slight impact on our test accuracy. If we were to recreate the method we would try to figure out an optimal way of handling both grayscale images and RGB images in the same method. One approach would be to reduce all images with 3 channels to grayscale images and create a model optimal for only 1 channel images. Another approach would be to use a assemble methodology with one network adapted for grayscale images and one for RGB images.
+Ignoring all gray-scale images in training could have an slight impact on our test accuracy. If we were to recreate the method we would try to figure out an optimal way of handling both grayscale images and RGB images in the same method. One approach would be to reduce all images with 3 channels to grayscale images and create a model optimal for only 1 channel images. Another approach would be to use a assemble methodology with one network adapted for grayscale images and one for RGB images. The lack of classification of the grayscale images also resulted in inability to send our predictions for testing which is made externally by providers of ImageNet.
 
 \subsection{Evaluation of results}
 
-Thoughts about the result.
+Looking at our result we can see that overfitting is an major issue for our network.
+All figures in \ref{fig:architecture} show that the validation loss increases in the final epochs of the models which clearly indicates overfitting.
+To combat this issue more regularization was added in the model and the adaption shows results of less overfitting seen in figure \ref{fig:final_plots}.
+From table \ref{table:accuracy} it is clear that adding regularization and thus increasing the complexity also increased the models validation accuracy.
 
-As mentioned in the previous section the test accuracy would perhaps have been slightly higher if we would have regarded the fact that some images are in gray-scale. Around 2\% of the test images and validation images are gray-scale and we assume that the percentage of gray-scale images is the same in the test data. This implies an 2\% loss in accuracy on the test data.
+If we would continue the implementations the next step would be to add dropout to model E and balance these parameters, maybe by broadly searching a parameter space then progressing to more fine coarse searches, to find optimal parameters of this model.
 
-\subsection{Tiny ImageNet state of the art}
+% As mentioned in the previous section the test accuracy would perhaps have been slightly higher if we would have regarded the fact that some images are in gray-scale.
+% Around 2\% of the test images and validation images are gray-scale and we assume that the percentage of gray-scale images is the same in the test data.
+% This implies an 2\% loss in accuracy on the test data.
 
-Comparing ours to other state of the art networks.
+\subsection{Tiny ImageNet State of the art}
 
-In Techniques for Image Classification on Tiny-ImageNet by Zach Barnes, Frank Cipollone and Tyler Romero of Stanford University, Stanford, CA they showed that using a ResNet18 with data augmentation, dropout and Snapshot Ensembleling they could receive an accuracy of top-5 validation of 81,4 \%, top-1 validation of 60,2 \% and top-1 test of 53,6 \%.
+In \cite{BarnesStanford} it was showed that using a ResNet18 with data augmentation, dropout and Snapshot Ensembleling they could receive an accuracy of top-5 validation of 81.4\%, top-1 validation of 60.2\% and top-1 test of 53.6\%. This shows with a quite simple network, i.e. not so deep, high accuracy can be achieved when utilizing suitable parameters.
 
+\cite{vCheung} achieve an accuracy of approximately 65\% top-1 error rate on the validation set and an error on the test set of 25.6\%. As of June 12th, 2017 their result was first on the leaderboard for TinyImagenet. They used an ensemble of three models: ResNet101, ResNet152 and DenseNet121. They apply normalization, marginalization and MAP inference in the ensemble architecture.
 
-DenResNet: Ensembling Dense Networks and Residual Networks by Victor Cheung of Stanford University Computer Science Department achieve an accuracy of approximately 65 \% top-1 error rate on the validation set and an error on the test set of 25.6 \%. As of June 12th, 2017 their result was first on the leaderboard for TinyImagenet. They used a  ensemble of three models: ResNet101, ResNet152 and DenseNet121. They apply normalization, marginalization and MAP inference in the ensemble architecture.
+Our results definitely comes up short comparing against these. A difference lies in number of epochs, we ran 60 which is less than number of epochs used by the implementations mentioned above. But ultimately, the fact our parameters are suboptimal results in our network being prone to overfitting and returns a network that becomes overtrained and generalizes poorly to validation data.
 
 \section{Conclusion}
-Final thoughts, future research, improvements etc.
-
+Making neural networks is a form of art. With so many architectures to choose from the real craftsmanship lies in tuning and tweaking the network accordingly to work properly. We're satisfied with the project as we've learned a lot about CNNs, even though we were hoping to achieve a higher accuracy.
 
 
 \bibliography{references}{}

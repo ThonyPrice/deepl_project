@@ -3,19 +3,21 @@
 \begin{table}[htbp]
 \begin{center}
 \begin{tabular}{|l|l|l|l|}
-\cline{1-4}
-\textbf{Model} & \textbf{Top-1 val} & \textbf{Top-5 val} & \textbf{Test}  \\
-\cline{1-4}
-          A: SGD, RUI                &   17\%  		  &  37\%	      & 0\\
-          B: Adam, RUI, BN           &   22\%  		  &  45\%	      & 0\\
-          C: Adam, RUI, Dropout      &   6\%      	&  20\%       & 0\\
-          D: Adam, HEI, Dropout, BN  &   29\%  	    &  55\% 	    &	0\\
+\hline
+\textbf{Model} & \textbf{Top-1 val} & \textbf{Top-5 val}  \\
+\hline
+          A: SGD, RUI                &   17\%  		  &  37\% \\
+          B: Adam, RUI, BN           &   22\%  		  &  45\% \\
+          C: Adam, RUI, Dropout      &   6\%      	&  20\% \\
+          D: Adam, HEI, Dropout, BN  &   29\%  	    &  55\% \\
+          E: Adam, HEI, BN, L2       &   25\%       &  50\% \\
+          F: Adam, HEI, BN, L2       &   26\%       &  51\% \\
 
-\cline{1-4}
+\hline
 \end{tabular}
 \caption[]
 {\small
-accuracy of models
+Accuracy of models.
 }
 \label{table:accuracy}
 \end{center}
