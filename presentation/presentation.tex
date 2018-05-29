@@ -7,16 +7,15 @@
 \usepackage{graphics}
 \usepackage{graphicx,wrapfig,lipsum}
 
-
 \usetheme{Copenhagen}
 
 \title{
-  Classification of ImageNet \\
+  Classification of ImageNet\\
   with Convolutional Neural Networks
 }
 \author{
-  Niklas Lindqvist,\\
-  Thony Price,\\
+  Niklas Lindqvist\\
+  Thony Price\\
   William Skagerström\\
 }
 
@@ -25,45 +24,70 @@
 
 \begin{frame}
   \frametitle{Agenda}
-
   \begin{itemize}
     \item Proposal and intention
     \item Implementation
-    \item Results
+    \item Results \& Discussion
   \end{itemize}
 \end{frame}
 
 \section{Proposal and intention}
+\subsection{Project proposal}
 \begin{frame}
   \frametitle{Project proposal}
   \begin{itemize}
+    \item Tiny ImageNet competition
 	  \item Implement a CNN
-    \item Achieve acceptable results in terms of accuracy (on ImageNet)
     \item Apply techniques from course to optimize performance of network
   \end{itemize}
 \end{frame}
 
-\section{Implementation}
+\subsection{Research of the field}
 \begin{frame}
   \frametitle{Research of the field}
-  We began looking at state of the art
-  \begin{itemize}
-    \item GoogLeNet
-    \item RezNet
-    \item VGGNet
-  \end{itemize}
-
-  Then to more achievable en par with our scope. Here Stanford's course \textbf{CS231} proved a valuable source. There was many reports on classification of ImageNet by CNNs.
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \begin{block}{}
+        \begin{minipage}[c][0.5\textheight][c]{\linewidth}
+          \includegraphics[width=\textwidth]{images/graph_cnns.jpg}
+        \end{minipage}
+      \end{block}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{block}{}
+        \begin{minipage}[c][0.5\textheight][c]{\linewidth}
+          \begin{itemize}
+            \item GoogLeNet
+            \item RezNet
+            \item VGGNet
+            \item Stanford's CS231
+          \end{itemize}
+        \end{minipage}
+      \end{block}
+    \end{column}
+  \end{columns}
 \end{frame}
 
+\section{Implementation}
+\subsection{Stack and Data}
 \begin{frame}
-  We went for an VGGNet inspired architecture of the network. The leftmost represents the most vanilla.
+  \frametitle{Stack and Data}
+  \centering
+  \includegraphics[width=0.7\textwidth]{images/samples.png}
+\end{frame}
+
+\subsection{CNN configurations}
+\begin{frame}
+  \frametitle{CNN configurations}
   \input{snippets/4_configurations}
 \end{frame}
 
 \section{Results}
 \begin{frame}
-  We initialized a run on Google Cloud and the result was... OVERFITTING
+  \centering
+  We initialized a run on Google Cloud and the result was...\pause
+  \vspace{0.02\textheight}
+  \includegraphics[width=0.7\textwidth]{images/overfitting.jpeg}
 \end{frame}
 
 
