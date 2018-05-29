@@ -41,6 +41,12 @@ We decided to try a few variations of the network to see what technique resulted
 
 The leftmost structure represents our most vanilla implementation and as we move to the right we add more tricks by changing the solver, adding batch normalisation, dropout and eventually testing with more connected layers.
 
+We initialised a run to test each of these networks for 20 epochs, name_Z will tell you about the results.
+
+## First results
+
+Text
+
 <!-- Below - Introduction to markdown -->
 
 # Header
