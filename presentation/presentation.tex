@@ -1,5 +1,12 @@
 \documentclass{beamer}
+\usepackage{hhline}
 \usepackage[utf8]{inputenc}
+\usepackage{subcaption}
+\usepackage{placeins}
+\usepackage{todonotes}
+\usepackage{graphics}
+\usepackage{graphicx,wrapfig,lipsum}
+
 
 \usetheme{Copenhagen}
 
@@ -50,10 +57,11 @@
 \end{frame}
 
 \begin{frame}
-  Considering this we wen't for an VGGNet inspired architecture of the network. The leftmost represents the most vanilla. Each step to the right a optimization technique is added.
-  \textbf{Insert table of architecture here}
+  We wen't for an VGGNet inspired architecture of the network. The leftmost represents the most vanilla.
+  \input{snippets/4_configurations}
 \end{frame}
 
+\section{Results}
 \begin{frame}
   We initialized a run on Google Cloud and the result was... OVERFITTING
   \textbf{Insert plots here}
