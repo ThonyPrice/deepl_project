@@ -1,0 +1,48 @@
+\begin{tabular}{|c|}
+  \hline
+  \multicolumn{1}{|c|}{E}
+  \\\hline
+  Adam, HEI, BN
+  \\\hhline{|=|}
+
+  \multicolumn{1}{|c|}{input ($64\times64\times3\;RGB\;image$)}
+  \\\hline
+
+  conv-32, 2x2, ReLu, BN
+  \\
+  conv-32, 2x1, ReLu, BN
+  \\
+  conv-32, 1x2, ReLu, BN, L2
+  \\\hline
+  MaxPooling, 2x2
+  \\\hline
+  conv-48, 2x2, ReLu, BN
+  \\
+  conv-48, 2x2, ReLu, BN
+  \\
+  conv-48, 2x2, ReLu, BN, L2
+  \\\hline
+  MaxPooling, 2x2
+  \\\hline
+  conv-80, 2x2, ReLu, BN
+  \\
+  conv-80, 2x2, ReLu, BN
+  \\
+  conv-80, 2x2, ReLu, BN, L2
+  \\\hline
+  MaxPooling, 2x2
+  \\\hline
+  FC-4096, ReLu, BN, L2
+  \\\hline
+  FC-4096, ReLu, BN, L2
+  \\\hline
+  FC-4096, ReLu, BN, L2
+  \\\hline
+  FC-200, SoftMax
+  \\\hline
+  \end{tabular}
+\caption[]
+{\small
+  Configuration of our final CNN architecture.
+}
+\label{table:final_config}
