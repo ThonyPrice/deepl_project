@@ -1,0 +1,62 @@
+\medskip
+
+\begin{table}[!htbp]
+\begin{center}
+\scalebox{0.8}{
+\begin{tabular}{|c|c|c|c|}
+
+  \hline
+  \multicolumn{2}{|c|}{ConvNet Configuration} \\
+  \hline
+
+  E & F
+  \\\hline
+
+  Adam, HEI, BN, L2 & Adam, HEI, BN, L2
+  \\\hhline{|=|=|=|=|}
+
+  \multicolumn{2}{|c|}{input ($64\times64\times3\;RGB\;image$)}
+  \\\hline
+  conv-32, 2x2, ReLu, BN & conv-32, 2x2, ReLu, BN
+  \\
+  conv-32, 2x1, ReLu, BN & conv-32, 2x1, ReLu, BN
+  \\
+  conv-32, 1x2, ReLu, BN, L2 & conv-32, 1x2, ReLu, BN, L2
+  \\\hline
+  MaxPooling, 2x2 & MaxPooling, 2x2
+  \\\hline
+  conv-48, 2x2, ReLu, BN & conv-48, 2x2, ReLu, BN
+  \\
+  conv-48, 2x2, ReLu, BN & conv-48, 2x2, ReLu, BN
+  \\
+  conv-48, 2x2, ReLu, BN, L2 & conv-48, 2x2, ReLu, BN, L2
+  \\\hline
+  MaxPooling, 2x2 & MaxPooling, 2x2
+  \\\hline
+  conv-80, 2x2, ReLu, BN & conv-80, 2x2, ReLu, BN
+  \\
+  conv-80, 2x2, ReLu, BN & conv-80, 2x2, ReLu, BN
+  \\
+  conv-80, 2x2, ReLu, BN, L2 & conv-80, 2x2, ReLu, BN, L2
+  \\\hline
+  MaxPooling, 2x2 & MaxPooling, 2x2
+  \\\hline
+  FC-4096, ReLu, BN, L2 & FC-200, SoftMax
+  \\\hline
+  FC-4096, ReLu, BN, L2 &
+  \\\hline
+  FC-4096, ReLu, BN, L2 &
+  \\\hline
+  FC-200, SoftMax &
+  \\\hline
+
+  \end{tabular}
+  }
+\caption[]
+{\small
+  Configuration of the two models E and F. They differ in the F does not have any fully connected layers leading up to the output, and has a higher degree of $L_{2}$ regularization, a lower learning rate, anda higher learning decay decay.).
+}
+\label{table:final2configs}
+\end{center}
+\end{table}
+\FloatBarrier
