@@ -1,4 +1,5 @@
 \documentclass{beamer}
+\usepackage{chngpage}
 \usepackage{hhline}
 \usepackage[utf8]{inputenc}
 \usepackage{subcaption}
@@ -73,7 +74,9 @@
 \begin{frame}
   \frametitle{Stack and Data}
   \centering
-  \includegraphics[width=0.7\textwidth]{images/samples.png}
+  \includegraphics[width=\textwidth]{images/samples.png}
+  \vspace{0.05\textheight}
+  \includegraphics[width=\textwidth]{images/logosPNG.png}
 \end{frame}
 
 \subsection{CNN configurations}
@@ -83,40 +86,27 @@
 \end{frame}
 
 \section{Results}
+\subsection{Initial results}
 \begin{frame}
   \centering
-  We initialized a run on Google Cloud and the result was...\pause
+  We initialised a run on Google Cloud and the results showed...\pause
   \vspace{0.02\textheight}
   \includegraphics[width=0.7\textwidth]{images/overfitting.jpeg}
 \end{frame}
 
 
-
 \begin{frame}
+\frametitle{Loss plots}
 \centering
-Network variant A
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.7\textwidth]{images/run1_loss_a.png}
+\begin{adjustwidth}{-.4in}{-.4in}
+  \includegraphics[width=0.4\textwidth]{images/run1_loss_a.png}
+  \includegraphics[width=0.4\textwidth]{images/run1_loss_b.png}
+  \includegraphics[width=0.4\textwidth]{images/run1_loss_c.png}
+\end{adjustwidth}
 \end{figure}
-\end{frame}
-
-\begin{frame}
-\centering
-Network variant B
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.7\textwidth]{images/run1_loss_b.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\centering
-Network variant C
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.7\textwidth]{images/run1_loss_c.png}
-\end{figure}
+(A) \hspace{3.5cm} (B) \hspace{3.5cm} (C)
 \end{frame}
 
 \begin{frame}

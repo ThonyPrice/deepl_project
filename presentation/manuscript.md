@@ -34,18 +34,33 @@ We made our implementation in python, we used pandas and numpy for data handling
 GPU set up for computations.
 
 The tiny image dataset consists of 100.000 images, 200 and 200 classes which results in 500 images per class in the training set. The validation set consists of 10.000 images.
+Each image is 64 by 64 pixel which is a reduction of the original size of 224 by 224 pixels.
 
 ## CNN Architectures
 
 We decided to try a few variations of the network to see what technique resulted in improvements. The variations are presented in this table.
 
-The leftmost structure represents our most vanilla implementation and as we move to the right we add more tricks by changing the solver, adding batch normalisation, dropout and eventually testing with more connected layers.
+The leftmost structure represents our most vanilla implementation and as we move to the right we add more tricks by changing the solver, adding batch normalisation, dropout, another initialiser and eventually testing with more connected layers.
 
 We initialised a run to test each of these networks for 20 epochs, name_Z will tell you about the results.
 
-## First results
+## Initial results
 
-Text
+The first results was... (click in overfitting meme here)
+
+## Loss plots
+
+The overfitting is evident by these lots representing three of the architectures we just showed. Looking at these we realised model A and B had no regularisation at all which means these results were to be expected.
+
+Model C and D had Dropout in the fully connected layer but only at a 30% ratio which apparently was not sufficient enough.
+
+## Model D
+
+When looking at the achieved accuracy on the validation set we found that model D performed the best. However, the loss plot indicates obvious overfitting and the accuracy is not satisfactory so we decided to try prevent overfitting and achieve better results.
+
+## War on overfitting
+
+Text here
 
 <!-- Below - Introduction to markdown -->
 
