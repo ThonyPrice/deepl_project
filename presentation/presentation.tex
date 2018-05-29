@@ -128,8 +128,39 @@ Network variant D
     \item Dropout (Dense layers)
     \item L2 regularization (X layers)
   \end{itemize}
-  Tinkering with these variables resulted in improved performance \textbf{insert plot here/next slide}
+  Tinkering with these variables resulted in a loss function with less signs of overfitting
 \end{frame}
+
+\begin{frame}
+  \begin{itemize}
+    \item  Changed preproccessing to subtracting the feature-wise mean of the dataset from each datapoint.
+    \item Added an $L_{2}$ regularization term of $1*10^{-3}$
+    \item Increased the number of fully connected layers to 3, each having a 70\% dropout ratio.
+  \end{itemize}
+
+  \begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{images/improved_loss_1.png}
+  \end{figure}
+\end{frame}
+
+
+\begin{frame}
+  \begin{itemize}
+    \item Removed the dropout.
+    \item Reguralization to rely on $L_{2}$ and Batch normalization.
+    \item Added a decay ret, initially set to very low($1*10^{-6}$).
+    \item Increased the number of training epochs. 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Last two configurations}
+  \input{snippets/final2configs}
+
+\end{frame}
+
+
 
 
 
