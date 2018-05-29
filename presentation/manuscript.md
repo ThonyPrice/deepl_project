@@ -60,34 +60,51 @@ When looking at the achieved accuracy on the validation set we found that model 
 
 However, the loss plot indicates serious overfitting and the accuracy is not satisfactory. So we decided to try prevent overfitting and achieve better results.
 
-## Prevent overfitting
+## Prevent overfitting 1/3
 
 To constrain the overfitting and achieve better results we tinkered with:
 1. Batch normalisation to enable a more stable learning
 2. Applying more Dropout
 3. L2 Regularisation to prevent weights to fit specifically to the training data
 
-## Prevent overfitting
+## Prevent overfitting 2/3
 
+More specifically:
+1. We preprocessed the pictures by subtracting the feature-wise mean of each datapoint
+2. Added a L2 regularisation of .001
+3. Did testing with 3 fully connected layers instead and increased dropout to 70%
 
+This resulted in less overfitting for the 20 first epochs as visualised in this plot. However, the tail of the graph hints of beginning to overfit and learning in somewhat unstable
 
-<!-- Below - Introduction to markdown -->
+## Prevent overfitting 3/3
 
-# Header
+We kept tinkering with the parameters and tried:
+<!-- TODO:  WILLIAM: Fill in here-->
 
-## Subsection
+## Last two configurations
 
-I suggest we write out manuscript here, in markdown.
+To summarise it resulted in these two final configurations
 
-Some *italic* and **bold** text.
+## Final loss and accuracy 1/2
 
-A list:
-1. Which
-2. is
-3. ordered
+The first model (E) achieved these results. From the plots we can tell training is slightly more stable but the loss plot reveals that overfitting still occurs. This was trained for 60 epochs.
 
-You can use markdown emojis too :smirk:
+## Final loss and accuracy 2/2
 
-Find cheat sheet on this [link](https://gist.github.com/rxaviers/7360908)
+The last model (F) showed stable learning and no signs of overfitting. This was run for 100 epochs. It appears to still progress slowly and potentially could achieve better results if allowed to run for even longer.
 
-Use Atom package 'Markdown preview plus' to render file
+## Accuracy
+
+To summary the results interestingly we found our best accuracy in model D which shoed a lot of overfitting. However, we reason that the stable learning of the last model (F) has a more stable result which would generalise better and could achieve better results if allow to train for more epochs.
+
+## Discussion and retro
+
+We run into a few obstacles during the implementations where the first concerned some of the pictures was black and white and the dimensionality therefore differed from the other images. If we had began visualising the data these could be detected as outliers and dealt with.
+
+We also regret not using RezNet, because it has fewer parameters it could probably allowed faster training and allocates us more time to find optimal parameters of the network. Because of the residuals we could also have tried deeper networks.
+
+And instead of tinkering manually with the parameters a parameter-search might have done the trick for us in a more structured manner.
+
+To conclude, tuning CNNs is hard and more of an art-form than a precise science.
+
+Thank you!
