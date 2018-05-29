@@ -58,14 +58,18 @@ Model C and D had Dropout in the fully connected layer but only at a 30% ratio w
 
 When looking at the achieved accuracy on the validation set we found that model D performed the best with 29% accuracy when predicting 1 class. When allowed to "guess" 5 classes the accuracy was 55%.
 
-However, the loss plot indicates serious overfitting and the accuracy is not satisfactory to us so we decided to try prevent overfitting and achieve better results.
+However, the loss plot indicates serious overfitting and the accuracy is not satisfactory. So we decided to try prevent overfitting and achieve better results.
 
-## War on overfitting
+## Prevent overfitting
 
-To constrain the overfitting we tinkered with:
+To constrain the overfitting and achieve better results we tinkered with:
 1. Batch normalisation to enable a more stable learning
 2. Applying more Dropout
 3. L2 Regularisation to prevent weights to fit specifically to the training data
+
+## Prevent overfitting
+
+
 
 <!-- Below - Introduction to markdown -->
 
