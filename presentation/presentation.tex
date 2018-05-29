@@ -57,15 +57,55 @@
 \end{frame}
 
 \begin{frame}
-  We wen't for an VGGNet inspired architecture of the network. The leftmost represents the most vanilla.
+  We went for an VGGNet inspired architecture of the network. The leftmost represents the most vanilla.
   \input{snippets/4_configurations}
 \end{frame}
 
 \section{Results}
 \begin{frame}
   We initialized a run on Google Cloud and the result was... OVERFITTING
-  \textbf{Insert plots here}
 \end{frame}
+
+
+
+\begin{frame}
+\centering
+Network variant A
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.7\textwidth]{images/run1_loss_a.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\centering
+Network variant B
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.7\textwidth]{images/run1_loss_b.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\centering
+Network variant C
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.7\textwidth]{images/run1_loss_c.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\centering
+Network variant D
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.7\textwidth]{images/run1_loss_d.png}
+\end{figure}
+\end{frame}
+
+
+
 
 \begin{frame}
   To battle this we applied
@@ -79,4 +119,15 @@
 
 
 
+
 \end{document}
+
+%\centering
+%Network variant A (left) and B(right)
+%\begin{figure}[!h]
+%\centering
+%\makebox[\textwidth]{
+%\includegraphics[width=0.3\textwidth]{images/run1_loss_a.png}
+%\includegraphics[width=0.3\textwidth]{images/run1_loss_b.png}
+%}
+%\end{figure}
