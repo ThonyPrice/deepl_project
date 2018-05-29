@@ -94,34 +94,34 @@
   \includegraphics[width=0.7\textwidth]{images/overfitting.jpeg}
 \end{frame}
 
-
+\subsection{Overfitting...}
 \begin{frame}
-\frametitle{Loss plots}
-\centering
-\begin{figure}[!h]
-\centering
-\begin{adjustwidth}{-.4in}{-.4in}
-  \includegraphics[width=0.4\textwidth]{images/run1_loss_a.png}
-  \includegraphics[width=0.4\textwidth]{images/run1_loss_b.png}
-  \includegraphics[width=0.4\textwidth]{images/run1_loss_c.png}
-\end{adjustwidth}
-\end{figure}
-(A) \hspace{3.5cm} (B) \hspace{3.5cm} (C)
+  \frametitle{Loss plots}
+  \centering
+  \begin{figure}[!h]
+  \centering
+  \begin{adjustwidth}{-.4in}{-.4in}
+    \includegraphics[width=0.4\textwidth]{images/run1_loss_a.png}
+    \includegraphics[width=0.4\textwidth]{images/run1_loss_b.png}
+    \includegraphics[width=0.4\textwidth]{images/run1_loss_c.png}
+  \end{adjustwidth}
+  \end{figure}
+  (A) \hspace{3.5cm} (B) \hspace{3.5cm} (C)
 \end{frame}
 
 \begin{frame}
-\centering
-Network variant D
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.7\textwidth]{images/run1_loss_d.png}
-\end{figure}
+  \centering
+  Network variant D and accuracies
+  \begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/run1_loss_d.png}
+  \end{figure}
+  \input{snippets/accuracy_table_4first}
 \end{frame}
 
-
-
-
+\subsection{Prevent overfitting}
 \begin{frame}
+  \frametitle{Prevent overfitting}
   To battle this we applied
   \begin{itemize}
     \item Batch normalization (All layers)
@@ -150,7 +150,7 @@ Network variant D
     \item Removed the dropout.
     \item Reguralization to rely on $L_{2}$ and Batch normalization.
     \item Added a decay ret, initially set to very low($1*10^{-6}$).
-    \item Increased the number of training epochs. 
+    \item Increased the number of training epochs.
   \end{itemize}
 \end{frame}
 
@@ -164,6 +164,16 @@ Network variant D
 
 
 
+
+\subsection{Discussion}
+\begin{frame}
+  \frametitle{Retrospective}
+  \begin{itemize}
+    \item Visualise data to find outliers!
+    \item Use RezNet instead - Less parameters
+    \item Do parameter search
+  \end{itemize}
+\end{frame}
 
 \end{document}
 

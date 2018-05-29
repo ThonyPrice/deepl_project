@@ -24,17 +24,17 @@ Along with this we set out to implement techniques which we've learned in the co
 
 We begun looking at the state of the art contributions to the image-net competitions. Those consisted mainly of implementation touched upon in the course such as GoogLeNet, RezNet and VGGNet.
 
-We decided to work with the VGG net implementation because of its straight forward appearance and higher accuracy than GoogLeNet and RezNet-18.
+We decided to work with the VGG net implementation because of its straight forward appearance and higher accuracy than GoogLeNet and RezNet-18. If we restrict ourselves to a reasonable amount of layers.
 
 We also found that Stanford's course CS231 includes a project on tiny imageNet and used these reports as an inspiration when deciding on the final structure of the network. Name_Y will explain this in further detail and how we implemented it.
 
 ## Stack and Data
 
 We made our implementation in python, we used pandas and numpy for data handling and augmentation. We then used Keras which is build on top of Tensorflow to take care of everything regarding the network and training.
-GPU set up for computations.
+The arrangement between this course and Google Cloud Services allowed us to utilise a modern high performance GPU, Tesla K80 to run our computations on.
 
-The tiny image dataset consists of 100.000 images, 200 and 200 classes which results in 500 images per class in the training set. The validation set consists of 10.000 images.
-Each image is 64 by 64 pixel which is a reduction of the original size of 224 by 224 pixels.
+The tiny image dataset consists of 100.000 images divided in 200 classes which results in 500 images per class in the training set. The validation set consists of 10.000 images.
+Each image is 64 by 64 pixel which is a reduction of the original size of 224 by 224 pixels. The test set has no available labels but predictions must be uploaded and then a results is received.
 
 ## CNN Architectures
 
@@ -56,11 +56,16 @@ Model C and D had Dropout in the fully connected layer but only at a 30% ratio w
 
 ## Model D
 
-When looking at the achieved accuracy on the validation set we found that model D performed the best. However, the loss plot indicates obvious overfitting and the accuracy is not satisfactory so we decided to try prevent overfitting and achieve better results.
+When looking at the achieved accuracy on the validation set we found that model D performed the best with 29% accuracy when predicting 1 class. When allowed to "guess" 5 classes the accuracy was 55%.
+
+However, the loss plot indicates serious overfitting and the accuracy is not satisfactory to us so we decided to try prevent overfitting and achieve better results.
 
 ## War on overfitting
 
-Text here
+To constrain the overfitting we tinkered with:
+1. Batch normalisation to enable a more stable learning
+2. Applying more Dropout
+3. L2 Regularisation to prevent weights to fit specifically to the training data
 
 <!-- Below - Introduction to markdown -->
 
