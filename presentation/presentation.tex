@@ -122,20 +122,20 @@
   \input{snippets/accuracy_table_4first}
 \end{frame}
 
-\subsection{Prevent overfitting}
+\subsection{Improving the results}
 \begin{frame}
-  \frametitle{Prevent overfitting (1/3)}
+  \frametitle{Prevent overfitting}
   To battle this we applied
   \begin{itemize}
-    \item Batch normalization (All layers)
+    \item Batch normalization
     \item Dropout (Dense layers)
-    \item L2 regularization (X layers)
+    \item L2 regularization
   \end{itemize}
   Tinkering with these variables resulted in a loss function with less signs of overfitting
 \end{frame}
 
 \begin{frame}
-  \frametitle{Prevent overfitting (2/3)}
+  \frametitle{Prevent overfitting (1/2)}
   \begin{itemize}
     \item  Changed preproccessing to subtracting the feature-wise mean of the dataset from each datapoint
     \item Added an $L_{2}$ regularization term of $1*10^{-3}$
@@ -149,7 +149,7 @@
 
 
 \begin{frame}
-  \frametitle{Prevent overfitting (3/3) + other configurations}
+  \frametitle{Prevent overfitting (2/2) + other configurations}
   \begin{itemize}
     \item Removed the dropout
     \item Reguralization to rely on $L_{2}$ and Batch normalization
@@ -180,7 +180,8 @@
   \input{snippets/accuracy_table}
 \end{frame}
 
-\subsection{Discussion}
+\section{Discussion}
+\subsection{Discussion \& retrospective}
 \begin{frame}
   \frametitle{Discussion \& retrospective}
   \begin{itemize}

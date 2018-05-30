@@ -2,15 +2,17 @@
 
 ## Title slide
 
-So i'm X_name, this is Y_name and Z_name. Our project is classification of Image-net with convolutional neural networks.
+*Niklas starts presenting*
+
+So i'm Niklas, this is Thony and William. Our project is classification of Image-net with convolutional neural networks.
 
 ## Agenda
 
 The presentation will be split into three parts, the first concerning our project proposal and intention in the beginning of the project.
 
-Then, Y_name will describe our method and how we went about to implement our methodology.
+Then, will describe our method and how we went about to implement our methodology.
 
-Lastly, Z_name will present our results and some retrospective on the project.
+Lastly, we will present our results and some retrospective on the project.
 
 ## Project proposal
 
@@ -24,17 +26,21 @@ Along with this we set out to implement techniques which we've learned in the co
 
 We begun looking at the state of the art contributions to the image-net competitions. Those consisted mainly of implementation touched upon in the course such as GoogLeNet, RezNet and VGGNet.
 
-We decided to work with the VGG net implementation because of its straight forward appearance and higher accuracy than GoogLeNet and RezNet-18. If we restrict ourselves to a reasonable amount of layers.
+We decided to work with the VGG net implementation because of its straight forward appearance.
 
-We also found that Stanford's course CS231 includes a project on tiny imageNet and used these reports as an inspiration when deciding on the final structure of the network. Name_Y will explain this in further detail and how we implemented it.
+We also found that Stanford's course CS231 includes a project on tiny imageNet and used these reports as an inspiration when deciding on the final structure of the network. We will explain this in further detail and how we implemented it.
 
 ## Stack and Data
 
-We made our implementation in python, we used pandas and numpy for data handling and augmentation. We then used Keras which is build on top of Tensorflow to take care of everything regarding the network and training.
+We made our implementation in python, we used pandas and numpy for data handling and augmentation. We then used Keras which is built on top of Tensorflow to take care of everything regarding the network and training.
+
 The arrangement between this course and Google Cloud Services allowed us to utilise a modern high performance GPU, Tesla K80 to run our computations on.
 
 The tiny image dataset consists of 100.000 images divided in 200 classes which results in 500 images per class in the training set. The validation set consists of 10.000 images.
-Each image is 64 by 64 pixel which is a reduction of the original size of 224 by 224 pixels. The test set has no available labels but predictions must be uploaded and then a results is received.
+
+Each image is 64 by 64 pixel which is a reduction of the original size of 224 by 224 pixels. The test set has no available labels but predictions must be uploaded and then a results is received by an online service.
+
+*Change presenter here to Thony*
 
 ## CNN Architectures
 
@@ -42,7 +48,7 @@ We decided to try a few variations of the network to see what technique resulted
 
 The leftmost structure represents our most vanilla implementation and as we move to the right we add more tricks by changing the solver, adding batch normalisation, dropout, another initialiser and eventually testing with more connected layers.
 
-We initialised a run to test each of these networks for 20 epochs, name_Z will tell you about the results.
+We initialised a run to test each of these networks for 20 epochs.
 
 ## Initial results
 
@@ -50,7 +56,7 @@ The first results was... (click in overfitting meme here)
 
 ## Loss plots
 
-The overfitting is evident by these lots representing three of the architectures we just showed. Looking at these we realised model A and B had no regularisation at all which means these results were to be expected.
+The overfitting is evident by these plots representing three of the architectures we just showed. Looking at these we realised model A and B had no regularisation at all which means overfitting were to be expected.
 
 Model C and D had Dropout in the fully connected layer but only at a 30% ratio which apparently was not sufficient enough.
 
@@ -60,14 +66,16 @@ When looking at the achieved accuracy on the validation set we found that model 
 
 However, the loss plot indicates serious overfitting and the accuracy is not satisfactory. So we decided to try prevent overfitting and achieve better results.
 
-## Prevent overfitting 1/3
+## Improving the results
 
 To constrain the overfitting and achieve better results we tinkered with:
 1. Batch normalisation to enable a more stable learning
 2. Applying more Dropout
 3. L2 Regularisation to prevent weights to fit specifically to the training data
 
-## Prevent overfitting 2/3
+*Change presenter here to William*
+
+## Prevent overfitting 1/2
 
 More specifically:
 1. We preprocessed the pictures by subtracting the feature-wise mean of each datapoint
@@ -76,7 +84,7 @@ More specifically:
 
 This resulted in less overfitting for the 20 first epochs as visualised in this plot. However, the tail of the graph hints of beginning to overfit and learning in somewhat unstable
 
-## Prevent overfitting 3/3
+## Prevent overfitting 2/2
 
 We kept tinkering with the parameters and tried:
 <!-- TODO:  WILLIAM: Fill in here-->
@@ -95,16 +103,16 @@ The last model (F) showed stable learning and no signs of overfitting. This was 
 
 ## Accuracy
 
-To summary the results interestingly we found our best accuracy in model D which shoed a lot of overfitting. However, we reason that the stable learning of the last model (F) has a more stable result which would generalise better and could achieve better results if allow to train for more epochs.
+To summary the results interestingly we found our best accuracy in model D which, as we mentioned, showed a lot of overfitting. However, we reason that the stable learning of the last model (F) has a more stable result which would generalise better and could achieve better accuracy if allowed to train for more epochs.
 
 ## Discussion and retro
 
 We run into a few obstacles during the implementations where the first concerned some of the pictures was black and white and the dimensionality therefore differed from the other images. If we had began visualising the data these could be detected as outliers and dealt with.
 
-We also regret not using RezNet, because it has fewer parameters it could probably allowed faster training and allocates us more time to find optimal parameters of the network. Because of the residuals we could also have tried deeper networks.
+We also regret not using RezNet, because it has fewer parameters and has faster training. This would have given us more time to find optimal parameters of the network. Also, because of the residuals we reason we could also have tried deeper networks without overfitting.
 
 And instead of tinkering manually with the parameters a parameter-search might have done the trick for us in a more structured manner.
 
-To conclude, tuning CNNs is hard and more of an art-form than a precise science.
+So to conclude, tuning CNNs is hard and more of an art-form than a precise science.
 
 Thank you!
