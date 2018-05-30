@@ -79,19 +79,18 @@ To constrain the overfitting and achieve better results we tinkered with:
 
 More specifically:
 1. We preprocessed the pictures by subtracting the feature-wise mean of each datapoint
-2. Added a L2 regularisation of .001
+2. Added a L2 regularization at the end of each convolutional stack, which we initialized to .001
 3. Did testing with 3 fully connected layers instead and increased dropout to 70%
 
-This resulted in less overfitting for the 20 first epochs as visualised in this plot. However, the tail of the graph hints of beginning to overfit and learning in somewhat unstable
+This resulted in less overfitting for the 20 first epochs as visualised in this plot. However, the tail of the graph hints of beginning to overfit and, as we can observe on the graph, the learning in somewhat unstable
 
 ## Prevent overfitting 2/2
 
-We kept tinkering with the parameters and tried:
-<!-- TODO:  WILLIAM: Fill in here-->
+We kept tinkering with the parameters and made some attempt to stabilize the learning process of the network. We decided to rely on the L2 term and the reduction of the covariance shift on the batches that is introduced by the batch normalization for the regularization of the network, so we removed the dropout after some experimentation.
 
 ## Last two configurations
 
-To summarise it resulted in these two final configurations
+This resultet in two new sets of configuration, shown here as E and F. They are very identical in their structure, but an experiemt was made after we ran E which resulted in the confugration F, where we removed the fully connected layers at the end and increased the L2 regularization and the learning rate decay. We also set the initial learning rate a bit lower, using the number 0.001 from the original paper.
 
 ## Final loss and accuracy 1/2
 
@@ -99,20 +98,20 @@ The first model (E) achieved these results. From the plots we can tell training 
 
 ## Final loss and accuracy 2/2
 
-The last model (F) showed stable learning and no signs of overfitting. This was run for 100 epochs. It appears to still progress slowly and potentially could achieve better results if allowed to run for even longer.
+The last model (F) showed stable learning and much less signs of overfitting. This was run for 100 epochs. It appears to still progress slowly and potentially could achieve better results if allowed to run for even longer.
 
 ## Accuracy
 
-To summary the results interestingly we found our best accuracy in model D which, as we mentioned, showed a lot of overfitting. However, we reason that the stable learning of the last model (F) has a more stable result which would generalise better and could achieve better accuracy if allowed to train for more epochs.
+To summary the results interestingly we found our best accuracy in model D which, as we mentioned, showed a lot of overfitting. However, we reason that the stable learning of the last model (F) has a more stable result which would generalise better and could achieve better accuracy if allowed to train for a longer period of time.
 
 ## Discussion and retro
 
 We run into a few obstacles during the implementations where the first concerned some of the pictures was black and white and the dimensionality therefore differed from the other images. If we had began visualising the data these could be detected as outliers and dealt with.
 
-We also regret not using RezNet, because it has fewer parameters and has faster training. This would have given us more time to find optimal parameters of the network. Also, because of the residuals we reason we could also have tried deeper networks without overfitting.
+We also regret not using RezNet, because it has fewer parameters and has a much faster training time. This would have given us more time to find optimal parameters of the network, since the slow speed of the VGG-net made course searching very difficult. Also, because of the residuals we reason we could also have tried deeper networks without overfitting.
 
 And instead of tinkering manually with the parameters a parameter-search might have done the trick for us in a more structured manner.
 
-So to conclude, tuning CNNs is hard and more of an art-form than a precise science.
+So to conclude the things we learning from the project, tuning CNNs is hard and more of an art-form than a precise science.
 
 Thank you!
