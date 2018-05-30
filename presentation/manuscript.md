@@ -78,7 +78,7 @@ To constrain the overfitting and achieve better results we tinkered with:
 ## Prevent overfitting 1/2
 
 More specifically:
-1. We preprocessed the pictures by subtracting the feature-wise mean of each datapoint
+1. We preprocessed the pictures by subtracting the feature-wise mean of the dataset from each datapoint
 2. Added a L2 regularization at the end of each convolutional stack, which we initialized to .001
 3. Did testing with 3 fully connected layers instead and increased dropout to 70%
 
@@ -102,7 +102,7 @@ The last model (F) showed stable learning and much less signs of overfitting. Th
 
 ## Accuracy
 
-To summary the results interestingly we found our best accuracy in model D which, as we mentioned, showed a lot of overfitting. However, we reason that the stable learning of the last model (F) has a more stable result which would generalise better and could achieve better accuracy if allowed to train for a longer period of time.
+To summary the results interestingly we found our best accuracy in model D which, as we mentioned, showed a lot of overfitting. However, we reason that the last model (F) has a more stable result due to its smoother learning process, which would generalise better and could achieve better accuracy if allowed to train for a longer period of time.
 
 ## Discussion and retro
 
