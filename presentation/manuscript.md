@@ -79,7 +79,7 @@ To constrain the overfitting and achieve better results we tinkered with:
 
 More specifically:
 1. We preprocessed the pictures by subtracting the feature-wise mean of the dataset from each datapoint
-2. Added a L2 regularization at the end of each convolutional stack, which we initialized to .001
+2. Added a L2 regularization at the last layer of convolutional stack, which we initialized to .001
 3. Did testing with 3 fully connected layers instead and increased dropout to 70%
 
 This resulted in less overfitting for the 20 first epochs as visualised in this plot. However, the tail of the graph hints of beginning to overfit and, as we can observe on the graph, the learning in somewhat unstable
@@ -90,7 +90,7 @@ We kept tinkering with the parameters and made some attempt to stabilize the lea
 
 ## Last two configurations
 
-This resultet in two new sets of configuration, shown here as E and F. They are very identical in their structure, but an experiemt was made after we ran E which resulted in the confugration F, where we removed the fully connected layers at the end and increased the L2 regularization and the learning rate decay. We also set the initial learning rate a bit lower, using the number 0.001 from the original paper.
+This resulted in two new sets of configuration, shown here as E and F. They are very identical in their architecture, but for F we  decided to try without the fully connected layers and increased the L2 regularization(to 5*10^-3) and the learning rate decay(to to 1*10^-3). We also set the initial learning rate a bit lower, using the number 0.001 from the original paper that introduced the Adam algorithm.
 
 ## Final loss and accuracy 1/2
 
